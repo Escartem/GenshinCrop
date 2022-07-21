@@ -1,1 +1,104 @@
-pete moi le fiak uwu
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Fragual</title>
+	<style>
+		#mouseZone {
+			width: 300px;
+			height: 300px;
+			border: solid;
+		}
+	</style>
+</head>
+<body>
+	<a>pete moi le fiak</a>
+	<div>
+		<a>SourisX : <a id="mx">0</a></a>
+		<br />
+		<a>SourisY : <a id="my">0</a></a>
+		<br />
+		<button id="startStopBtn" style="background: lightgreen;">Start</button>
+		<a id="timeLeft" style="visibility: hidden;">0</a>
+	</div>
+	<div id="mouseZone" onmousemove="updatePos(event)"></div>
+	<script type="module">
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-app.js";
+		import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.9.0/firebase-firestore.js"
+		// import { getAnalytics } from "firebase/analytics";
+
+		const firebaseConfig = {
+			apiKey: "AIzaSyBr8KzsQeqf70dfaVtRxZTSyH6vE93dGt0",
+			authDomain: "escartem-db.firebaseapp.com",
+			databaseURL: "https://escartem-db-default-rtdb.europe-west1.firebasedatabase.app",
+			projectId: "escartem-db",
+			storageBucket: "escartem-db.appspot.com",
+			messagingSenderId: "162662100257",
+			appId: "1:162662100257:web:c989f7b401afcd56b02260",
+			measurementId: "G-132CTGT17P"
+		};
+
+		const app = initializeApp(firebaseConfig);
+		const db = getFirestore();
+		// const analytics = getAnalytics(app);
+
+		const appRef = doc(db, "fragual", "data");
+		const appData = (await getDoc(appRef)).data();
+
+		console.log(appData)
+
+		async function sendPos() {
+			var mx = document.getElementById("mx").innerHTML;
+			var my = document.getElementById("my").innerHTML;
+
+			await updateDoc(appRef, {
+				mouseX: mx,
+				mouseY: my
+			});
+		}
+
+		const startStopBtn = document.getElementById("startStopBtn");
+		const timeLeft = document.getElementById("timeLeft");
+		var sendToggle = false;
+
+		startStopBtn.addEventListener("click", function() {
+			// sendPos();
+			if (sendToggle == false) {
+				sendToggle = true;
+				startStopBtn.innerHTML = "Stop";
+				startStopBtn.style.background = "lightcoral";
+				timeLeft.style.visibility = "visible";
+			} else if (sendToggle == true) {
+				sendToggle = false;
+				startStopBtn.innerHTML = "Start";
+				startStopBtn.style.background = "lightgreen";
+				timeLeft.style.visibility = "hidden";
+			}
+		})
+
+		var startTime = new Date();
+		var timeDelay = 1000;
+
+		var timeInterval = setInterval(function() {
+			if (sendToggle == true) {
+				var dateDiff = new Date() - startTime;
+				// console.log(dateDiff);
+				timeLeft.innerHTML = Math.round((timeDelay - dateDiff) / 100) / 10;
+				if (dateDiff > timeDelay) {
+					startTime = new Date();
+					sendPos();
+					// console.log("indeed")
+				}
+			}
+		}, 10)
+	</script>
+	<script>
+		function updatePos(e) {
+			// console.log(e)
+			document.getElementById("mx").innerHTML = e.offsetX;
+			document.getElementById("my").innerHTML = e.offsetY;
+		}
+	</script>
+</body>
+</html>
