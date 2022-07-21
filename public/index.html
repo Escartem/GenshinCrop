@@ -69,11 +69,17 @@
 				startStopBtn.innerHTML = "Stop";
 				startStopBtn.style.background = "lightcoral";
 				timeLeft.style.visibility = "visible";
+				updateDoc(appRef, {
+					active: true
+				});
 			} else if (sendToggle == true) {
 				sendToggle = false;
 				startStopBtn.innerHTML = "Start";
 				startStopBtn.style.background = "lightgreen";
 				timeLeft.style.visibility = "hidden";
+				updateDoc(appRef, {
+					active: false
+				});
 			}
 		})
 
