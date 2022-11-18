@@ -1,1 +1,54 @@
-oui
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- JS -->
+	<script src="assets/js/jquery-3.6.0.js"></script>
+    <script src="assets/js/material-components-web.min.js"></script>
+    <script defer src="assets/js/material.min.js"></script>
+    <script src="assets/js/mui.min.js"></script>
+    <script src="https://escartem.netlify.app/js/ems.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/material-components-web.min.css">
+    <link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <!-- FONTS -->
+    <link rel="stylesheet" href="assets/css/icon.css">
+    <link rel="stylesheet" href="assets/css/css2.css">
+	<title>Genshin Crop</title>
+</head>
+<body>
+	<div class="main">
+		<div class="top">
+			<span class="pic-title">Who is this ?</span>
+			<div class="pic">
+				<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="load-spinner"></div>
+				<img id="char" src="./assets/img/load.png" draggable="false">
+				<span id="error-text" class="error-text">Something went wrong 😣<br/>Please try again.</span>
+			</div>
+
+			<div>
+				<div class="input-area" id="input-area">
+					<input id="uinput" name="uinput" size=10 class="uinput" placeholder="Your guess" autocomplete="off">
+					<button type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
+				</div>
+
+				<div class="input-result" id="result-area">
+					<span id="result-text">no u</span>
+				</div>
+
+				<div class="buttons">
+					<button type="button" class="mdc-button mdc-button--raised regen" id="regenBtn"><span class="mdc-button__label">✨ Another one</span></button>
+					<button type="button" class="mdc-button mdc-button--raised report" id="reportBtn"><span class="mdc-button__label">⚠️ Report invalid image</span></button>
+				</div>
+			</div>
+		</div>
+
+		<div class="bottom">
+			<span class="credits">Made by <a href="https://github.com/Escartem" target="_blank">Escartem</a> 💖</span>
+		</div>
+	</div>
+	<script src="./assets/js/app.js"></script>
+</body>
+</html>
