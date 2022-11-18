@@ -7,9 +7,22 @@ html {
 body {
     --background-color: #2f353e;
     --secondary-color: #1c2127;
+}
 
-    --primary-color: #30363d;
-    --text-zone-color: #292929;
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-srollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 
 .main {
@@ -172,4 +185,11 @@ img {
 
 #discord, #showCharsBtn, #lang {
     background: #303030;
+}
+
+.title {
+    color: white;
+    position: absolute;
+    top: 0;
+    text-decoration: underline;
 }
