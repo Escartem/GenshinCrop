@@ -1,10 +1,21 @@
 {
-  "hosting": {
-    "public": "public",
+  "hosting": [
+  {
+    "target": "escartem-db",
+    "public": "escartem-db",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
     ]
-  }
+  },
+  {
+    "target": "genshin-crop",
+    "public": "genshin-crop",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }]
 }
