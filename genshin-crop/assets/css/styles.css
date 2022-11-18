@@ -27,8 +27,8 @@ body {
     justify-content: space-between;
     align-items: center;
     background: var(--secondary-color);
-    width: 500px;
-    height: 400px;
+    width: 80%;
+    height: 70%;
     border-radius: 15px;
     flex-direction: column;
     margin-bottom: 50px;
@@ -36,8 +36,8 @@ body {
 
 .pic-title {
     color: white;
-    font-size: 32px;
-    padding: 20px;
+    font-size: 6vw;
+    padding: 5%;
 }
 
 .char-name {
@@ -47,16 +47,18 @@ body {
 }
 
 .pic {
-    background: #101418;
-    border-radius: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 30vw;
+    height: 30vh;
 }
 
 img {
     border-radius: 8px;
     transition: all 0.2s ease 0s;
+    height: 70%;
+    object-fit: contain;
 }
 
 .buttons {
@@ -65,19 +67,26 @@ img {
 
 .report {
     background: #ff4c4c !important;
-    transition: all 0.2s ease 0s;
+    margin-left: 1vw;
 }
 
 .regen {
     background: #748aff !important;
+    margin-right: 1vw;
+}
+
+.report, .regen {
     transition: all 0.2s ease 0s;
+    width: 20vw;
+    height: 7vh;
+    font-size: 1.5vw;
 }
 
 .uinput {
     background-color: #46494e;
     border: 0;
     width: 30%;
-    height: 25px;
+    height: 3vh;
     border-radius: 6px;
     margin-top: 6px;
     margin-bottom: 16px;
@@ -99,7 +108,7 @@ img {
 .uinput-check {
     margin: 5px;
     width: 110px;
-    height: 25px;
+    height: 3vh;
     transition: all 0.2s ease 0s;
 }
 
@@ -108,13 +117,18 @@ img {
     display: flex;
     justify-content: center;
     align-items: center;
-    visibility: hidden;
+    opacity: 0;
 }
 
 #result-text {
     position: absolute;
     margin-bottom: 15px;
     font-size: 15px;
+    transition: all 0.2s ease 0s;
+}
+
+#popupDialog {
+    background: var(--background-color);
 }
 
 #load-spinner {
@@ -131,13 +145,11 @@ img {
     bottom: 0;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
 }
 
 .credits {
     color: white;
     font-size: 15px;
-    padding: 5px;
 }
 
 .error-text {
@@ -146,4 +158,18 @@ img {
     width: 120px;
     text-align: center;
     visibility: hidden;
+}
+
+.left {
+    padding: 5px;
+}
+
+.right {
+    position: fixed;
+    right: 0;
+    padding: 5px;
+}
+
+#discord, #showCharsBtn, #lang {
+    background: #303030;
 }
