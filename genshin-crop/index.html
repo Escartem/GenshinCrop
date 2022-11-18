@@ -20,6 +20,17 @@
 </head>
 <body>
 	<div class="main">
+		<dialog class="mdl-dialog" id="popupDialog">
+            <div class="mdl-dialog__content" style="padding: 0.1px; height: 100%; color: white;">
+                <h2 id="popupTitle" style="margin: 0px; font-size: 20px; line-height: 16px;">Popup Title</h2>
+                <br />
+                <span id="popupContent" style="overflow-wrap: anywhere;">Popup Content</span>
+            </div>
+            <div class="mdl-dialog__actions" style="position: fixed; margin-left: -28px; margin-top: -40px;">
+                <button type="button" class="mdc-button mdc-button--raised close"><span class="mdc-button__label">Ok</span></button>
+            </div>
+        </dialog>
+
 		<div class="top">
 			<span class="pic-title">Who is this ?</span>
 			<div class="pic">
@@ -46,7 +57,14 @@
 		</div>
 
 		<div class="bottom">
-			<span class="credits">Made by <a href="https://github.com/Escartem" target="_blank">Escartem</a> 💖</span>
+			<div class="left">
+				<span class="credits">Made by <a href="https://github.com/Escartem" target="_blank">Escartem</a> 💖 | Press ctrl+q to generate an image</span>
+			</div>
+			<div class="right">
+				<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label">💬 Discord</span></button>
+				<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label">🧾 Characters list</span></button>
+				<button type="button" class="mdc-button mdc-button--raised" id="lang"><span class="mdc-button__label">🌐 Language</span></button>
+			</div>
 		</div>
 	</div>
 	<script src="./assets/js/app.js"></script>
