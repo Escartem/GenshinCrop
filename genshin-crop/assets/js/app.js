@@ -71,6 +71,7 @@ function genImage() {
     img.onload = function() {
         char.src = img.src;
         char.style.opacity = 1;
+        char.style.height = "70%";
         loadSpinner.style.visibility = "hidden";
         
         buttonState(false, 1);
@@ -126,6 +127,7 @@ function check() {
     inputArea.style.opacity = 0;
     resultArea.style.opacity = 1;
 
+    char.style.height = "130%";
     char.src = full_url;
 }
 
