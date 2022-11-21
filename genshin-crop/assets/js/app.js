@@ -3,7 +3,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 console.log("v"+VERSION);
 
 // vars
@@ -11,6 +11,7 @@ var curr_char = null;
 var buid = null;
 var url_object = null;
 var gen = false;
+var full_url = null;
 var chars = "Aether <br/> Albedo <br/> Aloy <br/> Amber <br/> Itto <br/> Ayaka <br/> Ayato <br/> Barbara <br/> Beidou <br/> Bennett <br/> Chongyun <br/> Collei <br/> Diluc <br/> Diona <br/> Dori <br/> Eula <br/> Fischl <br/> Ganyu <br/> Gorou <br/> Heizou <br/> Hu Tao <br/> Jean <br/> Kaeya <br/> Kazuha <br/> Keqing <br/> Klee <br/> Kokomi <br/> Kuki Shinobu <br/> Lisa <br/> Mona <br/> Ningguang <br/> Noelle <br/> Qiqi <br/> Raiden <br/> Razor <br/> Rosaria <br/> Kujou Sara <br/> Sayu <br/> Shenhe <br/> Sucrose <br/> Tartaglia <br/> Thoma <br/> Tighnari <br/> Lumine <br/> Venti <br/> Xiangling <br/> Xiao <br/> Xingqiu <br/> Xinyan <br/> Yae Miko <br/> Yanfei <br/> Yelan <br/> Yoimiya <br/> Yun Jin <br/> Zhongli <br/><br/><br/><br/>"
 const triggerConfettis = new Event("confetti");
 let confetti = new Confetti('checkInputBtn');
@@ -90,6 +91,7 @@ function genImage() {
     fetch(req).then((response) => {
         curr_char = response.headers.get("char");
         buid = response.headers.get("uid");
+        full_url = response.headers.get("full");
         response.blob().then((blob) => {
             const objectURL = URL.createObjectURL(blob);
             url_object = objectURL
@@ -123,6 +125,8 @@ function check() {
 
     inputArea.style.opacity = 0;
     resultArea.style.opacity = 1;
+
+    char.src = full_url;
 }
 
 function showPopup(title, text, width="150", height="90") {
