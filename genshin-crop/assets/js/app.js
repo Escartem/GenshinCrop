@@ -66,12 +66,13 @@ function genImage() {
 
     buttonState(true, 0.7);
 
+    char.style.height = "70%";
+
     var img = new Image();
 
     img.onload = function() {
         char.src = img.src;
         char.style.opacity = 1;
-        char.style.height = "70%";
         loadSpinner.style.visibility = "hidden";
         
         buttonState(false, 1);
@@ -129,11 +130,13 @@ function check() {
 
     char.style.opacity = 0;
     loadSpinner.style.visibility = "visible";
+    char.style.height = "130%";
+
+    char.src = "about:blank";
 
     var img = new Image();
 
     img.onload = function() {
-        char.style.height = "130%";
         char.src = img.src;
         char.style.opacity = 1;
         loadSpinner.style.visibility = "hidden";
