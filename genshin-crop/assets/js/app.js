@@ -127,8 +127,20 @@ function check() {
     inputArea.style.opacity = 0;
     resultArea.style.opacity = 1;
 
-    char.style.height = "130%";
-    char.src = full_url;
+    char.style.opacity = 0;
+    loadSpinner.style.visibility = "visible";
+
+    var img = new Image();
+
+    img.onload = function() {
+        char.style.height = "130%";
+        char.src = img.src;
+        char.style.opacity = 1;
+        loadSpinner.style.visibility = "hidden";
+
+    }
+
+    img.src = full_url;
 }
 
 function showPopup(title, text, width="150", height="90") {
