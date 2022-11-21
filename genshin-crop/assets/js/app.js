@@ -132,8 +132,6 @@ function check() {
     loadSpinner.style.visibility = "visible";
     char.style.height = "130%";
 
-    char.src = "about:blank";
-
     var img = new Image();
 
     img.onload = function() {
