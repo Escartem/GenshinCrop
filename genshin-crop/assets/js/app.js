@@ -3,8 +3,9 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "1.0.1"
+VERSION = "1.1"
 console.log("v"+VERSION);
+document.getElementById("version").innerHTML = "V"+VERSION;
 
 // vars
 var curr_char = null;
