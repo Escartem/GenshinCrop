@@ -131,7 +131,7 @@ function check() {
 
     char.style.opacity = 0;
     loadSpinner.style.visibility = "visible";
-    char.style.height = "130%";
+    char.style.height = "100%";
 
     var img = new Image();
 
