@@ -87,6 +87,9 @@ function genImage() {
         inputArea.style.opacity = 1;
         resultArea.style.opacity = 0;
 
+        uinput.disabled = false;
+        checkInputBtn.disabled = false;
+
         uinput.focus();
 
         // for some reason this does not seem to work
@@ -122,6 +125,8 @@ function genImage() {
 function check() {
     resultLoading = true;
     uinput.blur()
+    uinput.disabled = true;
+    checkInputBtn.disabled = true;
     var entry = uinput.value;
     var text = getElem("result-text");
 
