@@ -98,12 +98,15 @@ img {
 .uinput {
     background-color: #46494e;
     border: 0;
-    width: 30%;
-    height: 3vh;
+    width: min(30vw, 200px);
+    height: 4vh;
     border-radius: 6px;
     margin-top: 6px;
     margin-bottom: 16px;
     color: white;
+    margin: 5px;
+    transition: all 0.2s ease 0s;
+    z-index: 10;
 }
 
 .input-area {
@@ -113,15 +116,10 @@ img {
     margin-bottom: -10px;
 }
 
-.uinput {
-    margin: 5px;
-    transition: all 0.2s ease 0s;
-}
-
 .uinput-check {
     margin: 5px;
     width: 110px;
-    height: 3vh;
+    height: 4vh;
     transition: all 0.2s ease 0s;
 }
 
@@ -161,7 +159,7 @@ img {
     transition: 250ms;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 760px) {
     .bottom { height: 100px; }
     .left { margin-bottom: 50px; }
     .right { right: 100% !important; transform: translate(100%, 0) !important; }

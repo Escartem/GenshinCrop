@@ -1,9 +1,10 @@
 // Escartem
 
+// ems is a simple script that disable some keyboard shortcuts and show a nice message in console
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "1.1"
+VERSION = "1.2"
 console.log("v"+VERSION);
 document.getElementById("version").innerHTML = "V"+VERSION;
 
@@ -11,12 +12,16 @@ document.getElementById("version").innerHTML = "V"+VERSION;
 var curr_char = null;
 var buid = null;
 var url_object = null;
+var url_object_result = null;
 var gen = false;
+var resultLoading = false;
 var full_url = null;
-var chars = "Aether <br/> Albedo <br/> Aloy <br/> Amber <br/> Itto <br/> Ayaka <br/> Ayato <br/> Barbara <br/> Beidou <br/> Bennett <br/> Chongyun <br/> Collei <br/> Diluc <br/> Diona <br/> Dori <br/> Eula <br/> Fischl <br/> Ganyu <br/> Gorou <br/> Heizou <br/> Hu Tao <br/> Jean <br/> Kaeya <br/> Kazuha <br/> Keqing <br/> Klee <br/> Kokomi <br/> Kuki Shinobu <br/> Lisa <br/> Mona <br/> Ningguang <br/> Noelle <br/> Qiqi <br/> Raiden <br/> Razor <br/> Rosaria <br/> Kujou Sara <br/> Sayu <br/> Shenhe <br/> Sucrose <br/> Tartaglia <br/> Thoma <br/> Tighnari <br/> Lumine <br/> Venti <br/> Xiangling <br/> Xiao <br/> Xingqiu <br/> Xinyan <br/> Yae Miko <br/> Yanfei <br/> Yelan <br/> Yoimiya <br/> Yun Jin <br/> Zhongli <br/><br/><br/><br/>"
+var charList = ["Aether", "Albedo", "Aloy", "Amber", "Itto", "Ayaka", "Ayato", "Barbara", "Beidou", "Bennett", "Chongyun", "Collei", "Diluc", "Diona", "Dori", "Eula", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", "Jean", "Kaeya", "Kazuha", "Keqing", "Klee", "Kokomi", "Kuki Shinobu", "Lisa", "Mona", "Ningguang", "Noelle", "Qiqi", "Raiden", "Razor", "Rosaria", "Kujou Sara", "Sayu", "Shenhe", "Sucrose", "Tartaglia", "Thoma", "Tighnari", "Lumine", "Venti", "Xiangling", "Xiao", "Xingqiu", "Xinyan", "Yae Miko", "Yanfei", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
+var chars = charList.join().replaceAll(","," <br/> ")+"<br/>".repeat(4)
 const triggerConfettis = new Event("confetti");
 let confetti = new Confetti('checkInputBtn');
 
+// tadjikistan
 confetti.setCount(150);
 confetti.setSize(1);
 confetti.setPower(50);
@@ -61,6 +66,7 @@ function buttonState(tf, b) {
 
 function genImage() {
     gen = true;
+    resultLoading = false;
     errorText.style.visibility = "hidden";
     loadSpinner.style.visibility = "visible";
     char.style.opacity = 0.5;
@@ -85,6 +91,7 @@ function genImage() {
 
         // for some reason this does not seem to work
         URL.revokeObjectURL(url_object);
+        URL.revokeObjectURL(url_object_result);
 
         gen = false;
     }
@@ -95,6 +102,7 @@ function genImage() {
         curr_char = response.headers.get("char");
         buid = response.headers.get("uid");
         full_url = response.headers.get("full");
+        result_url = response.headers.get("result");
         response.blob().then((blob) => {
             const objectURL = URL.createObjectURL(blob);
             url_object = objectURL
@@ -112,6 +120,8 @@ function genImage() {
 }
 
 function check() {
+    resultLoading = true;
+    uinput.blur()
     var entry = uinput.value;
     var text = getElem("result-text");
 
@@ -129,20 +139,44 @@ function check() {
     inputArea.style.opacity = 0;
     resultArea.style.opacity = 1;
 
-    char.style.opacity = 0;
+    // char.style.opacity = 0;
+    char.style.opacity = 0.5;
     loadSpinner.style.visibility = "visible";
     char.style.height = "100%";
 
     var img = new Image();
 
     img.onload = function() {
-        char.src = img.src;
-        char.style.opacity = 1;
-        loadSpinner.style.visibility = "hidden";
+        if (resultLoading == true) {
+            char.src = img.src;
+            char.style.opacity = 1;
+            // char.style.opacity = 1;
+            loadSpinner.style.visibility = "hidden";
+        }
+
+        resultLoading = false;
 
     }
 
-    img.src = full_url;
+    // img.src = full_url;
+
+    const req = new Request(result_url);
+
+    fetch(req).then((response) => {
+        response.blob().then((blob) => {
+            const objectURL = URL.createObjectURL(blob);
+            url_object_result = objectURL
+            img.src = objectURL;
+        });
+    })
+    .catch((error) => {
+        char.src = "./assets/img/load.png";
+        char.style.opacity = 1;
+        loadSpinner.style.visibility = "hidden";
+        errorText.style.visibility = "visible";
+        regenBtn.disabled = false;
+        regenBtn.style.filter = "brightness(1)";
+    });
 }
 
 function showPopup(title, text, width="150", height="90") {
