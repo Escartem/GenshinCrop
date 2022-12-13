@@ -101,7 +101,7 @@ function genImage() {
     fetch(req).then((response) => {
         curr_char = response.headers.get("char");
         buid = response.headers.get("uid");
-        full_url = response.headers.get("full");
+        // full_url = response.headers.get("full");
         result_url = response.headers.get("result");
         response.blob().then((blob) => {
             const objectURL = URL.createObjectURL(blob);
