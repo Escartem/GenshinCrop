@@ -1,0 +1,3 @@
+[submodule "genshin-crop"]
+	path = genshin-crop
+	url = https://github.com/Escartem/genshin-crop
