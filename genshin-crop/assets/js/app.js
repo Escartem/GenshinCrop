@@ -4,7 +4,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "1.2"
+VERSION = "1.3"
 console.log("v"+VERSION);
 document.getElementById("version").innerHTML = "V"+VERSION;
 
@@ -16,8 +16,9 @@ var url_object_result = null;
 var gen = false;
 var resultLoading = false;
 var full_url = null;
+var charsListEnabled = false;
 var charList = ["Aether", "Albedo", "Aloy", "Amber", "Ayaka", "Ayato", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Diluc", "Diona", "Dori", "Eula", "Faruza", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", "Itto", "Jean", "Kaeya", "Kazuha", "Keqing", "Klee", "Kokomi", "Kujou Sara", "Kuki", "Layla", "Lisa", "Lumine", "Mona", "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", "Raiden", "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", "Tartaglia", "Thoma", "Tighnari", "Venti", "Wanderer", "Xiangling", "Xiao", "Xingqiu", "Xinyan", "Yae Miko", "Yanfei", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
-var chars = charList.join().replaceAll(","," <br/> ")+"<br/>".repeat(4)
+var chars = charList.join().replaceAll(","," <br/> ")
 const triggerConfettis = new Event("confetti");
 let confetti = new Confetti('checkInputBtn');
 
@@ -41,13 +42,39 @@ char = getElem("char")
 showCharsBtn = getElem("showCharsBtn");
 errorText = getElem("error-text");
 loadSpinner = getElem("load-spinner");
+mcontent = getElem("mcontent");
+clist = getElem("clist");
 
 document.addEventListener("keydown", function(e) {if (e.ctrlKey && e.keyCode == 81) {e.preventDefault(); if (gen==false) {genImage();}}});
 uinput.onkeydown = function(event) {if (event.keyCode == 13) {check();}};
 regenBtn.addEventListener("click", function(event) {event.preventDefault(); genImage();});
 reportBtn.addEventListener("click", function(event) {event.preventDefault(); showPopup("Report image", "Please join the <a href='https://discord.gg/fzRdtVh', target='_blank'>discord</a> and provide this : <span style='color: white; background: #2a2a2a;'>"+buid+"</span>", 260, 200);});
 checkInputBtn.addEventListener("click", function(event) {event.preventDefault(); check();})
-showCharsBtn.addEventListener("click", function(event) {event.preventDefault(); showPopup("List of characters names", chars, 250, 500);});
+showCharsBtn.addEventListener("click", function(event) {event.preventDefault(); switchCharList();})
+
+getElem("listContent").innerHTML = chars;
+
+function switchCharList() {
+    if (charsListEnabled == false) {   
+        // char -> list
+        mcontent.style.transform = "translateY(100%)";
+        mcontent.style.height = "0";
+        clist.style.transform = "translateY(0)";
+        clist.style.height = "100%";
+        getElem("clist-title").style.transform = "translateY(0)";
+        getElem("list").style.transform = "translateY(0)";
+        charsListEnabled = true;
+    } else {
+        // char -> list
+        mcontent.style.transform = "translateY(0)";
+        mcontent.style.height = "100%";
+        clist.style.transform = "translateY(-100%)";
+        clist.style.height = "0";
+        getElem("clist-title").style.transform = "translateY(-100vh)";
+        getElem("list").style.transform = "translateY(-100vh)";
+        charsListEnabled = false;
+    }
+}
 
 // change buttons state
 function buttonState(tf, b) {
