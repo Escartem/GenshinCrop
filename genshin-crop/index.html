@@ -52,26 +52,35 @@
         <span class="title">Genshin Crop | Guess the Genshin Impact character from a cropped picture</span>
 
 		<div class="top">
-			<span class="pic-title">Who is this ?</span>
-			<div class="pic">
-				<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="load-spinner"></div>
-				<img id="char" src="./assets/img/load.png" draggable="false">
-				<span id="error-text" class="error-text">Something went wrong 😣<br/>Please try again</span>
+			<div class="characters-list" id="clist">
+				<span class="pic-title" id="clist-title" style="transition: 0.5s; transform: translateY(-100vh);">List of characters names</span>
+
+				<div class="clist" id="list">
+					<span id="listContent" style="overflow-wrap: anywhere; color: white; font-size: 22px;">Content</span>
+				</div>
 			</div>
-
-			<div>
-				<div class="input-area" id="input-area">
-					<input id="uinput" name="uinput" size=10 class="uinput" placeholder="Your guess" autocomplete="off">
-					<button type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
+			<div class="main-content" id="mcontent">
+				<span class="pic-title">Who is this ?</span>
+				<div class="pic">
+					<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="load-spinner"></div>
+					<img id="char" src="./assets/img/load.png" draggable="false">
+					<span id="error-text" class="error-text">Something went wrong 😣<br/>Please try again</span>
 				</div>
 
-				<div class="input-result" id="result-area">
-					<span id="result-text">no u</span>
-				</div>
+				<div>
+					<div class="input-area" id="input-area">
+						<input id="uinput" name="uinput" size=10 class="uinput" placeholder="Your guess" autocomplete="off">
+						<button type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
+					</div>
 
-				<div class="buttons">
-					<button type="button" class="mdc-button mdc-button--raised regen" id="regenBtn"><span class="mdc-button__label">✨ Another one</span></button>
-					<button type="button" class="mdc-button mdc-button--raised report" id="reportBtn"><span class="mdc-button__label">⚠️ Report invalid image</span></button>
+					<div class="input-result" id="result-area">
+						<span id="result-text">no u</span>
+					</div>
+
+					<div class="buttons">
+						<button type="button" class="mdc-button mdc-button--raised regen" id="regenBtn"><span class="mdc-button__label">✨ Another one</span></button>
+						<button type="button" class="mdc-button mdc-button--raised report" id="reportBtn"><span class="mdc-button__label">⚠️ Report invalid image</span></button>
+					</div>
 				</div>
 			</div>
 		</div>

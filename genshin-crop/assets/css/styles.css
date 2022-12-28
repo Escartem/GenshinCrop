@@ -7,10 +7,12 @@ html {
 body {
     --background-color: #2f353e;
     --secondary-color: #1c2127;
+    --clist-color: #3e4956;
+    --clist-alt-color: #5b697a;
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 7px;
 }
 
 ::-webkit-srollbar-track {
@@ -19,6 +21,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background: #888;
+    border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -45,6 +48,44 @@ body {
     border-radius: 15px;
     flex-direction: column;
     margin-bottom: 50px;
+    overflow: hidden;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    transform: translateY(0px);
+    transition: 0.5s;
+}
+
+.characters-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    transform: translateY(-100%);
+    height: 0;
+    background: var(--clist-color);
+    transition: 0.5s;
+}
+
+.clist {
+    overflow: auto;
+    width: 90%;
+    background: var(--clist-alt-color);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    transition: 0.5s;
+    transform: translateY(-100vh);
 }
 
 .pic-title {
@@ -210,4 +251,5 @@ img {
     position: absolute;
     top: 0;
     text-decoration: underline;
+    text-align: center;
 }
