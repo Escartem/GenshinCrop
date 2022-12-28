@@ -100,6 +100,8 @@ function genImage() {
 
     buttonState(true, 0.7);
 
+    showCharsBtn.disabled = true;
+
     char.style.height = "70%";
 
     var img = new Image();
@@ -124,6 +126,7 @@ function genImage() {
         URL.revokeObjectURL(url_object_result);
 
         gen = false;
+        showCharsBtn.disabled = false;
     }
 
     const req = new Request("https://hm3g1egfy6.execute-api.eu-west-3.amazonaws.com/v1/p/gca");
