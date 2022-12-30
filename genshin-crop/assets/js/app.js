@@ -157,10 +157,10 @@ function check() {
     uinput.blur()
     uinput.disabled = true;
     checkInputBtn.disabled = true;
-    var entry = uinput.value;
+    var entry = (uinput.value).toLowerCase().trimEnd();
     var text = getElem("result-text");
 
-    if (entry.toLowerCase() == curr_char.toLowerCase()) {
+    if (entry == curr_char.toLowerCase()) {
         checkInputBtn.dispatchEvent(triggerConfettis)
         text.innerHTML = "Correct 🎉";
         text.style.color = "#beffbe";
