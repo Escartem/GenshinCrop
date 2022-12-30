@@ -201,7 +201,7 @@ img {
     transition: 250ms;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 860px) {
     .bottom { height: 100px; }
     .left { margin-bottom: 50px; }
     .right { right: 100% !important; transform: translate(100%, 0) !important; }
