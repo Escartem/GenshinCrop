@@ -60,6 +60,25 @@
 					<span id="listContent" style="overflow-wrap: anywhere; color: white; font-size: 22px; -webkit-user-select: text; -ms-user-select: text; user-select: text;">Content</span>
 				</div>
 			</div>
+
+			<div class="options" id="options">
+				<span class="pic-title" id="options-title" style="transition: 0.5s; transform: translateY(-100vh);">Options</span>
+
+				<div class="optionsContent" id="optionsContent">
+					<div>
+						<span class="optionsCatTitle">Settings</span>
+					</div>
+
+					<div>
+						<span class="optionsCatTitle">Socials</span>
+						<button type="button" class="mdc-button mdc-button--raised" id="github" onclick="window.open('https://github.com/Escartem', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-github"></i> Github</span></button>
+						<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-discord"></i> Discord</span></button>
+					</div>
+
+					<span id="bottomText">Genshin Crop - <span id="version">V0.0<span></span>
+				</div>
+			</div>
+
 			<div class="main-content" id="mcontent">
 				<span class="pic-title">Who is this ?</span>
 				<div class="pic">
@@ -88,15 +107,12 @@
 
 		<div class="bottom">
 			<div class="left">
-				<span class="credits">Made by <a href="https://github.com/Escartem" target="_blank">Escartem</a> <i class="fa-solid fa-heart" style="color: #e55c5c;"></i> | Press ctrl+q to generate an image | <span id="version">V0.0<span></span>
+				<span class="credits">Made by <a href="https://github.com/Escartem" target="_blank">Escartem</a> <i class="fa-solid fa-heart" style="color: #e55c5c;"></i> | Press ctrl+q to generate an image</span>
 			</div>
 			<div class="bottomLine"><hr></div>
 			<div class="right">
-				<button type="button" class="mdc-button mdc-button--raised" id="github" onclick="window.open('https://github.com/Escartem', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-github"></i> Github</span></button>
-				<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-discord"></i> Discord</span></button>
 				<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label">📄 Characters list</span></button>
-				<!-- Might do it one day -->
-				<!-- <button type="button" class="mdc-button mdc-button--raised" id="lang"><span class="mdc-button__label">🌐 Language</span></button> -->
+				<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label">⚙ Options</span></button>
 			</div>
 		</div>
 	</div>

@@ -9,6 +9,7 @@ body {
     --secondary-color: #1c2127;
     --clist-color: #3e4956;
     --clist-alt-color: #5b697a;
+    --options-bg: #343d4a;
 }
 
 ::-webkit-scrollbar {
@@ -77,6 +78,20 @@ body {
     transition: 0.5s;
 }
 
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    transform: translateY(-100%);
+    height: 0;
+    background: var(--clist-color);
+    transition: 0.5s;
+}
+
 .clist {
     overflow: auto;
     width: 90%;
@@ -86,6 +101,34 @@ body {
     border-radius: 10px;
     transition: 0.5s;
     transform: translateY(-100vh);
+}
+
+.optionsCatTitle {
+    color: white;
+    display: block;
+    font-size: 25px;
+    margin: 10px;
+}
+
+.optionsContent {
+    overflow: auto;
+    width: 90%;
+    height: 90%;
+    background: var(--options-bg);
+    padding: 10px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    transition: 0.5s;
+    transform: translateY(-100vh);
+}
+
+#bottomText {
+    width: calc(100% - 10px);
+    bottom: 0;
+    margin-bottom: 10px;
+    color: white;
+    text-align: center;
+    position: absolute;
 }
 
 .pic-title {
@@ -242,8 +285,19 @@ img {
     transition: 250ms;
 }
 
-#github, #discord, #showCharsBtn, #lang {
+#github, #discord, #showCharsBtn, #lang, #showOptions {
     background: #303030;
+    transition: 0.5s;
+    color: white;
+}
+
+button:disabled {
+    color: rgba(0, 0, 0, 0.38) !important;
+}
+
+.btnSelected {
+    background: #d9d9d9 !important;
+    color: black !important;
 }
 
 .title {
