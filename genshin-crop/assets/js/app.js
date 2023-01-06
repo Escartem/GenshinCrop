@@ -129,7 +129,7 @@ function genImage() {
         showCharsBtn.disabled = false;
     }
 
-    const req = new Request("https://hm3g1egfy6.execute-api.eu-west-3.amazonaws.com/v1/p/gca");
+    const req = new Request("https://api.escartem.eu.org/p/gca");
 
     fetch(req).then((response) => {
         curr_char = response.headers.get("char");
