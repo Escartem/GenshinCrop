@@ -4,7 +4,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "1.3"
+VERSION = "1.4"
 console.log("v"+VERSION);
 document.getElementById("version").innerHTML = "V"+VERSION;
 
@@ -17,6 +17,7 @@ var gen = false;
 var resultLoading = false;
 var full_url = null;
 var charsListEnabled = false;
+var optionsShown = false;
 var charList = ["Aether", "Albedo", "Aloy", "Amber", "Ayaka", "Ayato", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", "Itto", "Jean", "Kaeya", "Kazuha", "Keqing", "Klee", "Kokomi", "Kujou Sara", "Kuki", "Layla", "Lisa", "Lumine", "Mona", "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", "Raiden", "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", "Tartaglia", "Thoma", "Tighnari", "Venti", "Wanderer", "Xiangling", "Xiao", "Xingqiu", "Xinyan", "Yae Miko", "Yanfei", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
 var chars = charList.join().replaceAll(","," <br/> ")
 const triggerConfettis = new Event("confetti");
@@ -40,20 +41,75 @@ inputArea = getElem("input-area");
 resultArea = getElem("result-area");
 char = getElem("char")
 showCharsBtn = getElem("showCharsBtn");
+showOptionsBtn = getElem("showOptions");
 errorText = getElem("error-text");
 loadSpinner = getElem("load-spinner");
 mcontent = getElem("mcontent");
 clist = getElem("clist");
+options = getElem("options");
+//
+optionsNoConfettis = getElem("optionsNoConfettis");
+optionsNewAuto = getElem("optionsNewAuto");
 
-document.addEventListener("keydown", function(e) {if (e.ctrlKey && e.keyCode == 81) {e.preventDefault(); if (gen==false) {genImage();}}});
+document.addEventListener("keydown", function(e) {if (e.ctrlKey && e.keyCode == 81) {e.preventDefault(); if (gen==false && charsListEnabled==false && optionsShown==false) {genImage();}}});
 uinput.onkeydown = function(event) {if (event.keyCode == 13) {check();}};
 regenBtn.addEventListener("click", function(event) {event.preventDefault(); genImage();});
 reportBtn.addEventListener("click", function(event) {event.preventDefault(); showPopup("Report image", "Please join the <a href='https://discord.gg/fzRdtVh', target='_blank'>discord</a> and provide this : <span style='color: white; background: #2a2a2a;'>"+buid+"</span>", 260, 200);});
 checkInputBtn.addEventListener("click", function(event) {event.preventDefault(); check();})
 showCharsBtn.addEventListener("click", function(event) {event.preventDefault(); switchCharList();})
+showOptionsBtn.addEventListener("click", function(event) {event.preventDefault(); switchOptions();})
 
 getElem("listContent").innerHTML = chars;
 
+// cookies
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+        return parts.pop().split(";").shift()
+    } else {
+        setCookie(name, 0);
+        return 0
+    };
+}
+
+function setCookie(name, value) {
+    var exdate = new Date();
+    // set cookie to expire after 30 days, might change it later
+    exdate.setDate(exdate.getDate()+30);
+    document.cookie=name+"="+value+"; expires="+exdate.toUTCString();
+}
+
+function deleteCookie(name) {
+    document.cookie=name+"=0; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+}
+
+// set up options
+if (getCookie("noConfettis") == 1) {
+    optionsNoConfettis.checked = true;
+}
+
+if (getCookie("newAuto") == 1) {
+    optionsNewAuto.checked = true;
+}
+
+optionsNoConfettis.addEventListener("click", function() {
+    if (optionsNoConfettis.checked == true) {
+        setCookie("noConfettis", 1);
+    } else {
+        setCookie("noConfettis", 0);
+    }
+});
+
+optionsNewAuto.addEventListener("click", function() {
+    if (optionsNewAuto.checked == true) {
+        setCookie("newAuto", 1);
+    } else {
+        setCookie("newAuto", 0);
+    }
+});
+
+// app functions
 function switchCharList() {
     if (charsListEnabled == false) {   
         // char -> list
@@ -63,6 +119,8 @@ function switchCharList() {
         clist.style.height = "100%";
         getElem("clist-title").style.transform = "translateY(0)";
         getElem("list").style.transform = "translateY(0)";
+        showCharsBtn.classList.add("btnSelected");
+        showOptionsBtn.disabled = true;
         charsListEnabled = true;
     } else {
         // char -> list
@@ -72,7 +130,35 @@ function switchCharList() {
         clist.style.height = "0";
         getElem("clist-title").style.transform = "translateY(-100vh)";
         getElem("list").style.transform = "translateY(-100vh)";
+        showCharsBtn.classList.remove("btnSelected");
+        showOptionsBtn.disabled = false;
         charsListEnabled = false;
+    }
+}
+
+function switchOptions() {
+    if (optionsShown == false) {   
+        // char -> list
+        mcontent.style.transform = "translateY(100%)";
+        mcontent.style.height = "0";
+        options.style.transform = "translateY(0)";
+        options.style.height = "100%";
+        getElem("options-title").style.transform = "translateY(0)";
+        getElem("optionsContent").style.transform = "translateY(0)";
+        showOptionsBtn.classList.add("btnSelected");
+        showCharsBtn.disabled = true;
+        optionsShown = true;
+    } else {
+        // char -> list
+        mcontent.style.transform = "translateY(0)";
+        mcontent.style.height = "100%";
+        options.style.transform = "translateY(-100%)";
+        options.style.height = "0";
+        getElem("options-title").style.transform = "translateY(-100vh)";
+        getElem("optionsContent").style.transform = "translateY(-100vh)";
+        showOptionsBtn.classList.remove("btnSelected");
+        showCharsBtn.disabled = false;
+        optionsShown = false;
     }
 }
 
@@ -101,6 +187,7 @@ function genImage() {
     buttonState(true, 0.7);
 
     showCharsBtn.disabled = true;
+    showOptionsBtn.disabled = true;
 
     char.style.height = "70%";
 
@@ -127,6 +214,7 @@ function genImage() {
 
         gen = false;
         showCharsBtn.disabled = false;
+        showOptionsBtn.disabled = false;
     }
 
     const req = new Request("https://api.escartem.eu.org/p/gca");
@@ -161,7 +249,9 @@ function check() {
     var text = getElem("result-text");
 
     if (entry == curr_char.toLowerCase()) {
-        checkInputBtn.dispatchEvent(triggerConfettis)
+        if (getCookie("noConfettis") == 0) {
+            checkInputBtn.dispatchEvent(triggerConfettis)
+        }
         text.innerHTML = "Correct 🎉";
         text.style.color = "#beffbe";
     } else {
@@ -178,6 +268,10 @@ function check() {
     char.style.opacity = 0.5;
     loadSpinner.style.visibility = "visible";
     char.style.height = "100%";
+
+    if (getCookie("newAuto") == 1 && entry == curr_char.toLowerCase()) {
+        genImage();
+    }
 
     var img = new Image();
 
@@ -235,6 +329,8 @@ function showPopup(title, text, width="150", height="90") {
 window.onload = genImage();
 
 // TODO
-// * blob files does not seems to be revoked correctly
-// * phone support sucks
+// * blob files does not seems to be revoked correctly but not always
+// * phone support is good but could be better
+// * add pwa support + service worker for updating faster the app
+// * add options menu
 // * support for multiples languages

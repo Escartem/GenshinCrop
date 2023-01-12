@@ -16,17 +16,17 @@
 	<meta name="description" content="A small page to guess the Genshin Impact character from a cropped image.">
 	<!-- JS -->
 	<script src="assets/js/jquery-3.6.0.js"></script>
-    <script src="assets/js/material-components-web.min.js"></script>
-    <script defer src="assets/js/material.min.js"></script>
-    <script src="assets/js/mui.min.js"></script>
-    <script src="assets/js/confetti.min.js"></script>
-    <script src="https://escartem.netlify.app/js/ems.js"></script>
-    <script src="https://kit.fontawesome.com/8cacf0a9e5.js" crossorigin="anonymous"></script>
-    <!-- CSS -->
-    <link rel="stylesheet" href="assets/css/material-components-web.min.css">
-    <link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <!-- Google tag (gtag.js) -->
+	<script src="assets/js/material-components-web.min.js"></script>
+	<script defer src="assets/js/material.min.js"></script>
+	<script src="assets/js/mui.min.js"></script>
+	<script src="assets/js/confetti.min.js"></script>
+	<script src="https://escartem.netlify.app/js/ems.js"></script>
+	<script src="https://kit.fontawesome.com/8cacf0a9e5.js" crossorigin="anonymous"></script>
+	<!-- CSS -->
+	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
+	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
+	<link rel="stylesheet" href="assets/css/styles.css">
+	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-132CTGT17P"></script>
 	<script>
 	window.dataLayer = window.dataLayer || [];
@@ -40,17 +40,17 @@
 <body>
 	<div class="main">
 		<dialog class="mdl-dialog" id="popupDialog">
-            <div class="mdl-dialog__content" style="padding: 0.1px; height: 100%; color: white;">
-                <h2 id="popupTitle" style="margin: 0px; font-size: 20px; line-height: 16px;">Popup Title</h2>
-                <br />
-                <span id="popupContent" style="overflow-wrap: anywhere;">Popup Content</span>
-            </div>
-            <div class="mdl-dialog__actions" style="position: fixed; margin-left: -28px; margin-top: -40px;">
-                <button type="button" class="mdc-button mdc-button--raised close"><span class="mdc-button__label">Close</span></button>
-            </div>
-        </dialog>
+			<div class="mdl-dialog__content" style="padding: 0.1px; height: 100%; color: white;">
+				<h2 id="popupTitle" style="margin: 0px; font-size: 20px; line-height: 16px;">Popup Title</h2>
+				<br />
+				<span id="popupContent" style="overflow-wrap: anywhere;">Popup Content</span>
+			</div>
+			<div class="mdl-dialog__actions" style="position: fixed; margin-left: -28px; margin-top: -40px;">
+				<button type="button" class="mdc-button mdc-button--raised close"><span class="mdc-button__label">Close</span></button>
+			</div>
+		</dialog>
 
-        <span class="title">Genshin Crop | Guess the Genshin Impact character from a cropped picture</span>
+		<span class="title">Genshin Crop | Guess the Genshin Impact character from a cropped picture</span>
 
 		<div class="top">
 			<div class="characters-list" id="clist">
@@ -60,6 +60,35 @@
 					<span id="listContent" style="overflow-wrap: anywhere; color: white; font-size: 22px; -webkit-user-select: text; -ms-user-select: text; user-select: text;">Content</span>
 				</div>
 			</div>
+
+			<div class="options" id="options">
+				<span class="pic-title" id="options-title" style="transition: 0.5s; transform: translateY(-100vh);">Options</span>
+
+				<div class="optionsContent" id="optionsContent">
+					<div style="margin-bottom: 20px;">
+						<div class="mdc-form-field">
+							<div class="mdc-checkbox"><input id="optionsNoConfettis" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+							<label style="color: white;" for="checkbox-1">Disable confettis</label>
+						</div>
+
+						<br />
+
+						<div class="mdc-form-field">
+							<div class="mdc-checkbox"><input id="optionsNewAuto" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+							<label style="color: white;" for="checkbox-1">Automatically generate new image if guess is correct</label>
+						</div>
+					</div>
+
+					<div>
+						<span class="optionsCatTitle">Socials</span>
+						<button type="button" class="mdc-button mdc-button--raised" id="github" onclick="window.open('https://github.com/Escartem', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-github"></i> Github</span></button>
+						<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-discord"></i> Discord</span></button>
+					</div>
+
+					<span id="bottomText">Genshin Crop - <span id="version">V0.0<span></span>
+				</div>
+			</div>
+
 			<div class="main-content" id="mcontent">
 				<span class="pic-title">Who is this ?</span>
 				<div class="pic">
@@ -88,15 +117,12 @@
 
 		<div class="bottom">
 			<div class="left">
-				<span class="credits">Made by <a href="https://github.com/Escartem" target="_blank">Escartem</a> <i class="fa-solid fa-heart" style="color: #e55c5c;"></i> | Press ctrl+q to generate an image | <span id="version">V0.0<span></span>
+				<span class="credits">Made by <a href="https://github.com/Escartem" target="_blank">Escartem</a> <i class="fa-solid fa-heart" style="color: #e55c5c;"></i> | Press ctrl+q to generate an image</span>
 			</div>
 			<div class="bottomLine"><hr></div>
 			<div class="right">
-				<button type="button" class="mdc-button mdc-button--raised" id="github" onclick="window.open('https://github.com/Escartem', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-github"></i> Github</span></button>
-				<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-discord"></i> Discord</span></button>
 				<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label">📄 Characters list</span></button>
-				<!-- Might do it one day -->
-				<!-- <button type="button" class="mdc-button mdc-button--raised" id="lang"><span class="mdc-button__label">🌐 Language</span></button> -->
+				<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label">⚙ Options</span></button>
 			</div>
 		</div>
 	</div>
