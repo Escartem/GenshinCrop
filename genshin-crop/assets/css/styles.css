@@ -242,7 +242,7 @@ img {
     transition: 250ms;
 }
 
-#github, #discord, #showCharsBtn, #lang {
+#github, #discord, #showCharsBtn, #lang, #installApp {
     background: #303030;
 }
 
