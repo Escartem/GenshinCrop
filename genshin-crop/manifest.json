@@ -1,0 +1,15 @@
+{
+	"short_name": "Genshin Crop",
+	"name": "Genshin Crop",
+	"icons": [
+		{
+			"src": "/assets/img/icon.png",
+			"sizes": "180x180",
+			"type": "image/png"
+		}
+	],
+	"start_url": "/",
+	"background_color": "#2f353e",
+	"theme_color": "#2f353e",
+	"display": "standalone"
+}

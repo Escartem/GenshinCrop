@@ -14,6 +14,8 @@
 	<meta property="twitter:url" content="https://genshin-crop.web.app">
 	<meta property="twitter:image" content="https://genshin-crop.web.app/assets/img/icon.png">
 	<meta name="description" content="A small page to guess the Genshin Impact character from a cropped image.">
+	<!-- PWA -->
+	<link rel="manifest" href="/manifest.json">
 	<!-- JS -->
 	<script src="assets/js/jquery-3.6.0.js"></script>
 	<script src="assets/js/material-components-web.min.js"></script>
@@ -123,9 +125,45 @@
 			<div class="right">
 				<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label">📄 Characters list</span></button>
 				<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label">⚙ Options</span></button>
+				<button type="button" class="mdc-button mdc-button--raised" id="installApp" disabled><span class="mdc-button__label">Install</span></button>
 			</div>
 		</div>
 	</div>
 	<script src="./assets/js/app.js"></script>
+	<script>
+		if ("serviceWorker" in navigator) {
+			window.addEventListener("load", function() {
+				navigator.serviceWorker.register("sw.js").then(function(registration) {
+					console.log("registered yay")
+				}, function(err) {
+					console.log("fail :", err)
+				}).catch(function(err) {
+					console.log(err)
+				})
+			})
+		} else {
+			console.log("not supported")
+		}
+
+		var deferredPrompt = null
+
+		window.addEventListener("beforeinstallprompt", e => {
+			console.log("beforeinstallprompt fired")
+			e.preventDefault()
+
+			deferredPrompt = e
+			document.getElementById("installApp").disabled = false
+			return false
+		})
+
+		document.getElementById("installApp").addEventListener("click", function() {
+			deferredPrompt.prompt()
+			deferredPrompt.userChoice.then(choice => {
+				console.log(choice)
+			})
+			deferredPrompt = null
+			document.getElementById("installApp").disabled = true
+		})
+	</script>
 </body>
 </html>
