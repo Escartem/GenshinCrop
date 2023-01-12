@@ -47,6 +47,9 @@ loadSpinner = getElem("load-spinner");
 mcontent = getElem("mcontent");
 clist = getElem("clist");
 options = getElem("options");
+//
+optionsNoConfettis = getElem("optionsNoConfettis");
+optionsNewAuto = getElem("optionsNewAuto");
 
 document.addEventListener("keydown", function(e) {if (e.ctrlKey && e.keyCode == 81) {e.preventDefault(); if (gen==false && charsListEnabled==false && optionsShown==false) {genImage();}}});
 uinput.onkeydown = function(event) {if (event.keyCode == 13) {check();}};
@@ -65,7 +68,8 @@ function getCookie(name) {
     if (parts.length === 2) {
         return parts.pop().split(";").shift()
     } else {
-        return null
+        setCookie(name, 0);
+        return 0
     };
 }
 
@@ -73,12 +77,37 @@ function setCookie(name, value) {
     var exdate = new Date();
     // set cookie to expire after 30 days, might change it later
     exdate.setDate(exdate.getDate()+30);
-    document.cookie=name+"="+val+"; expires="+exdate.toUTCString();
+    document.cookie=name+"="+value+"; expires="+exdate.toUTCString();
 }
 
 function deleteCookie(name) {
     document.cookie=name+"=0; expires=Thu, 01 Jan 1970 00:00:00 GMT";
 }
+
+// set up options
+if (getCookie("noConfettis") == 1) {
+    optionsNoConfettis.checked = true;
+}
+
+if (getCookie("newAuto") == 1) {
+    optionsNewAuto.checked = true;
+}
+
+optionsNoConfettis.addEventListener("click", function() {
+    if (optionsNoConfettis.checked == true) {
+        setCookie("noConfettis", 1);
+    } else {
+        setCookie("noConfettis", 0);
+    }
+});
+
+optionsNewAuto.addEventListener("click", function() {
+    if (optionsNewAuto.checked == true) {
+        setCookie("newAuto", 1);
+    } else {
+        setCookie("newAuto", 0);
+    }
+});
 
 // app functions
 function switchCharList() {
@@ -188,7 +217,7 @@ function genImage() {
         showOptionsBtn.disabled = false;
     }
 
-    const req = new Request("https://hm3g1egfy6.execute-api.eu-west-3.amazonaws.com/v1/p/gca");
+    const req = new Request("https://api.escartem.eu.org/p/gca");
 
     fetch(req).then((response) => {
         curr_char = response.headers.get("char");
@@ -220,7 +249,9 @@ function check() {
     var text = getElem("result-text");
 
     if (entry == curr_char.toLowerCase()) {
-        checkInputBtn.dispatchEvent(triggerConfettis)
+        if (getCookie("noConfettis") == 0) {
+            checkInputBtn.dispatchEvent(triggerConfettis)
+        }
         text.innerHTML = "Correct 🎉";
         text.style.color = "#beffbe";
     } else {
@@ -237,6 +268,10 @@ function check() {
     char.style.opacity = 0.5;
     loadSpinner.style.visibility = "visible";
     char.style.height = "100%";
+
+    if (getCookie("newAuto") == 1 && entry == curr_char.toLowerCase()) {
+        genImage();
+    }
 
     var img = new Image();
 
