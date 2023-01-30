@@ -4,7 +4,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "1.4"
+VERSION = "1.5"
 console.log("v"+VERSION);
 document.getElementById("version").innerHTML = "V"+VERSION;
 
@@ -18,7 +18,7 @@ var resultLoading = false;
 var full_url = null;
 var charsListEnabled = false;
 var optionsShown = false;
-var charList = ["Aether", "Albedo", "Aloy", "Amber", "Ayaka", "Ayato", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", "Itto", "Jean", "Kaeya", "Kazuha", "Keqing", "Klee", "Kokomi", "Kujou Sara", "Kuki", "Layla", "Lisa", "Lumine", "Mona", "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", "Raiden", "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", "Tartaglia", "Thoma", "Tighnari", "Venti", "Wanderer", "Xiangling", "Xiao", "Xingqiu", "Xinyan", "Yae Miko", "Yanfei", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
+var charList = ["Aether", "Albedo", "Alhaitham", "Aloy", "Amber", "Ayaka", "Ayato", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", "Itto", "Jean", "Kaeya", "Kazuha", "Keqing", "Klee", "Kokomi", "Kujou Sara", "Kuki", "Layla", "Lisa", "Lumine", "Mona", "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", "Raiden", "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", "Tartaglia", "Thoma", "Tighnari", "Venti", "Wanderer", "Xiangling", "Xiao", "Xingqiu", "Xinyan", "Yae Miko", "Yanfei", "YaoYao", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
 var chars = charList.join().replaceAll(","," <br/> ")
 const triggerConfettis = new Event("confetti");
 let confetti = new Confetti('checkInputBtn');
@@ -122,6 +122,7 @@ function switchCharList() {
         showCharsBtn.classList.add("btnSelected");
         showOptionsBtn.disabled = true;
         charsListEnabled = true;
+        getElem("bottomText").style.visibility = "hidden";
     } else {
         // char -> list
         mcontent.style.transform = "translateY(0)";
@@ -148,6 +149,7 @@ function switchOptions() {
         showOptionsBtn.classList.add("btnSelected");
         showCharsBtn.disabled = true;
         optionsShown = true;
+        getElem("bottomText").style.visibility = "visible";
     } else {
         // char -> list
         mcontent.style.transform = "translateY(0)";
@@ -165,16 +167,12 @@ function switchOptions() {
 // change buttons state
 function buttonState(tf, b) {
     regenBtn.disabled = tf;
-    regenBtn.style.filter = "brightness("+b+")";
 
     uinput.disabled = tf;
-    uinput.style.filter = "brightness("+b+")";
     
     checkInputBtn.disabled = tf;
-    checkInputBtn.style.filter = "brightness("+b+")";
 
     reportBtn.disabled = tf;
-    reportBtn.style.filter = "brightness("+b+")";
 }
 
 function genImage() {

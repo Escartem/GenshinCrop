@@ -65,7 +65,7 @@
 				<span class="pic-title" id="options-title" style="transition: 0.5s; transform: translateY(-100vh);">Options</span>
 
 				<div class="optionsContent" id="optionsContent">
-					<div style="margin-bottom: 20px;">
+					<div>
 						<div class="mdc-form-field">
 							<div class="mdc-checkbox"><input id="optionsNoConfettis" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
 							<label style="color: white;" for="checkbox-1">Disable confettis</label>
@@ -85,8 +85,19 @@
 						<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-discord"></i> Discord</span></button>
 					</div>
 
-					<span id="bottomText">Genshin Crop - <span id="version">V0.0<span></span>
+					<span class="optionsCatTitle">What's new</span>
+					<div id="news" style="overflow-y: scroll;">
+						<span style="margin: 10px;">
+							version 1.5 (30 january 2023)
+							<ul>
+								<li>added this news section</li>
+								<li>added Alhaitham and YaoYao</li>
+								<li>fixed some bugs</li>
+							</ul>
+						</span>
+					</div>
 				</div>
+				<span id="bottomText">Genshin Crop - <span id="version">V0.0<span></span>
 			</div>
 
 			<div class="main-content" id="mcontent">
@@ -121,8 +132,8 @@
 			</div>
 			<div class="bottomLine"><hr></div>
 			<div class="right">
-				<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label">📄 Characters list</span></button>
-				<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label">⚙ Options</span></button>
+				<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label" disabled>📄 Characters list</span></button>
+				<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label" disabled>⚙ Options</span></button>
 			</div>
 		</div>
 	</div>
