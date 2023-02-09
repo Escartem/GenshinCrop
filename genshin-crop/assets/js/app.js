@@ -215,7 +215,7 @@ function genImage() {
         showOptionsBtn.disabled = false;
     }
 
-    const req = new Request("https://api.escartem.eu.org/p/gca");
+    const req = new Request("https://api.escartem.eu.org/p/gca/c");
 
     fetch(req).then((response) => {
         curr_char = response.headers.get("char");
