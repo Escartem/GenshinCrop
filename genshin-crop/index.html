@@ -25,7 +25,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
 	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
-	<link rel="stylesheet" href="assets/css/styles.css?v=15">
+	<link rel="stylesheet" href="assets/css/styles.css?v=160">
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-132CTGT17P"></script>
 	<script>
@@ -52,7 +52,23 @@
 
 		<span class="title">Genshin Crop | Guess the Genshin Impact character from a cropped picture</span>
 
-		<div class="top">
+		<div class="left-panel" id="leftPanel">
+			<span class="pic-title">About</span>
+
+			<div id="news" style="height: max-content; color: lightgray; filter: brightness(0.5); margin: 10px;">
+				<span style="margin: 10px; font-size: 13px;">
+					You will be shown a cropped picture of a random part of a random character from the game. You must guess which character it is. Be careful with names, there is only one valid for each character, you can check the list of all valid names with the button under this.
+
+					<br /><br />
+
+					Shortcuts are also a thing, press ctrl+q to generate an image, textbox is automatically selected after image is shown, but if not press tab to focus it. And you can after press enter to confirm your guess.
+				</span>
+			</div>
+
+			<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label" disabled>📄 Characters list</span></button>
+		</div>
+
+		<div class="top" id="mainPanel">
 			<div class="characters-list" id="clist">
 				<span class="pic-title" id="clist-title" style="transition: 0.5s; transform: translateY(-100vh);">List of characters names</span>
 
@@ -77,6 +93,13 @@
 							<div class="mdc-checkbox"><input id="optionsNewAuto" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
 							<label style="color: white;" for="checkbox-1">Automatically generate new image if guess is correct</label>
 						</div>
+
+						<br />
+
+						<div class="mdc-form-field">
+							<div class="mdc-checkbox"><input id="optionsHideWrongImg" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+							<label style="color: white;" for="checkbox-1">Hide "report invalid image" button</label>
+						</div>
 					</div>
 
 					<div>
@@ -86,13 +109,14 @@
 					</div>
 
 					<span class="optionsCatTitle">What's new</span>
-					<div id="news" style="overflow-y: scroll;">
-						<span style="margin: 10px;">
-							version 1.5 (30 january 2023)
+					<div id="news" style="height: max-content;">
+						<span style="margin-top: 10px; margin-left: 10px;">
+							version 1.6 (23 february 2023)
 							<ul>
-								<li>added this news section</li>
-								<li>added Alhaitham and YaoYao</li>
-								<li>fixed some bugs</li>
+								<li>interface rework: updated buttons, added about section, moved characters list button here and fixed/improved other stuff. Still a work in progress and may change again later</li>
+								<li>added new option to hide the "report invalid image" button</li>
+								<li>fixed a bug with the ctrl+q shortcut that was sometimes not working</li>
+								<li>faster image generation (I hope)</li>
 							</ul>
 						</span>
 					</div>
@@ -108,7 +132,7 @@
 					<span id="error-text" class="error-text">Something went wrong 😣<br/>Please try again</span>
 				</div>
 
-				<div>
+				<div style="width: 100%;">
 					<div class="input-area" id="input-area">
 						<input id="uinput" name="uinput" size=10 class="uinput" placeholder="Your guess" autocomplete="off">
 						<button type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
@@ -128,15 +152,15 @@
 
 		<div class="bottom">
 			<div class="left">
-				<span class="credits">Made by <a href="https://github.com/Escartem" target="_blank">Escartem</a> <i class="fa-solid fa-heart" style="color: #e55c5c;"></i> | Press ctrl+q to generate an image</span>
+				<span class="credits">Made by <a href="https://github.com/Escartem" target="_blank">Escartem</a> <i class="fa-solid fa-heart" style="color: #e55c5c;"></i></span>
 			</div>
 			<div class="bottomLine"><hr></div>
-			<div class="right">
-				<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label" disabled>📄 Characters list</span></button>
-				<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label" disabled>⚙ Options</span></button>
+				<div class="right">
+					<button type="button" class="mdc-button mdc-button--raised" id="leftPanelSwitch"><span class="mdc-button__label" disabled>🤔 About</span></button>
+					<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label" disabled>⚙ Settings</span></button>
 			</div>
 		</div>
 	</div>
-	<script src="./assets/js/app.js?v=151"></script>
+	<script src="./assets/js/app.js?v=160"></script>
 </body>
 </html>

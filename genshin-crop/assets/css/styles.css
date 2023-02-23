@@ -16,6 +16,10 @@ button:disabled {
     filter: brightness(0.7);
 }
 
+#leftPanelSwitch, #showOptions {
+    height: 25px;
+}
+
 .mdc-checkbox__background {
     border-color: white !important;
 }
@@ -35,6 +39,24 @@ button:disabled {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.left-panel {
+    height: 70%;
+    z-index: 999;
+    width: 35%;
+    left: 0;
+    margin-left: 5%;
+    position: absolute;
+    background: var(--secondary-color);
+    margin-bottom: 50px;
+    border-radius: 15px;
+    transform: translateX(-100vw);
+    transition: 250ms;
+    display: flex;
+    flex-direction: column;
+    align-content: space-around;
+    align-items: center;
 }
 
 .main {
@@ -58,18 +80,20 @@ button:disabled {
     flex-direction: column;
     margin-bottom: 50px;
     overflow: hidden;
+    transition: 250ms;
 }
 
 .main-content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     border-radius: 15px;
     width: 100%;
     height: 100%;
     flex-direction: column;
     transform: translateY(0px);
     transition: 0.5s;
+    align-items: center;
+    justify-content: space-between;
+    align-content: space-around;
 }
 
 .characters-list {
@@ -151,8 +175,8 @@ button:disabled {
 
 .pic-title {
     color: white;
-    font-size: 6vw;
-    padding: 5%;
+    font-size: 200%;
+    padding-top: 3%;
 }
 
 .char-name {
@@ -178,6 +202,10 @@ img {
 
 .buttons {
     padding: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    width: 90%;
+    margin: auto;
 }
 
 .report {
@@ -192,9 +220,11 @@ img {
 
 .report, .regen {
     transition: all 0.2s ease 0s;
-    width: min(30vw, 200px);
+    /* width: min(100%, 200px); */
+    width: 100%;
     height: 7vh;
-/*    font-size: 1.5vw;*/
+    /* font-size: 1.5vw; */
+    padding: 1px;
 }
 
 .uinput {
@@ -252,7 +282,7 @@ img {
 }
 
 .bottom {
-    height: 50px;
+    height: 30px;
     width: 100%;
     background: var(--secondary-color);
     position: fixed;
@@ -262,11 +292,12 @@ img {
     transition: 250ms;
 }
 
-@media (max-width: 720px) {
-    .bottom { height: 100px; }
-    .left { margin-bottom: 50px; }
-    .right { right: 100% !important; transform: translate(100%, 0) !important; }
+@media (max-width: 690px) {
+    .bottom { height: 60px; }
+    .left { margin-bottom: 30px; }
+    .right { right: 100% !important; transform: translate(100%, 0) !important; margin-right: 0px !important; }
     .bottomLine { margin-bottom: 5px !important; }
+    .left-panel { width: 90%; transition: 250ms; }
 }
 
 .bottomLine {
@@ -284,26 +315,28 @@ img {
 .error-text {
     color: white;
     position: absolute;
-    width: 120px;
+    width: 100px;
     text-align: center;
     visibility: hidden;
 }
 
 .left {
-    padding: 5px;
+    padding: 10px;
     transition: 250ms;
 }
 
 .right {
+    height: 20px;
     position: absolute;
     right: 0;
     bottom: 0;
     width: max-content;
     padding: 8px;
     transition: 250ms;
+    margin-right: -5px;
 }
 
-#github, #discord, #showCharsBtn, #lang, #showOptions {
+#github, #discord, #showCharsBtn, #lang, #showOptions, #leftPanelSwitch {
     background: #303030;
     transition: 0.5s;
     color: white;
