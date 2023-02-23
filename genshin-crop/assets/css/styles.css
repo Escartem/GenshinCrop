@@ -176,7 +176,7 @@ button:disabled {
 .pic-title {
     color: white;
     font-size: 200%;
-    padding-top: 3%;
+    padding: 3%;
 }
 
 .char-name {
