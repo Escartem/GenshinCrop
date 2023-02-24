@@ -102,14 +102,12 @@ function switchLeftPanel() {
     mainPanel = getElem("mainPanel");
     leftPanel = getElem("leftPanel");
     if (leftPanelShown == false) {
-        mainPanel.style.width = "50%";
-        mainPanel.style.marginLeft = "40%";
+        mainPanel.classList.add("main-panel-moved");
         leftPanel.style.transform = "translateX(0)";
         leftPanelShown = true;
         showLeftPanelBtn.classList.add("btnSelected");
     } else {
-        mainPanel.style.width = null;
-        mainPanel.style.marginLeft = null;
+        mainPanel.classList.remove("main-panel-moved");
         leftPanelShown = false;
         leftPanel.style.transform = "translateX(-100vw)";
         showLeftPanelBtn.classList.remove("btnSelected");
