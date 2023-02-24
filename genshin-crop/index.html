@@ -25,7 +25,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
 	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
-	<link rel="stylesheet" href="assets/css/styles.css?v=160">
+	<link rel="stylesheet" href="assets/css/styles.css?v=161">
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-132CTGT17P"></script>
 	<script>
@@ -55,17 +55,19 @@
 		<div class="left-panel" id="leftPanel">
 			<span class="pic-title">About</span>
 
-			<div id="news" style="height: max-content; color: lightgray; filter: brightness(0.5); margin: 10px;">
-				<span style="margin: 10px; font-size: 13px;">
-					You will be shown a cropped picture of a random part of a random character from the game. You must guess which character it is. Be careful with names, there is only one valid for each character, you can check the list of all valid names with the button under this.
+			<div class="aboutContent">
+				<div id="news" style="height: max-content; color: lightgray; filter: brightness(0.5); margin: 10px;">
+					<span style="margin: 10px; font-size: 13px;">
+						You will be shown a cropped picture of a random part of a random character from the game. You must guess which character it is. Be careful with names, there is only one valid for each character, you can check the list of all valid names with the button under this.
 
-					<br /><br />
+						<br /><br />
 
-					Shortcuts are also a thing, press ctrl+q to generate an image, textbox is automatically selected after image is shown, but if not press tab to focus it. And you can after press enter to confirm your guess.
-				</span>
+						Shortcuts are also a thing, press ctrl+q to generate an image, textbox is automatically selected after image is shown, but if not press tab to focus it. And you can after press enter to confirm your guess.
+					</span>
+				</div>
+
+				<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label" disabled>📄 Characters list</span></button>
 			</div>
-
-			<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label" disabled>📄 Characters list</span></button>
 		</div>
 
 		<div class="top" id="mainPanel">
@@ -161,6 +163,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="./assets/js/app.js?v=160"></script>
+	<script src="./assets/js/app.js?v=161"></script>
 </body>
 </html>
