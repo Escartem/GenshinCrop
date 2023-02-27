@@ -4,12 +4,25 @@ html {
     user-select: none; /* Standard syntax */
 }
 
-body {
+:root,
+:root.dark {
     --background-color: #2f353e;
     --secondary-color: #1c2127;
     --clist-color: #3e4956;
     --clist-alt-color: #5b697a;
     --options-bg: #343d4a;
+    --text-color: white;
+    --text-alt-color: lightgray;
+}
+
+:root.light {
+    --background-color: #bac9e1;
+    --secondary-color: #9eb0cd;
+    --clist-color: #617b99;
+    --clist-alt-color: #728cab;
+    --options-bg: #859dbf;
+    --text-color: black;
+    --text-alt-color: #4c4c4c;
 }
 
 button:disabled {
@@ -137,7 +150,7 @@ button:disabled {
 }
 
 .optionsCatTitle {
-    color: white;
+    color: var(--text-color);
     display: block;
     font-size: 25px;
     margin: 10px;
@@ -158,18 +171,20 @@ button:disabled {
 
 .aboutContent {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 10px;
     border-radius: 10px;
     transition: 0.5s;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: baseline;
+    align-content: center;
 }
 
 #news {
     display: flex;
-    color: gray;
+    color: var(--text-alt-color);
     background-color: var(--secondary-color);
     height: 120px;
     margin-top: 10px;
@@ -180,19 +195,19 @@ button:disabled {
     width: calc(100% - 10px);
     bottom: 0;
     margin-bottom: 5px;
-    color: white;
+    color: var(--text-color);
     text-align: center;
     position: absolute;
 }
 
 .pic-title {
-    color: white;
+    color: var(--text-color);
     font-size: 200%;
     padding: 3%;
 }
 
 .char-name {
-    color: white;
+    color: var(--text-color);
     font-size: 20px;
     padding: 10px;
 }
@@ -223,7 +238,12 @@ img {
 
 .report {
     background: #ff4c4c !important;
-    margin-left: 1vw;
+}
+
+#reportBtnDiv {
+    overflow: hidden;
+    transition: 250ms;
+    width: 100%;
 }
 
 .regen {
@@ -303,6 +323,7 @@ img {
     display: flex;
     align-items: center;
     transition: 250ms;
+    z-index: 10;
 }
 
 @media (max-width: 690px) {
@@ -323,7 +344,7 @@ img {
 }
 
 .credits {
-    color: white;
+    color: var(--text-color);
     font-size: 15px;
 }
 
@@ -367,7 +388,7 @@ button:disabled {
 }
 
 .title {
-    color: white;
+    color: var(--text-color);
     position: absolute;
     top: 0;
     text-decoration: underline;
@@ -377,4 +398,14 @@ button:disabled {
 .main-panel-moved {
     width: 50%;
     margin-left: 40%;
+}
+
+#news, .credits, .main, #bottomText {
+    transition: 250ms;
+}
+
+hr {
+    background: var(--text-color);
+    border: 0;
+    transition: 250ms;
 }
