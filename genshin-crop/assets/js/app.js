@@ -4,7 +4,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "1.6"
+VERSION = "1.6.1"
 console.log("v"+VERSION);
 document.getElementById("version").innerHTML = "V"+VERSION;
 
@@ -25,8 +25,8 @@ const triggerConfettis = new Event("confetti");
 let confetti = new Confetti('checkInputBtn');
 
 // tadjikistan
-confetti.setCount(150);
-confetti.setSize(1);
+confetti.setCount(300);
+confetti.setSize(2);
 confetti.setPower(50);
 confetti.setFade(true);
 confetti.destroyTarget(false);
@@ -50,6 +50,7 @@ clist = getElem("clist");
 options = getElem("options");
 showLeftPanelBtn = getElem("leftPanelSwitch")
 //
+optionsLightMode = getElem("optionsLightMode");
 optionsNoConfettis = getElem("optionsNoConfettis");
 optionsNewAuto = getElem("optionsNewAuto");
 optionsHideReportBtn = getElem("optionsHideWrongImg");
@@ -65,34 +66,36 @@ showLeftPanelBtn.addEventListener("click", function(event) {event.preventDefault
 
 getElem("listContent").innerHTML = chars;
 
-// cookies
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-        return parts.pop().split(";").shift()
+// cookies -> switched to local storage for better perf but kept old names
+function getCookie(name, check=false) {
+    t = window.localStorage.getItem(name)
+    if (t != null) {
+        return t;
     } else {
-        setCookie(name, 0);
-        return 0
-    };
+        if (check == false) {
+            setCookie(name, 0)
+            return 0
+        } else {
+            return false
+        }
+    }
 }
 
 function setCookie(name, value) {
-    var exdate = new Date();
-    // set cookie to expire after 30 days, might change it later
-    exdate.setDate(exdate.getDate()+30);
-    document.cookie=name+"="+value+"; expires="+exdate.toUTCString();
+    window.localStorage.setItem(name, value);
 }
 
 function deleteCookie(name) {
-    document.cookie=name+"=0; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    window.localStorage.removeItem(name);
 }
 
 // set up options
+optionsLightMode.checked = getCookie("lightMode") == 1 ? true : false;
 optionsNoConfettis.checked = getCookie("noConfettis") == 1 ? true : false;
 optionsNewAuto.checked = getCookie("newAuto") == 1 ? true : false;
 optionsHideReportBtn.checked = getCookie("hideReportBtn") == 1 ? true : false;
 
+optionsLightMode.addEventListener("click", function() { setCookie("lightMode", optionsLightMode.checked ? 1 : 0); themeSwitch(); })
 optionsNoConfettis.addEventListener("click", function() { setCookie("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
 optionsNewAuto.addEventListener("click", function() { setCookie("newAuto", optionsNewAuto.checked ? 1 : 0); });
 optionsHideReportBtn.addEventListener("click", function() { setCookie("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
@@ -106,31 +109,48 @@ function switchLeftPanel() {
         leftPanel.style.transform = "translateX(0)";
         leftPanelShown = true;
         showLeftPanelBtn.classList.add("btnSelected");
+        setCookie("leftPanelVisible", 1);
     } else {
         mainPanel.classList.remove("main-panel-moved");
         leftPanelShown = false;
         leftPanel.style.transform = "translateX(-100vw)";
         showLeftPanelBtn.classList.remove("btnSelected");
+        setCookie("leftPanelVisible", 0);
     }
 }
+
+if (getCookie("leftPanelVisible", true) === false && window.innerWidth > 690) { switchLeftPanel(); } else { if (getCookie("leftPanelVisible") == 1) { switchLeftPanel(); } }
+
+function themeSwitch() {
+    if (getCookie("lightMode") == 1) {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.classList.add("light");
+    } else {
+        document.documentElement.classList.remove("light");
+        document.documentElement.classList.add("dark");
+    }
+}
+
+themeSwitch();
 
 function reportBtnSwitch() {
     if (getCookie("hideReportBtn") == 1) {
         reportBtn.style.pointerEvents = "none";
-        reportBtn.style.width = "300px";
-        reportBtn.style.zIndex = "-999";
-        reportBtn.style.visibility = "hidden";
-        reportBtn.style.position = "absolute";
+        reportBtn.style.fontSize = "0";
+        getElem("reportBtnDiv").style.width = "0";
     } else {
         reportBtn.style.pointerEvents = null;
-        reportBtn.style.width = null;
-        reportBtn.style.zIndex = null;
-        reportBtn.style.visibility = null;
-        reportBtn.style.position = null;
+        reportBtn.style.fontSize = null;
+        getElem("reportBtnDiv").style.width = null;
     }
 }
 
+reportBtnSwitch();
+
 function switchCharList() {
+    if (window.innerWidth < 690) {
+        switchLeftPanel();
+    }
     if (charsListEnabled == false) {   
         // char -> list
         mcontent.style.transform = "translateY(100%)";
@@ -256,6 +276,8 @@ function genImage() {
         regenBtn.disabled = false;
         regenBtn.style.filter = "brightness(1)";
         gen = false;
+        showCharsBtn.disabled = false;
+        showOptionsBtn.disabled = false;
     });
 }
 
@@ -345,4 +367,4 @@ function showPopup(title, text, width="150", height="90") {
     popupDialog.querySelector('.close').addEventListener('click', function() {popupDialog.close();});
 }
 
-window.onload = genImage(); reportBtnSwitch();
+window.onload = genImage();
