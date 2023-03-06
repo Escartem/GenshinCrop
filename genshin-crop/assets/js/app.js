@@ -4,7 +4,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "1.6.1"
+VERSION = "1.6.2"
 console.log("v"+VERSION);
 document.getElementById("version").innerHTML = "V"+VERSION;
 
@@ -19,7 +19,8 @@ var full_url = null;
 var charsListEnabled = false;
 var optionsShown = false;
 var leftPanelShown = false;
-var charList = ["Aether", "Albedo", "Alhaitham", "Aloy", "Amber", "Ayaka", "Ayato", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", "Itto", "Jean", "Kaeya", "Kazuha", "Keqing", "Klee", "Kokomi", "Kujou Sara", "Kuki", "Layla", "Lisa", "Lumine", "Mona", "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", "Raiden", "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", "Tartaglia", "Thoma", "Tighnari", "Venti", "Wanderer", "Xiangling", "Xiao", "Xingqiu", "Xinyan", "Yae Miko", "Yanfei", "YaoYao", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
+var oldVersionsShown = false;
+var charList = ["Aether", "Albedo", "Alhaitham", "Aloy", "Amber", "Ayaka", "Ayato", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Dehya", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", "Itto", "Jean", "Kaeya", "Kazuha", "Keqing", "Klee", "Kokomi", "Kujou Sara", "Kuki", "Layla", "Lisa", "Lumine", "Mika", "Mona", "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", "Raiden", "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", "Tartaglia", "Thoma", "Tighnari", "Venti", "Wanderer", "Xiangling", "Xiao", "Xingqiu", "Xinyan", "Yae Miko", "Yanfei", "YaoYao", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
 var chars = charList.join().replaceAll(","," <br/> ")
 const triggerConfettis = new Event("confetti");
 let confetti = new Confetti('checkInputBtn');
@@ -48,7 +49,8 @@ loadSpinner = getElem("load-spinner");
 mcontent = getElem("mcontent");
 clist = getElem("clist");
 options = getElem("options");
-showLeftPanelBtn = getElem("leftPanelSwitch")
+showLeftPanelBtn = getElem("leftPanelSwitch");
+showOldVersionsBtn = getElem("oldVersionsSwitch");
 //
 optionsLightMode = getElem("optionsLightMode");
 optionsNoConfettis = getElem("optionsNoConfettis");
@@ -63,6 +65,7 @@ checkInputBtn.addEventListener("click", function(event) {event.preventDefault();
 showCharsBtn.addEventListener("click", function(event) {event.preventDefault(); switchCharList();})
 showOptionsBtn.addEventListener("click", function(event) {event.preventDefault(); switchOptions();})
 showLeftPanelBtn.addEventListener("click", function(event) {event.preventDefault(); switchLeftPanel();})
+showOldVersionsBtn.addEventListener("click", function(event) {event.preventDefault(); showOldVersions();})
 
 getElem("listContent").innerHTML = chars;
 
@@ -204,6 +207,20 @@ function switchOptions() {
     }
 }
 
+function showOldVersions() {
+    if (oldVersionsShown == false) {
+        showOldVersionsBtn.classList.add("btnSelected");
+        oldVersionsShown = true;
+        getElem("oldNews").style.opacity = 1;
+        getElem("oldNews").style.height = "max-content";
+    } else {
+        showOldVersionsBtn.classList.remove("btnSelected");
+        oldVersionsShown = false;
+        getElem("oldNews").style.opacity = 0;
+        getElem("oldNews").style.height = "0";
+    }
+}
+
 // change buttons state
 function buttonState(tf, b) {
     regenBtn.disabled = tf;
@@ -294,10 +311,10 @@ function check() {
             checkInputBtn.dispatchEvent(triggerConfettis)
         }
         text.innerHTML = "Correct 🎉";
-        text.style.color = "#beffbe";
+        text.style.color = "var(--text-green)";
     } else {
         text.innerHTML = "Nope, it was "+curr_char+" 😔";
-        text.style.color = "#ff9f9f";
+        text.style.color = "var(--text-red)";
     }
 
     uinput.value = "";
