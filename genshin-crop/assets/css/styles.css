@@ -13,6 +13,8 @@ html {
     --options-bg: #343d4a;
     --text-color: white;
     --text-alt-color: lightgray;
+    --text-red: #ff9f9f;
+    --text-green: #beffbe;
 }
 
 :root.light {
@@ -23,6 +25,8 @@ html {
     --options-bg: #859dbf;
     --text-color: black;
     --text-alt-color: #4c4c4c;
+    --text-red: #ee4a4a;
+    --text-green: #beffbe;
 }
 
 button:disabled {
@@ -182,13 +186,14 @@ button:disabled {
     align-content: center;
 }
 
-#news {
+#news, #oldNews {
     display: flex;
     color: var(--text-alt-color);
     background-color: var(--secondary-color);
     height: 120px;
     margin-top: 10px;
     border-radius: 4px;
+    overflow: hidden;
 }
 
 #bottomText {
@@ -372,7 +377,7 @@ img {
     margin-right: -5px;
 }
 
-#github, #discord, #showCharsBtn, #lang, #showOptions, #leftPanelSwitch {
+#github, #discord, #showCharsBtn, #lang, #showOptions, #leftPanelSwitch, #oldVersionsSwitch {
     background: #303030;
     transition: 0.5s;
     color: white;
@@ -400,7 +405,7 @@ button:disabled {
     margin-left: 40%;
 }
 
-#news, .credits, .main, #bottomText {
+#news, .credits, .main, #bottomText, #oldNews {
     transition: 250ms;
 }
 
