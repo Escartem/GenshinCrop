@@ -179,11 +179,14 @@ function switchCharList() {
     }
     if (charsListEnabled == false) {   
         // char -> list
+        if (optionsShown == true) {
+            switchOptions();
+        }
         showCharsBtn.classList.add("btnSelected");
         getElem("mcontlistwrap").style.transform = "translateY(0)";
         charsListEnabled = true;
     } else {
-        // char -> list
+        // list -> char
         showCharsBtn.classList.remove("btnSelected");
         getElem("mcontlistwrap").style.transform = "translateY(-50%)";
         charsListEnabled = false;
@@ -382,3 +385,6 @@ function showPopup(title, text, width="150", height="90") {
 }
 
 // window.onload = genImage();
+
+// todo 
+// bouton hide bar en haut et en bas car why not
