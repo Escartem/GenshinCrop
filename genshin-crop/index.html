@@ -20,8 +20,8 @@
 	<script defer src="assets/js/material.min.js"></script>
 	<script src="assets/js/mui.min.js"></script>
 	<script src="assets/js/confetti.min.js"></script>
-	<script src="https://ena.escartem.eu.org/js/ems.js"></script>
-	<script src="https://kit.fontawesome.com/8cacf0a9e5.js" crossorigin="anonymous"></script>
+	<!-- <script src="https://ena.escartem.eu.org/js/ems.js"></script> -->
+	<!-- <script src="https://kit.fontawesome.com/8cacf0a9e5.js" crossorigin="anonymous"></script> -->
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
 	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
@@ -50,175 +50,220 @@
 			</div>
 		</dialog>
 
-		<span class="title">Genshin Crop | Guess the Genshin Impact character from a cropped picture</span>
+		<div id="top-bar">
+			<div id="bar-left" style="height: 100%; display: flex; align-items: center;">
+				<img id="icon" draggable="false" src="./assets/img/icon.png" style="height: 100%;">
+				<span class="title" style="color: var(--text-color); font-size: 24px;">Genshin Crop</span>
+			</div>
+		</div>
 
 		<div class="left-panel" id="leftPanel">
-			<span class="pic-title">About</span>
+			<div id="left-panel-wrapper">
+				<div id="left-panel-map">
+					<div class="aboutContent">
+						<span class="pic-title">About</span>
 
-			<div class="aboutContent">
-				<div id="news" style="height: max-content; color: var(--text-alt-color); filter: brightness(0.5); margin: 10px; width: 100%;">
-					<span style="margin: 10px; font-size: 13px;">
-						You will be shown a cropped picture of a random part of a random character from the game. You must guess which character it is. Be careful with names, there is only one valid for each character, you can check the list of all valid names with the button under this.
+						<div id="news" style="height: max-content; color: var(--text-alt-color); margin: 10px; width: 100%; background-color: var(--about-bg);">
+							<span style="margin: 10px; font-size: 13px;">
+								You will be shown a cropped picture of a random part of a random character from the game. You must guess which character it is. Be careful with names, there is only one valid for each character, you can check the list of all valid names with the button under this.
 
-						<br /><br />
+								<br /><br />
 
-						Shortcuts are also a thing, press ctrl+q to generate an image, textbox is automatically selected after image is shown, but if not press tab to focus it. And you can after press enter to confirm your guess.
-					</span>
+								Shortcuts are also a thing, press ctrl+q to generate an image, textbox is automatically selected after image is shown, but if not press tab to focus it. And you can after press enter to confirm your guess.
+							</span>
+						</div>
+					</div>
 				</div>
 
-				<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label" disabled>📄 Characters list</span></button>
+				<div id="left-panel-char">
+					<div class="aboutContent">
+						<span class="pic-title">About</span>
 
-				<hr style="width: 100%;">
+						<div id="news" style="height: max-content; color: var(--text-alt-color); margin: 10px; width: 100%; background-color: var(--about-bg);">
+							<span style="margin: 10px; font-size: 13px;">
+								You will be shown a cropped picture of a random part of a random character from the game. You must guess which character it is. Be careful with names, there is only one valid for each character, you can check the list of all valid names with the button under this.
 
-				<span class="optionsCatTitle">Settings</span>
+								<br /><br />
 
-				<div class="mdc-form-field">
-					<div class="mdc-checkbox"><input id="optionsNewAuto" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-					<label style="color: var(--text-alt-color);" for="checkbox-1">Automatically generate new image if guess is correct</label>
-				</div>
+								Shortcuts are also a thing, press ctrl+q to generate an image, textbox is automatically selected after image is shown, but if not press tab to focus it. And you can after press enter to confirm your guess.
+							</span>
+						</div>
 
-				<div class="mdc-form-field">
-					<div class="mdc-checkbox"><input id="optionsHideWrongImg" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-					<label style="color: var(--text-alt-color);" for="checkbox-1">Hide "report invalid image" button</label>
+						<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label" disabled>📄 Characters list</span></button>
+
+						<hr style="width: 100%;">
+
+						<span class="optionsCatTitle">Settings</span>
+
+						<div class="mdc-form-field">
+							<div class="mdc-checkbox"><input id="optionsNewAuto" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+							<label style="color: var(--text-alt-color);" for="checkbox-1">Automatically generate new image if guess is correct</label>
+						</div>
+
+						<div class="mdc-form-field">
+							<div class="mdc-checkbox"><input id="optionsHideWrongImg" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+							<label style="color: var(--text-alt-color);" for="checkbox-1">Hide "report invalid image" button</label>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
 		<div class="top" id="mainPanel">
-			<div class="characters-list" id="clist">
-				<span class="pic-title" id="clist-title" style="transition: 0.5s; transform: translateY(-100vh);">List of characters names</span>
+			<div id="topwrapper">
+				<div class="options" id="options">
+					<span class="pic-title" id="options-title" style="transition: 0.5s;">Settings</span>
 
-				<div class="clist" id="list">
-					<span id="listContent" style="overflow-wrap: anywhere; color: white; font-size: 22px; -webkit-user-select: text; -ms-user-select: text; user-select: text;">Content</span>
-				</div>
-			</div>
+					<div class="optionsContent" id="optionsContent">
+						<div>
+							<div class="mdc-form-field">
+								<div class="mdc-checkbox"><input id="optionsLightMode" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+								<label style="color: var(--text-alt-color);" for="checkbox-1">Light Mode</label>
+							</div>
 
-			<div class="options" id="options">
-				<span class="pic-title" id="options-title" style="transition: 0.5s; transform: translateY(-100vh);">Settings</span>
+							<br />
 
-				<div class="optionsContent" id="optionsContent">
-					<div>
-						<div class="mdc-form-field">
-							<div class="mdc-checkbox"><input id="optionsLightMode" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-							<label style="color: var(--text-alt-color);" for="checkbox-1">Light Mode</label>
+							<div class="mdc-form-field">
+								<div class="mdc-checkbox"><input id="optionsNoConfettis" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+								<label style="color: var(--text-alt-color);" for="checkbox-1">Disable confettis</label>
+							</div>
 						</div>
 
-						<br />
+						<div>
+							<span class="optionsCatTitle">Socials</span>
+							<button type="button" class="mdc-button mdc-button--raised" id="github" onclick="window.open('https://github.com/Escartem', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-github"></i> Github</span></button>
+							<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-discord"></i> Discord</span></button>
+						</div>
 
-						<div class="mdc-form-field">
-							<div class="mdc-checkbox"><input id="optionsNoConfettis" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-							<label style="color: var(--text-alt-color);" for="checkbox-1">Disable confettis</label>
+						<span class="optionsCatTitle">What's new</span>
+						<button type="button" class="mdc-button mdc-button--raised" id="oldVersionsSwitch" style="height: 25px;"><span class="mdc-button__label">Show older versions</span></button>
+						<div id="news" style="height: max-content;">
+							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+								version 2.0.0 (? april 2023)
+								<ul>
+									<li>new gamemode added : guess the map location</li>
+									<li>the previous gamemode is still available but map is now showed by default</li>
+									<li>interface changes and smoother animations</li>
+									<li>many bug fixes and better support for different screen sizes</li>
+								</ul>
+							</span>
+						</div>
+						<div id="oldNews" style="height: 0; opacity: 0;">
+							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+								version 1.6.2 (6 mars 2023)
+								<ul>
+									<li>added Dehya and Mika</li>
+									<li>added button to show old versions</li>
+									<li>bug fixes</li>
+								</ul>
+
+								version 1.6.1 (27 february 2023)
+								<ul>
+									<li>interface rework again, moved some settings in the about tab, others small improvements and visual fixes for phones</li>
+									<li>added a light mode for all light mode fans :)</li>
+									<li>about section is now enabled by default and stays the way it was after refresh</li>
+									<li>report button now hides with a cleaner animation than before</li>
+									<li>enabling characters list on phone hides the about section instead of showing the list somewhere behind it</li>
+									<li>many others bug fixes</li>
+									<li>new gamemode coming soon ? ;)</li>
+								</ul>
+
+								version 1.6 (23 february 2023)
+								<ul>
+									<li>interface rework: updated buttons, added about section, moved characters list button here and fixed/improved other stuff. Still a work in progress and may change again later</li>
+									<li>added new option to hide the "report invalid image" button</li>
+									<li>fixed a bug with the ctrl+q shortcut that was sometimes not working</li>
+									<li>faster image generation (I hope)</li>
+								</ul>
+
+								version 1.5 (30 january 2023)
+								<ul>
+									<li>added this news section</li>
+									<li>added Alhaitham and YaoYao</li>
+									<li>fixed some bugs</li>
+								</ul>
+
+								version 1.4 (12 january 2023)
+								<ul>
+									<li>added options menu with some options to disable confettis and automatically generate new image</li>
+									<li>fixed bugs such as with input not being accepted on some phones</li>
+								</ul>
+
+								version 1.3 (28 december 2022)
+								<ul>
+									<li>new design for characters list instead of the old popup</li>
+								</ul>
+
+								version 1.2 (13 december 2022)
+								<ul>
+									<li>added wanderer and layla</li>
+									<li>lot of bug fixes with buttons not working</li>
+									<li>after a guess, a zoomed out image is now showed with a red square representing the area of the cropped image instead of the full one</li>
+								</ul>
+
+								version 1.1 (12 december 2022)
+								<ul>
+									<li>added phone support for the interface</li>
+									<li>bug fixes again</li>
+								</ul>
+
+								version 1.0.1 (21 november 2022)
+								<ul>
+									<li>the image of the full character is now showed after guessing</li>
+									<li>few improvements and fixes</li>
+								</ul>
+
+								version 1.0 (19 november 2022)
+								<ul>
+									<li>Genshin Crop Initial Release !</li>
+								</ul>
+							</span>
 						</div>
 					</div>
-
-					<div>
-						<span class="optionsCatTitle">Socials</span>
-						<button type="button" class="mdc-button mdc-button--raised" id="github" onclick="window.open('https://github.com/Escartem', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-github"></i> Github</span></button>
-						<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-discord"></i> Discord</span></button>
-					</div>
-
-					<span class="optionsCatTitle">What's new</span>
-					<button type="button" class="mdc-button mdc-button--raised" id="oldVersionsSwitch" style="height: 25px;"><span class="mdc-button__label">Show older versions</span></button>
-					<div id="news" style="height: max-content;">
-						<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
-							version 1.6.2 (6 mars 2023)
-							<ul>
-								<li>added Dehya and Mika</li>
-								<li>added button to show old versions</li>
-								<li>bug fixes</li>
-							</ul>
-						</span>
-					</div>
-					<div id="oldNews" style="height: 0; opacity: 0;">
-						<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
-							version 1.6.1 (27 february 2023)
-							<ul>
-								<li>interface rework again, moved some settings in the about tab, others small improvements and visual fixes for phones</li>
-								<li>added a light mode for all light mode fans :)</li>
-								<li>about section is now enabled by default and stays the way it was after refresh</li>
-								<li>report button now hides with a cleaner animation than before</li>
-								<li>enabling characters list on phone hides the about section instead of showing the list somewhere behind it</li>
-								<li>many others bug fixes</li>
-								<li>new gamemode coming soon ? ;)</li>
-							</ul>
-
-							version 1.6 (23 february 2023)
-							<ul>
-								<li>interface rework: updated buttons, added about section, moved characters list button here and fixed/improved other stuff. Still a work in progress and may change again later</li>
-								<li>added new option to hide the "report invalid image" button</li>
-								<li>fixed a bug with the ctrl+q shortcut that was sometimes not working</li>
-								<li>faster image generation (I hope)</li>
-							</ul>
-
-							version 1.5 (30 january 2023)
-							<ul>
-								<li>added this news section</li>
-								<li>added Alhaitham and YaoYao</li>
-								<li>fixed some bugs</li>
-							</ul>
-
-							version 1.4 (12 january 2023)
-							<ul>
-								<li>added options menu with some options to disable confettis and automatically generate new image</li>
-								<li>fixed bugs such as with input not being accepted on some phones</li>
-							</ul>
-
-							version 1.3 (28 december 2022)
-							<ul>
-								<li>new design for characters list instead of the old popup</li>
-							</ul>
-
-							version 1.2 (13 december 2022)
-							<ul>
-								<li>added wanderer and layla</li>
-								<li>lot of bug fixes with buttons not working</li>
-								<li>after a guess, a zoomed out image is now showed with a red square representing the area of the cropped image instead of the full one</li>
-							</ul>
-
-							version 1.1 (12 december 2022)
-							<ul>
-								<li>added phone support for the interface</li>
-								<li>bug fixes again</li>
-							</ul>
-
-							version 1.0.1 (21 november 2022)
-							<ul>
-								<li>the image of the full character is now showed after guessing</li>
-								<li>few improvements and fixes</li>
-							</ul>
-
-							version 1.0 (19 november 2022)
-							<ul>
-								<li>Genshin Crop Initial Release !</li>
-							</ul>
-						</span>
-					</div>
-				</div>
-				<span id="bottomText">Genshin Crop - <span id="version">V0.0<span></span>
-			</div>
-
-			<div class="main-content" id="mcontent">
-				<span class="pic-title" style="padding: 0%; padding-top: 3%;">Who is this ?</span>
-				<div class="pic">
-					<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="load-spinner"></div>
-					<img id="char" src="./assets/img/load.png" draggable="false">
-					<span id="error-text" class="error-text">Something went wrong 😣<br/>Please try again</span>
+					<span id="bottomText">Genshin Crop - <span id="version">V0.0<span></span>
 				</div>
 
-				<div style="width: 100%;">
-					<div class="input-area" id="input-area">
-						<input id="uinput" name="uinput" size=10 class="uinput" placeholder="Your guess" autocomplete="off">
-						<button type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
+				<div id="main-wrapper">
+					<div id="main-map">
+						<div id="main-map-content"></div>
 					</div>
 
-					<div class="input-result" id="result-area">
-						<span id="result-text">no u</span>
-					</div>
+					<div id="main-char">
+						<div id="mcontlistwrap">
+							<div class="characters-list" id="clist">
+								<span class="pic-title" id="clist-title" style="transition: 0.5s;">List of characters names</span>
 
-					<div class="buttons">
-						<button type="button" class="mdc-button mdc-button--raised regen" id="regenBtn"><span class="mdc-button__label">✨ Another one</span></button>
-						<div id="reportBtnDiv">
-							<button type="button" class="mdc-button mdc-button--raised report" id="reportBtn"><span class="mdc-button__label">⚠️ Report invalid image</span></button>
+								<div class="clist" id="list">
+									<span id="listContent" style="overflow-wrap: anywhere; color: white; font-size: 22px; -webkit-user-select: text; -ms-user-select: text; user-select: text;">Content</span>
+								</div>
+							</div>
+
+							<div class="main-content" id="mcontentchar">
+								<span class="pic-title" style="padding: 0%; padding-top: 3%;">Who is this ?</span>
+								<div class="pic">
+									<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="load-spinner"></div>
+									<img id="char" src="./assets/img/load.png" draggable="false">
+									<span id="error-text" class="error-text">Something went wrong 😣<br/>Please try again</span>
+								</div>
+
+								<div style="width: 100%;">
+									<div class="input-area" id="input-area">
+										<input id="uinput" name="uinput" size=10 class="uinput" placeholder="Your guess" autocomplete="off">
+										<button type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
+									</div>
+
+									<div class="input-result" id="result-area">
+										<span id="result-text">no u</span>
+									</div>
+
+									<div class="buttons">
+										<button type="button" class="mdc-button mdc-button--raised regen" id="regenBtn"><span class="mdc-button__label">✨ Another one</span></button>
+										<div id="reportBtnDiv">
+											<button type="button" class="mdc-button mdc-button--raised report" id="reportBtn"><span class="mdc-button__label">⚠️ Report invalid image</span></button>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -227,10 +272,11 @@
 
 		<div class="bottom">
 			<div class="left">
-				<span class="credits">Made by <a href="https://github.com/Escartem" target="_blank">Escartem</a> <i class="fa-solid fa-heart" style="color: #e55c5c;"></i></span>
+				<span class="credits">Made by <a href="https://escartem.eu.org" target="_blank">Escartem</a> <i class="fa-solid fa-heart" style="color: #e55c5c;"></i></span>
 			</div>
 			<div class="bottomLine"><hr></div>
 				<div class="right">
+					<button id="switchModeBtn">aaaa</button>
 					<button type="button" class="mdc-button mdc-button--raised" id="leftPanelSwitch"><span class="mdc-button__label">🤔 About</span></button>
 					<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label" disabled>⚙ Settings</span></button>
 			</div>
