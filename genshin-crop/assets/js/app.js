@@ -1,10 +1,10 @@
 // Escartem
 
 // ems is a simple script that disable some keyboard shortcuts and show a nice message in console
-setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
+// setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "1.6.2"
+VERSION = "2.0.0"
 console.log("v"+VERSION);
 document.getElementById("version").innerHTML = "V"+VERSION;
 
@@ -20,6 +20,7 @@ var charsListEnabled = false;
 var optionsShown = false;
 var leftPanelShown = false;
 var oldVersionsShown = false;
+var gameMode = "map";
 var charList = ["Aether", "Albedo", "Alhaitham", "Aloy", "Amber", "Ayaka", "Ayato", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Dehya", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", "Itto", "Jean", "Kaeya", "Kazuha", "Keqing", "Klee", "Kokomi", "Kujou Sara", "Kuki", "Layla", "Lisa", "Lumine", "Mika", "Mona", "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", "Raiden", "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", "Tartaglia", "Thoma", "Tighnari", "Venti", "Wanderer", "Xiangling", "Xiao", "Xingqiu", "Xinyan", "Yae Miko", "Yanfei", "YaoYao", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
 var chars = charList.join().replaceAll(","," <br/> ")
 const triggerConfettis = new Event("confetti");
@@ -34,7 +35,7 @@ confetti.destroyTarget(false);
 
 function getElem(id) {return document.getElementById(id)};
 
-// elems and functions
+// elems and functions (this is chaotic and need some optimisation but it works so shush)
 regenBtn = getElem("regenBtn");
 reportBtn = getElem("reportBtn");
 checkInputBtn = getElem("checkInputBtn");
@@ -46,7 +47,8 @@ showCharsBtn = getElem("showCharsBtn");
 showOptionsBtn = getElem("showOptions");
 errorText = getElem("error-text");
 loadSpinner = getElem("load-spinner");
-mcontent = getElem("mcontent");
+mcontent = getElem("main-wrapper");
+mcontentchar = getElem("mcontentchar");
 clist = getElem("clist");
 options = getElem("options");
 showLeftPanelBtn = getElem("leftPanelSwitch");
@@ -56,13 +58,18 @@ optionsLightMode = getElem("optionsLightMode");
 optionsNoConfettis = getElem("optionsNoConfettis");
 optionsNewAuto = getElem("optionsNewAuto");
 optionsHideReportBtn = getElem("optionsHideWrongImg");
+// game modes
+switchModeBtn = getElem("switchModeBtn");
+leftWrapper = getElem("left-panel-wrapper");
+mainWrapper = getElem("main-wrapper");
 
 document.addEventListener("keydown", function(e) {if (e.ctrlKey && e.keyCode == 81) {e.preventDefault(); if (gen==false && charsListEnabled==false && optionsShown==false) {genImage();}}});
 uinput.onkeydown = function(event) {if (event.keyCode == 13) {check();}};
 regenBtn.addEventListener("click", function(event) {event.preventDefault(); genImage();});
 reportBtn.addEventListener("click", function(event) {event.preventDefault(); showPopup("Report image", "Please join the <a href='https://discord.gg/fzRdtVh', target='_blank'>discord</a> and provide this : <span style='color: white; background: #2a2a2a;'>"+buid+"</span>", 260, 200);});
-checkInputBtn.addEventListener("click", function(event) {event.preventDefault(); check();})
 showCharsBtn.addEventListener("click", function(event) {event.preventDefault(); switchCharList();})
+switchModeBtn.addEventListener("click", function(event) {event.preventDefault(); switchMode();})
+checkInputBtn.addEventListener("click", function(event) {event.preventDefault(); check();})
 showOptionsBtn.addEventListener("click", function(event) {event.preventDefault(); switchOptions();})
 showLeftPanelBtn.addEventListener("click", function(event) {event.preventDefault(); switchLeftPanel();})
 showOldVersionsBtn.addEventListener("click", function(event) {event.preventDefault(); showOldVersions();})
@@ -104,6 +111,22 @@ optionsNewAuto.addEventListener("click", function() { setCookie("newAuto", optio
 optionsHideReportBtn.addEventListener("click", function() { setCookie("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
 
 // app functions
+function switchMode() {
+    if (gameMode == "map") {
+        // map to char
+        leftWrapper.style.transform = "translateX(-50%)";
+        mainWrapper.style.transform = "translateX(-50%)";
+
+        gameMode = "char";
+    } else {
+        // char to map
+        leftWrapper.style.transform = "translateX(0)";
+        mainWrapper.style.transform = "translateX(0)";
+
+        gameMode = "map";
+    }
+}
+
 function switchLeftPanel() {
     mainPanel = getElem("mainPanel");
     leftPanel = getElem("leftPanel");
@@ -156,26 +179,13 @@ function switchCharList() {
     }
     if (charsListEnabled == false) {   
         // char -> list
-        mcontent.style.transform = "translateY(100%)";
-        mcontent.style.height = "0";
-        clist.style.transform = "translateY(0)";
-        clist.style.height = "100%";
-        getElem("clist-title").style.transform = "translateY(0)";
-        getElem("list").style.transform = "translateY(0)";
         showCharsBtn.classList.add("btnSelected");
-        showOptionsBtn.disabled = true;
+        getElem("mcontlistwrap").style.transform = "translateY(0)";
         charsListEnabled = true;
-        getElem("bottomText").style.visibility = "hidden";
     } else {
         // char -> list
-        mcontent.style.transform = "translateY(0)";
-        mcontent.style.height = "100%";
-        clist.style.transform = "translateY(-100%)";
-        clist.style.height = "0";
-        getElem("clist-title").style.transform = "translateY(-100vh)";
-        getElem("list").style.transform = "translateY(-100vh)";
         showCharsBtn.classList.remove("btnSelected");
-        showOptionsBtn.disabled = false;
+        getElem("mcontlistwrap").style.transform = "translateY(-50%)";
         charsListEnabled = false;
     }
 }
@@ -183,27 +193,14 @@ function switchCharList() {
 function switchOptions() {
     if (optionsShown == false) {   
         // char -> list
-        mcontent.style.transform = "translateY(100%)";
-        mcontent.style.height = "0";
-        options.style.transform = "translateY(0)";
-        options.style.height = "100%";
-        getElem("options-title").style.transform = "translateY(0)";
-        getElem("optionsContent").style.transform = "translateY(0)";
         showOptionsBtn.classList.add("btnSelected");
-        showCharsBtn.disabled = true;
         optionsShown = true;
-        getElem("bottomText").style.visibility = "visible";
+        getElem("topwrapper").style.transform = "translateY(0)";
     } else {
         // char -> list
-        mcontent.style.transform = "translateY(0)";
-        mcontent.style.height = "100%";
-        options.style.transform = "translateY(-100%)";
-        options.style.height = "0";
-        getElem("options-title").style.transform = "translateY(-100vh)";
-        getElem("optionsContent").style.transform = "translateY(-100vh)";
         showOptionsBtn.classList.remove("btnSelected");
-        showCharsBtn.disabled = false;
         optionsShown = false;
+        getElem("topwrapper").style.transform = "translateY(-50%)";
     }
 }
 
@@ -384,4 +381,4 @@ function showPopup(title, text, width="150", height="90") {
     popupDialog.querySelector('.close').addEventListener('click', function() {popupDialog.close();});
 }
 
-window.onload = genImage();
+// window.onload = genImage();
