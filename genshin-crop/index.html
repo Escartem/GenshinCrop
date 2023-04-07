@@ -20,12 +20,14 @@
 	<script defer src="assets/js/material.min.js"></script>
 	<script src="assets/js/mui.min.js"></script>
 	<script src="assets/js/confetti.min.js"></script>
+	<script src="assets/js/leaflet-src.js"></script>
 	<!-- <script src="https://ena.escartem.eu.org/js/ems.js"></script> -->
-	<!-- <script src="https://kit.fontawesome.com/8cacf0a9e5.js" crossorigin="anonymous"></script> -->
+	<script src="https://kit.fontawesome.com/8cacf0a9e5.js" crossorigin="anonymous"></script>
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
 	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
 	<link rel="stylesheet" href="assets/css/styles.css?v=162">
+	<link rel="stylesheet" href="assets/css/leaflet.css" />
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-132CTGT17P"></script>
 	<script>
@@ -37,7 +39,7 @@
 	</script>
 	<title>Genshin Crop</title>
 </head>
-<body>
+<body style="opacity: 0; transition: 500ms; background-color: var(--background-color);">
 	<div class="main">
 		<dialog class="mdl-dialog" id="popupDialog">
 			<div class="mdl-dialog__content" style="padding: 0.1px; height: 100%; color: var(--text-color);">
@@ -53,7 +55,20 @@
 		<div id="top-bar">
 			<div id="bar-left" style="height: 100%; display: flex; align-items: center;">
 				<img id="icon" draggable="false" src="./assets/img/icon.png" style="height: 100%;">
-				<span class="title" style="color: var(--text-color); font-size: 24px;">Genshin Crop</span>
+				<span class="title" style="color: var(--text-color); font-size: 24px; transition: 250ms;">Genshin Crop</span>
+			</div>
+			<div id="bar-middle">
+				<div id="gamemodeWrapper">
+					<span id="gamemodeSelector"></span>
+					<div id="topTextWrapper">
+						<div id="topText">Map</div>
+						<div id="topText">Characters</div>
+					</div>
+					<div id="selectorBg">
+						<span class="selectorBgBtn" id="gmMap"></span>
+						<span class="selectorBgBtn" id="gmChar"></span>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -141,10 +156,9 @@
 							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
 								version 2.0.0 (? april 2023)
 								<ul>
-									<li>new gamemode added : guess the map location</li>
-									<li>the previous gamemode is still available but map is now showed by default</li>
-									<li>interface changes and smoother animations</li>
-									<li>many bug fixes and better support for different screen sizes</li>
+									<li>New gamemode added ! How well do you know Teyvat ? Try now with a geoguessr style minigame.</li>
+									<li>For the characters mode, there is now support of multiples names for the same characters, you can see them in the characters list</li>
+									<li>Many bug fixes, an improved interface with a new top bar and better centered elements, better mobile support, smoother animations to make the website more clean and pleasing.</li>
 								</ul>
 							</span>
 						</div>
@@ -225,7 +239,25 @@
 
 				<div id="main-wrapper">
 					<div id="main-map">
-						<div id="main-map-content"></div>
+						<div id="mmaplistwrap">
+							<div id="map-cont-top-part">
+								<div id="maptopcontent">
+									<div class="pic">
+										<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="load-spinner-map"></div>
+										<img id="guessMap" src="./assets/img/load.png" draggable="false" style="border-radius: 7px; height: 100%;">
+										<span id="error-text" class="error-text">Something went wrong 😣<br/>Please try again</span>
+									</div>
+
+									<div>
+										<button id="showMapBtn">ja gut</button>
+										<button id="genMapBtn">moar</button>
+									</div>
+								</div>
+							</div>
+							<div id="map-cont-bottom-part">
+								<div id="map"></div>
+							</div>
+						</div>
 					</div>
 
 					<div id="main-char">
@@ -242,7 +274,7 @@
 								<span class="pic-title" style="padding: 0%; padding-top: 3%;">Who is this ?</span>
 								<div class="pic">
 									<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="load-spinner"></div>
-									<img id="char" src="./assets/img/load.png" draggable="false">
+									<img id="char" src="./assets/img/load.png" draggable="false" style="border-radius: 7px;">
 									<span id="error-text" class="error-text">Something went wrong 😣<br/>Please try again</span>
 								</div>
 
@@ -276,7 +308,6 @@
 			</div>
 			<div class="bottomLine"><hr></div>
 				<div class="right">
-					<button id="switchModeBtn">aaaa</button>
 					<button type="button" class="mdc-button mdc-button--raised" id="leftPanelSwitch"><span class="mdc-button__label">🤔 About</span></button>
 					<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label" disabled>⚙ Settings</span></button>
 			</div>
