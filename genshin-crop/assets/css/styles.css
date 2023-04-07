@@ -2,6 +2,7 @@ html {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+    overflow: hidden;
 }
 
 :root,
@@ -101,6 +102,11 @@ button:disabled {
     transition: 250ms;
 }
 
+#map-cont-top-part, #map-cont-bottom-part {
+    width: 100%;
+    height: 100%;
+}
+
 .main {
     width: 100vw;
     height: 100vh;
@@ -117,6 +123,81 @@ button:disabled {
     position: absolute;
     top: 0;
     background-color: var(--secondary-color);
+    transition: 250ms;
+}
+
+#bar-middle {
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#gamemodeWrapper {
+    width: 200px;
+    height: 30px;
+    border-radius: 7px;
+    background-color: var(--clist-color);
+    display: flex;
+    align-items: center;
+}
+
+#gamemodeSelector {
+    height: 26px;
+    position: absolute;
+    width: 96px;
+    margin-left: 2px;
+    background-color: var(--background-color);
+    border-radius: 7px;
+    z-index: 2;
+    transition: 250ms;
+}
+
+#topTextWrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    z-index: 3;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    color: var(--text-color);
+}
+
+#topText {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#selectorBg {
+    width: 200px;
+    height: 30px;
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1;
+}
+
+.selectorBgBtn {
+    width: calc(50% - 4px);
+    height: calc(100% - 4px);
+    background-color: var(--clist-color);
+    display: flex;
+    border-radius: 7px;
+    transition: 250ms;
+}
+
+.selectorBgBtn:hover {
+    filter: brightness(1.1);
+    cursor: pointer;
 }
 
 .top {
@@ -190,13 +271,26 @@ button:disabled {
     z-index: 999;
 }
 
-#mcontlistwrap {
+#mcontlistwrap, #mmaplistwrap {
     width: 100%;
     height: 200%;
     display: flex;
     flex-direction: column;
     transition: 250ms;
     transform: translateY(-50%);
+}
+
+#mmaplistwrap {
+    transform: translateY(0);
+}
+
+#maptopcontent {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 #topwrapper {
@@ -276,6 +370,7 @@ button:disabled {
     color: var(--text-color);
     font-size: 200%;
     padding: 3%;
+    transition: 250ms;
 }
 
 .char-name {
@@ -289,11 +384,10 @@ button:disabled {
     justify-content: center;
     align-items: center;
     width: 30vw;
-    height: 30vh;
+    height: 40vh;
 }
 
 img {
-    border-radius: 8px;
     transition: all 0.2s ease 0s;
     height: 70%;
     object-fit: contain;
@@ -306,6 +400,10 @@ img {
     width: 90%;
     margin: auto;
     max-width: 500px;
+}
+
+#map {
+    height: 100%;
 }
 
 .report {
@@ -378,7 +476,7 @@ img {
     background: var(--background-color);
 }
 
-#load-spinner {
+#load-spinner, #load-spinner-map {
     z-index: 10;
     position: absolute;
     visibility: hidden;
@@ -401,8 +499,10 @@ img {
     .left { margin-bottom: 30px; }
     .right { right: 100% !important; transform: translate(100%, 0) !important; margin-right: 0px !important; }
     .bottomLine { margin-bottom: 5px !important; }
-    .left-panel { width: 90%; transition: 250ms; }
+    .left-panel { width: 90%; transition: 250ms; height: calc(80% - 30px); margin-bottom: 80px; }
     .main-panel-moved { width: 0 !important; height: 0 !important; }
+    .title { transform: translateY(-100px); }
+    .top { height: calc(80% - 30px); margin-bottom: 80px; }
 }
 
 .bottomLine {

@@ -8,7 +8,10 @@ VERSION = "2.0.0"
 console.log("v"+VERSION);
 document.getElementById("version").innerHTML = "V"+VERSION;
 
-// vars
+////////////
+/// VARS ///
+////////////
+
 var curr_char = null;
 var buid = null;
 var url_object = null;
@@ -35,7 +38,11 @@ confetti.destroyTarget(false);
 
 function getElem(id) {return document.getElementById(id)};
 
-// elems and functions (this is chaotic and need some optimisation but it works so shush)
+/////////////////////
+/// ELEMS + FUNCS ///
+/////////////////////
+
+// this is chaotic and need some optimisation but it works so shush
 regenBtn = getElem("regenBtn");
 reportBtn = getElem("reportBtn");
 checkInputBtn = getElem("checkInputBtn");
@@ -59,16 +66,22 @@ optionsNoConfettis = getElem("optionsNoConfettis");
 optionsNewAuto = getElem("optionsNewAuto");
 optionsHideReportBtn = getElem("optionsHideWrongImg");
 // game modes
-switchModeBtn = getElem("switchModeBtn");
 leftWrapper = getElem("left-panel-wrapper");
 mainWrapper = getElem("main-wrapper");
+gmMap = getElem("gmMap");
+gmChar = getElem("gmChar");
+showMapBtn = getElem("showMapBtn");
+genMapBtn = getElem("genMapBtn");
 
 document.addEventListener("keydown", function(e) {if (e.ctrlKey && e.keyCode == 81) {e.preventDefault(); if (gen==false && charsListEnabled==false && optionsShown==false) {genImage();}}});
+gmMap.addEventListener("click", function(event) {event.preventDefault(); switchMode("map");})
+gmChar.addEventListener("click", function(event) {event.preventDefault(); switchMode("char");})
 uinput.onkeydown = function(event) {if (event.keyCode == 13) {check();}};
 regenBtn.addEventListener("click", function(event) {event.preventDefault(); genImage();});
 reportBtn.addEventListener("click", function(event) {event.preventDefault(); showPopup("Report image", "Please join the <a href='https://discord.gg/fzRdtVh', target='_blank'>discord</a> and provide this : <span style='color: white; background: #2a2a2a;'>"+buid+"</span>", 260, 200);});
+genMapBtn.addEventListener("click", function(event) {event.preventDefault(); genMap();})
+showMapBtn.addEventListener("click", function(event) {event.preventDefault(); showMap();})
 showCharsBtn.addEventListener("click", function(event) {event.preventDefault(); switchCharList();})
-switchModeBtn.addEventListener("click", function(event) {event.preventDefault(); switchMode();})
 checkInputBtn.addEventListener("click", function(event) {event.preventDefault(); check();})
 showOptionsBtn.addEventListener("click", function(event) {event.preventDefault(); switchOptions();})
 showLeftPanelBtn.addEventListener("click", function(event) {event.preventDefault(); switchLeftPanel();})
@@ -76,7 +89,10 @@ showOldVersionsBtn.addEventListener("click", function(event) {event.preventDefau
 
 getElem("listContent").innerHTML = chars;
 
-// cookies -> switched to local storage for better perf but kept old names
+////////////////////////////////////////
+/// COOKIES LOCAL STORAGE EDITION :) ///
+////////////////////////////////////////
+
 function getCookie(name, check=false) {
     t = window.localStorage.getItem(name)
     if (t != null) {
@@ -99,7 +115,10 @@ function deleteCookie(name) {
     window.localStorage.removeItem(name);
 }
 
-// set up options
+//////////////////////
+/// SET UP OPTIONS ///
+//////////////////////
+
 optionsLightMode.checked = getCookie("lightMode") == 1 ? true : false;
 optionsNoConfettis.checked = getCookie("noConfettis") == 1 ? true : false;
 optionsNewAuto.checked = getCookie("newAuto") == 1 ? true : false;
@@ -110,23 +129,39 @@ optionsNoConfettis.addEventListener("click", function() { setCookie("noConfettis
 optionsNewAuto.addEventListener("click", function() { setCookie("newAuto", optionsNewAuto.checked ? 1 : 0); });
 optionsHideReportBtn.addEventListener("click", function() { setCookie("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
 
-// app functions
-function switchMode() {
-    if (gameMode == "map") {
+//////////////////////
+/// MAIN FUNCTIONS ///
+//////////////////////
+
+// change gamemode
+function switchMode(mode) {
+    if (optionsShown == true) {
+        switchOptions();
+    }
+    if (mode == "char") {
         // map to char
         leftWrapper.style.transform = "translateX(-50%)";
         mainWrapper.style.transform = "translateX(-50%)";
 
+        getElem("gamemodeSelector").style.transform = "translateX(calc(100% + 4px))";
+
         gameMode = "char";
+        setCookie("gamemode", "char");
     } else {
         // char to map
         leftWrapper.style.transform = "translateX(0)";
         mainWrapper.style.transform = "translateX(0)";
 
+        getElem("gamemodeSelector").style.transform = "translateX(0)";
+
         gameMode = "map";
+        setCookie("gamemode", "map");
     }
 }
 
+switchMode(getCookie("gamemode"));
+
+// toggle about menu
 function switchLeftPanel() {
     mainPanel = getElem("mainPanel");
     leftPanel = getElem("leftPanel");
@@ -147,6 +182,7 @@ function switchLeftPanel() {
 
 if (getCookie("leftPanelVisible", true) === false && window.innerWidth > 690) { switchLeftPanel(); } else { if (getCookie("leftPanelVisible") == 1) { switchLeftPanel(); } }
 
+// dark / light mode
 function themeSwitch() {
     if (getCookie("lightMode") == 1) {
         document.documentElement.classList.remove("dark");
@@ -159,6 +195,7 @@ function themeSwitch() {
 
 themeSwitch();
 
+// report button hide
 function reportBtnSwitch() {
     if (getCookie("hideReportBtn") == 1) {
         reportBtn.style.pointerEvents = "none";
@@ -173,6 +210,7 @@ function reportBtnSwitch() {
 
 reportBtnSwitch();
 
+// characters list
 function switchCharList() {
     if (window.innerWidth < 690) {
         switchLeftPanel();
@@ -193,6 +231,7 @@ function switchCharList() {
     }
 }
 
+// toggle options
 function switchOptions() {
     if (optionsShown == false) {   
         // char -> list
@@ -207,6 +246,7 @@ function switchOptions() {
     }
 }
 
+// show old versions in settings
 function showOldVersions() {
     if (oldVersionsShown == false) {
         showOldVersionsBtn.classList.add("btnSelected");
@@ -232,6 +272,11 @@ function buttonState(tf, b) {
     reportBtn.disabled = tf;
 }
 
+///////////////////////////
+/// CHARACTERS GAMEMODE ///
+///////////////////////////
+
+// gen image
 function genImage() {
     gen = true;
     resultLoading = false;
@@ -263,7 +308,6 @@ function genImage() {
 
         uinput.focus();
 
-        // for some reason this does not seem to work
         URL.revokeObjectURL(url_object);
         URL.revokeObjectURL(url_object_result);
 
@@ -298,6 +342,7 @@ function genImage() {
     });
 }
 
+// check input
 function check() {
     resultLoading = true;
     uinput.blur()
@@ -322,7 +367,6 @@ function check() {
     inputArea.style.opacity = 0;
     resultArea.style.opacity = 1;
 
-    // char.style.opacity = 0;
     char.style.opacity = 0.5;
     loadSpinner.style.visibility = "visible";
     char.style.height = "100%";
@@ -345,8 +389,6 @@ function check() {
 
     }
 
-    // img.src = full_url;
-
     const req = new Request(result_url);
 
     fetch(req).then((response) => {
@@ -366,6 +408,82 @@ function check() {
     });
 }
 
+////////////////////
+/// MAP GAMEMODE ///
+////////////////////
+
+mapChecked = false;
+var marker;
+var imgMarker;
+var rlat = 0;
+var rlng = 0;
+var polyline = null;
+
+// setup map
+var map = L.map("map", {
+    crs: L.CRS.Simple
+}).setView([0, 0], 0);
+
+L.TileLayer.CustomCoords = L.TileLayer.extend({
+    getTileUrl: function(tilecoords) {
+        tilecoords.x = tilecoords.x;
+        tilecoords.y = -tilecoords.y-1;
+        tilecoords.z = tilecoords.z;
+        return L.TileLayer.prototype.getTileUrl.call(this, tilecoords);
+    }
+});
+
+var layer = new L.TileLayer.CustomCoords("https://game-cdn.appsample.com/gim/map-teyvat/v34-rc1/{z}/tile-{x}_{y}.jpg", {
+    bounds: [[-256, -256], [256, 256]],
+    tms: true,
+    infinite: false,
+    minZoom: 1,
+    maxZoom: 6,
+    zoomOffset: 9,
+    errorTileUrl: "https://b.thumbs.redditmedia.com/H5nhWWeE6BI_2EOBPwPXaLIWBsFN0pV5YExGorp16zY.png"
+}).addTo(map);
+
+// map functions
+if (typeof(Number.prototype.toRad) === "undefined") {
+    Number.prototype.toRad = function() {
+        return this * Math.PI / 180;
+    }
+};
+
+function getXYcoord(lat, lng, size) {
+    x = Math.floor(lng/size);
+    y = Math.floor(lat/size);
+    return [x, y];
+};
+
+function getLLcoord(x, y, size) {
+    lat = y*size+(size/2);
+    lng = x*size+(size/2);
+    return [lat, lng];
+};
+
+function showMap() {
+    getElem("mmaplistwrap").style.transform = "translateY(-50%)";
+}
+
+map.on("click", function(ev) {
+    if (mapChecked == false) {
+        // if (checkBtn.disabled = true) {
+        //     checkBtn.disabled = false;
+        // };
+
+        if (!marker) {
+            marker = L.marker(ev.latlng).addTo(map);
+        } else {
+            marker.setLatLng(ev.latlng);
+        };
+    }
+})
+
+////////////
+/// MISC ///
+////////////
+
 function showPopup(title, text, width="150", height="90") {
     var popupDialog = getElem("popupDialog");
 
@@ -384,7 +502,9 @@ function showPopup(title, text, width="150", height="90") {
     popupDialog.querySelector('.close').addEventListener('click', function() {popupDialog.close();});
 }
 
-// window.onload = genImage();
+window.addEventListener("load", () => {
+    document.body.style.opacity = 1;
+})
 
 // todo 
 // bouton hide bar en haut et en bas car why not
