@@ -627,6 +627,7 @@ button {
 button:disabled {
     color: rgba(255, 255, 255, 1) !important;
     background-color: rgba(0, 0, 0, 0.5) !important;
+    cursor: not-allowed !important;
 }
 
 .btnSelected {
