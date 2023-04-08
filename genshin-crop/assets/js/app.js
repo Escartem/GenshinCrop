@@ -94,8 +94,8 @@ document.addEventListener("keydown", function(e) {
             checkMap();
         }
     } else if (e.keyCode == 32) {
-        e.preventDefault();
         if (gameMode == "map" && genMap == false) {
+            e.preventDefault();
             showMap();
         }
     }
