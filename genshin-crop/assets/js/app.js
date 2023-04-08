@@ -554,11 +554,16 @@ function showMap() {
 
 function mapScorePos(score) {
     message = "";
-    if (score.between(0, 80)) {
+    if (socre == 0) {
+        message = "How.";
+        if (getCookie("noConfettis") == 0) {
+            getElem("c").dispatchEvent(triggerConfettis);
+        };
+    } else if (score.between(0, 80)) {
         message = "Perfectly on spot 🎉";
         if (getCookie("noConfettis") == 0) {
             getElem("c").dispatchEvent(triggerConfettis);
-        }
+        };
     } else if (score.between(80, 140)) {
         message = "Pretty close 😔";
     } else if (score.between(140, 320)) {
