@@ -486,7 +486,7 @@ L.TileLayer.CustomCoords = L.TileLayer.extend({
     }
 });
 
-var layer = new L.TileLayer.CustomCoords("https://game-cdn.appsample.com/gim/map-teyvat/v34-rc1/{z}/tile-{x}_{y}.jpg", {
+var layer = new L.TileLayer.CustomCoords("https://bluedb.escartem.eu.org/gs/map/{z}/{z}_{x}-{y}.png", {
     bounds: [[-256, -256], [256, 256]],
     tms: true,
     infinite: false,
