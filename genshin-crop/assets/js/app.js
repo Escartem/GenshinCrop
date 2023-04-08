@@ -1,7 +1,7 @@
 // Escartem
 
 // ems is a simple script that disable some keyboard shortcuts and show a nice message in console
-// setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
+setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
 VERSION = "2.0.0"
@@ -12,22 +12,25 @@ document.getElementById("version").innerHTML = "V"+VERSION;
 /// VARS ///
 ////////////
 
-var curr_char = null;
-var buid = null;
-var url_object = null;
-var url_object_result = null;
-var gen = false;
-var resultLoading = false;
-var full_url = null;
-var charsListEnabled = false;
-var optionsShown = false;
-var leftPanelShown = false;
-var oldVersionsShown = false;
+var curr_char=buid=url_object=url_object_result=full_url=null;
+var gen=resultLoading=charsListEnabled=optionsShown=leftPanelShown=oldVersionsShown=charInitialized=mapInitialized=false;
+
 var gameMode = "map";
-var charList = ["Aether", "Albedo", "Alhaitham", "Aloy", "Amber", "Ayaka", "Ayato", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Dehya", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", "Itto", "Jean", "Kaeya", "Kazuha", "Keqing", "Klee", "Kokomi", "Kujou Sara", "Kuki", "Layla", "Lisa", "Lumine", "Mika", "Mona", "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", "Raiden", "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", "Tartaglia", "Thoma", "Tighnari", "Venti", "Wanderer", "Xiangling", "Xiao", "Xingqiu", "Xinyan", "Yae Miko", "Yanfei", "YaoYao", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
-var chars = charList.join().replaceAll(","," <br/> ")
+var charList = ["Aether", "Albedo", "Alhaitham", "Aloy", "Amber", "Ayaka", "Ayato", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Dehya", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", ["Itto", "Arataki Itto"], "Jean", "Kaeya",  ["Kazuha", "Kaedehara Kazuha"], "Keqing", "Klee", ["Kokomi", "Sangonomiya Kokomi"], ["Sara", "Kujou Sara"], ["Kuki", "Kuki Shinobu"], "Layla", "Lisa", "Lumine", ["Mika", "Mika Schmidt"], ["Mona", "Mona Megistus"], "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", ["Ei", "Raiden", "Shogun", "Raiden Shogun", "Baal"], "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", ["Tartaglia", "Childe"], "Thoma", "Tighnari", "Venti", ["Wanderer", "Scaramouche"], "Xiangling", "Xiao", "Xingqiu", "Xinyan", ["Yae Miko", "Yae"], "Yanfei", "YaoYao", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
+var charReplacement = {};
+var chars = "";
+charList.forEach(function(value) {
+    if (typeof(value) === "object") {
+        chars += `<br/>${value.join().replaceAll(",",", ")}`;
+
+        charReplacement[value[0].toLowerCase()] = value.map(name => name.toLowerCase());
+    } else {
+        chars += `<br/>${value}`;
+    }
+});
+chars = chars.slice(5);
 const triggerConfettis = new Event("confetti");
-let confetti = new Confetti('checkInputBtn');
+let confetti = new Confetti("c");
 
 // tadjikistan
 confetti.setCount(300);
@@ -70,20 +73,48 @@ leftWrapper = getElem("left-panel-wrapper");
 mainWrapper = getElem("main-wrapper");
 gmMap = getElem("gmMap");
 gmChar = getElem("gmChar");
+// map
 showMapBtn = getElem("showMapBtn");
 genMapBtn = getElem("genMapBtn");
+checkMapBtn = getElem("checkMapBtn");
+genMapBtnBottom = getElem("genMapBtnBottom");
 
-document.addEventListener("keydown", function(e) {if (e.ctrlKey && e.keyCode == 81) {e.preventDefault(); if (gen==false && charsListEnabled==false && optionsShown==false) {genImage();}}});
+// ctrl + q shortcut
+document.addEventListener("keydown", function(e) {
+    if (e.ctrlKey && e.keyCode == 81) {
+        e.preventDefault();
+        if (gameMode == "char") {  
+            if (gen==false && charsListEnabled==false && optionsShown==false) {genImage();};
+        } else {
+            if (genMap==false && optionsShown==false) {genMapGuess();};
+        }
+    } else if (e.keyCode == 13) {
+        e.preventDefault();
+        if (gameMode == "map" && checkMapBtn.disabled == false) {
+            checkMap();
+        }
+    } else if (e.keyCode == 32) {
+        e.preventDefault();
+        if (gameMode == "map" && genMap == false) {
+            showMap();
+        }
+    }
+});
+// input enter shortcut
+uinput.onkeydown = function(event) {if (event.keyCode == 13) {check();}};
+
+// buttons links
 gmMap.addEventListener("click", function(event) {event.preventDefault(); switchMode("map");})
 gmChar.addEventListener("click", function(event) {event.preventDefault(); switchMode("char");})
-uinput.onkeydown = function(event) {if (event.keyCode == 13) {check();}};
 regenBtn.addEventListener("click", function(event) {event.preventDefault(); genImage();});
 reportBtn.addEventListener("click", function(event) {event.preventDefault(); showPopup("Report image", "Please join the <a href='https://discord.gg/fzRdtVh', target='_blank'>discord</a> and provide this : <span style='color: white; background: #2a2a2a;'>"+buid+"</span>", 260, 200);});
-genMapBtn.addEventListener("click", function(event) {event.preventDefault(); genMap();})
+genMapBtn.addEventListener("click", function(event) {event.preventDefault(); genMapGuess();})
 showMapBtn.addEventListener("click", function(event) {event.preventDefault(); showMap();})
+checkMapBtn.addEventListener("click", function(event) {event.preventDefault(); checkMap();})
 showCharsBtn.addEventListener("click", function(event) {event.preventDefault(); switchCharList();})
 checkInputBtn.addEventListener("click", function(event) {event.preventDefault(); check();})
 showOptionsBtn.addEventListener("click", function(event) {event.preventDefault(); switchOptions();})
+genMapBtnBottom.addEventListener("click", function(event) {event.preventDefault(); genMapGuess();})
 showLeftPanelBtn.addEventListener("click", function(event) {event.preventDefault(); switchLeftPanel();})
 showOldVersionsBtn.addEventListener("click", function(event) {event.preventDefault(); showOldVersions();})
 
@@ -134,7 +165,7 @@ optionsHideReportBtn.addEventListener("click", function() { setCookie("hideRepor
 //////////////////////
 
 // change gamemode
-function switchMode(mode) {
+function switchMode(mode, initialize=true) {
     if (optionsShown == true) {
         switchOptions();
     }
@@ -147,6 +178,10 @@ function switchMode(mode) {
 
         gameMode = "char";
         setCookie("gamemode", "char");
+
+        if (charInitialized == false && initialize == true) {
+            genImage();
+        };
     } else {
         // char to map
         leftWrapper.style.transform = "translateX(0)";
@@ -156,15 +191,22 @@ function switchMode(mode) {
 
         gameMode = "map";
         setCookie("gamemode", "map");
+
+        if (mapInitialized == false && initialize == true) {
+            genMapGuess();
+        };
     }
 }
 
-switchMode(getCookie("gamemode"));
+switchMode(getCookie("gamemode"), false);
 
 // toggle about menu
 function switchLeftPanel() {
     mainPanel = getElem("mainPanel");
     leftPanel = getElem("leftPanel");
+    if (gameMode == "map") {
+        setTimeout(function() {map.invalidateSize()}, 300);
+    }
     if (leftPanelShown == false) {
         mainPanel.classList.add("main-panel-moved");
         leftPanel.style.transform = "translateX(0)";
@@ -262,14 +304,17 @@ function showOldVersions() {
 }
 
 // change buttons state
-function buttonState(tf, b) {
-    regenBtn.disabled = tf;
-
-    uinput.disabled = tf;
-    
-    checkInputBtn.disabled = tf;
-
-    reportBtn.disabled = tf;
+function buttonState(tf, b, mode) {
+    if (mode == "char") {
+        regenBtn.disabled = tf;
+        uinput.disabled = tf;
+        checkInputBtn.disabled = tf;
+        reportBtn.disabled = tf;
+    } else {
+        genMapBtn.disabled = tf;
+        showMapBtn.disabled = tf;
+        genMapBtnBottom.disabled = tf;
+    }
 }
 
 ///////////////////////////
@@ -278,16 +323,17 @@ function buttonState(tf, b) {
 
 // gen image
 function genImage() {
+    if (charInitialized == false) {
+        charInitialized = true;
+    };
+
     gen = true;
     resultLoading = false;
     errorText.style.visibility = "hidden";
     loadSpinner.style.visibility = "visible";
     char.style.opacity = 0.5;
 
-    buttonState(true, 0.7);
-
-    showCharsBtn.disabled = true;
-    showOptionsBtn.disabled = true;
+    buttonState(true, 0.7, "char");
 
     char.style.height = "70%";
 
@@ -298,7 +344,7 @@ function genImage() {
         char.style.opacity = 1;
         loadSpinner.style.visibility = "hidden";
         
-        buttonState(false, 1);
+        buttonState(false, 1, "char");
 
         inputArea.style.opacity = 1;
         resultArea.style.opacity = 0;
@@ -306,14 +352,14 @@ function genImage() {
         uinput.disabled = false;
         checkInputBtn.disabled = false;
 
-        uinput.focus();
+        if (gameMode == "char" && optionsShown == false && charsListEnabled == false) {
+            uinput.focus();
+        };
 
         URL.revokeObjectURL(url_object);
         URL.revokeObjectURL(url_object_result);
 
         gen = false;
-        showCharsBtn.disabled = false;
-        showOptionsBtn.disabled = false;
     }
 
     const req = new Request("https://api.escartem.eu.org/p/gca/c");
@@ -321,7 +367,6 @@ function genImage() {
     fetch(req).then((response) => {
         curr_char = response.headers.get("char");
         buid = response.headers.get("uid");
-        // full_url = response.headers.get("full");
         result_url = response.headers.get("result");
         response.blob().then((blob) => {
             const objectURL = URL.createObjectURL(blob);
@@ -337,8 +382,6 @@ function genImage() {
         regenBtn.disabled = false;
         regenBtn.style.filter = "brightness(1)";
         gen = false;
-        showCharsBtn.disabled = false;
-        showOptionsBtn.disabled = false;
     });
 }
 
@@ -351,9 +394,15 @@ function check() {
     var entry = (uinput.value).toLowerCase().trimEnd();
     var text = getElem("result-text");
 
-    if (entry == curr_char.toLowerCase()) {
+    if (curr_char.toLowerCase() in charReplacement) {
+        win = (charReplacement[curr_char.toLowerCase()].includes(entry));
+    } else {
+        win = (entry == curr_char.toLowerCase())
+    };
+
+    if (win) {
         if (getCookie("noConfettis") == 0) {
-            checkInputBtn.dispatchEvent(triggerConfettis)
+            getElem("c").dispatchEvent(triggerConfettis);
         }
         text.innerHTML = "Correct 🎉";
         text.style.color = "var(--text-green)";
@@ -371,7 +420,7 @@ function check() {
     loadSpinner.style.visibility = "visible";
     char.style.height = "100%";
 
-    if (getCookie("newAuto") == 1 && entry == curr_char.toLowerCase()) {
+    if (getCookie("newAuto") == 1 && win) {
         genImage();
     }
 
@@ -413,16 +462,20 @@ function check() {
 ////////////////////
 
 mapChecked = false;
+var genMap = false;
 var marker;
 var imgMarker;
 var rlat = 0;
 var rlng = 0;
 var polyline = null;
+var guessImg = getElem("guessMap");
+var loadSpinnerMap = getElem("load-spinner-map");
+var errorTextMap = getElem("error-text-map");
 
 // setup map
 var map = L.map("map", {
     crs: L.CRS.Simple
-}).setView([0, 0], 0);
+}).setView([0, 0], 1);
 
 L.TileLayer.CustomCoords = L.TileLayer.extend({
     getTileUrl: function(tilecoords) {
@@ -440,13 +493,31 @@ var layer = new L.TileLayer.CustomCoords("https://game-cdn.appsample.com/gim/map
     minZoom: 1,
     maxZoom: 6,
     zoomOffset: 9,
-    errorTileUrl: "https://b.thumbs.redditmedia.com/H5nhWWeE6BI_2EOBPwPXaLIWBsFN0pV5YExGorp16zY.png"
+    errorTileUrl: "assets/img/empty.png"
 }).addTo(map);
+
+var resultIcon = L.icon({
+    iconUrl: "assets/img/result-marker.png",
+    shadowUrl: "assets/img/marker-shadow.png",
+
+    iconSize: [25, 25],
+    shadowSize: [41, 41],
+    iconAnchor: [12, 24],
+    shadowAnchor: [12, 37]
+});
 
 // map functions
 if (typeof(Number.prototype.toRad) === "undefined") {
     Number.prototype.toRad = function() {
         return this * Math.PI / 180;
+    }
+};
+
+if (typeof(Number.prototype.between) === "undefined") {
+    Number.prototype.between = function(a, b, i=true) {
+        var min = Math.min.apply(Math, [a, b]);
+        var max = Math.max.apply(Math, [a, b]);
+        return i ? this >= min && this <= max : this > min && this < max;
     }
 };
 
@@ -462,15 +533,11 @@ function getLLcoord(x, y, size) {
     return [lat, lng];
 };
 
-function showMap() {
-    getElem("mmaplistwrap").style.transform = "translateY(-50%)";
-}
-
 map.on("click", function(ev) {
     if (mapChecked == false) {
-        // if (checkBtn.disabled = true) {
-        //     checkBtn.disabled = false;
-        // };
+        if (checkMapBtn.disabled = true) {
+            checkMapBtn.disabled = false;
+        };
 
         if (!marker) {
             marker = L.marker(ev.latlng).addTo(map);
@@ -479,6 +546,127 @@ map.on("click", function(ev) {
         };
     }
 })
+
+function showMap() {
+    getElem("mmaplistwrap").style.transform = "translateY(-50%)";
+    map.invalidateSize();
+};
+
+function mapScorePos(score) {
+    message = "";
+    if (score.between(0, 80)) {
+        message = "Perfectly on spot 🎉";
+        if (getCookie("noConfettis") == 0) {
+            getElem("c").dispatchEvent(triggerConfettis);
+        }
+    } else if (score.between(80, 140)) {
+        message = "Pretty close 😔";
+    } else if (score.between(140, 320)) {
+        message = "Good, but not good enough 🗿";
+    } else if (score.between(320, 580)) {
+        message = "Better luck next time 🍀";
+    } else if (score.between(580, 800)) {
+        message = "You tried 🤓";
+    } else {
+        message = "You are completly lost 🤨";
+    }
+    return message;
+}
+
+function genMapGuess() {
+    if (mapInitialized == false) {
+        mapInitialized = true;
+    };
+
+    genMap = true;
+    getElem("mmaplistwrap").style.transform = "translateY(0)";
+
+    errorTextMap.style.visibility = "hidden";
+    loadSpinnerMap.style.visibility = "visible";
+    guessImg.style.opacity = 0.5;
+    getElem("mapMessage").style.transform = "translateY(-10vh)";
+    
+    buttonState(true, 0.7, "map");
+    checkMapBtn.disabled = true;
+
+    if (marker) {marker.remove(); marker=null};
+    if (imgMarker) {imgMarker.remove()};
+    if (polyline) {polyline.remove()};
+
+    var img = new Image();
+
+    img.onload = function() {
+        guessImg.src = img.src;
+        guessImg.style.opacity = 1;
+        loadSpinnerMap.style.visibility = "hidden";
+
+        buttonState(false, 0.7, "map");
+
+        genMap = false;
+
+        URL.revokeObjectURL(url_object);
+
+        mapChecked = false;
+
+        map.setView([0, 0], 1);
+        map.invalidateSize();
+    }
+
+    // defaults to medium difficulty, will add easy/hard mode later
+    const req = new Request("https://api.escartem.eu.org/p/gca/m/14x512");
+
+    fetch(req).then((response) => {
+        rx = response.headers.get("rx");
+        ry = response.headers.get("ry");
+        size = response.headers.get("size");
+        os = 2**(-(size-9)+8);
+        llc = getLLcoord(rx,ry,os);
+        [rlat,rlng]= [llc[0],llc[1]];
+
+        response.blob().then((blob) => {
+            const objectURL = URL.createObjectURL(blob);
+            url_object = objectURL;
+            img.src = objectURL;
+        });
+    })
+    .catch((error) => {
+        guessImg.src = "./assets/img/load.png";
+        guessImg.style.opacity = 1;
+        loadSpinnerMap.style.visibility = "hidden";
+        errorTextMap.style.visibility = "visible";
+        genMapBtn.disabled = false;
+        genMapBtn.style.filter = "brightness(1)";
+        genMap = false;
+    })
+};
+
+function checkMap() {
+    mapChecked = true;
+
+    checkMapBtn.disabled = true;
+
+    imgMarker = L.marker([lat, lng], {icon: resultIcon}).addTo(map);
+
+    var dots = Array();
+    dots.push(marker.getLatLng());
+    dots.push(imgMarker.getLatLng());
+
+    distance = dots[0].distanceTo(dots[1]);
+    score = Math.round(distance/10000);
+
+    polyline = L.polyline(dots, {color: "red"}).addTo(map);
+    map.fitBounds(polyline.getBounds());
+
+    // approximation of ratio between geographic coordonate system and in-game distance
+    coeff = 2.948595429*10**-4
+
+    gameDistance = distance * coeff;
+    distanceMessage = mapScorePos(gameDistance);
+
+    getElem("mapMessageTop").innerHTML = `You were ${Math.round(gameDistance)} meters away`;
+    getElem("mapMessageBottom").innerHTML = distanceMessage;
+    getElem("mapMessage").style.transform = "translateY(0)";
+}
 
 ////////////
 /// MISC ///
@@ -504,7 +692,5 @@ function showPopup(title, text, width="150", height="90") {
 
 window.addEventListener("load", () => {
     document.body.style.opacity = 1;
-})
-
-// todo 
-// bouton hide bar en haut et en bas car why not
+    switchMode(gameMode);
+});
