@@ -144,6 +144,7 @@ button:disabled {
     background-color: var(--clist-color);
     display: flex;
     align-items: center;
+    transition: 250ms;
 }
 
 #gamemodeSelector {
@@ -387,10 +388,32 @@ button:disabled {
     height: 40vh;
 }
 
+.leaflet-control-zoom-out span {
+    margin-right: 2px;
+}
+
+.leaflet-bar {
+    border: 0 !important;
+}
+
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
+    background-image: url("/assets/img/zoom-icon.png");
+    background-size: cover;
+    color: white !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+    border: 0 !important;
+    margin-bottom: 5px;
+}
+
 img {
     transition: all 0.2s ease 0s;
     height: 70%;
     object-fit: contain;
+    pointer-events: none;
+}
+
+img#char, img#guessMap {
+    border: solid 1px #ffffff;
 }
 
 .buttons {
@@ -404,6 +427,50 @@ img {
 
 #map {
     height: 100%;
+    background-color: black;
+    z-index: 0;
+}
+
+#mapButtons {
+    position: absolute;
+    bottom: 0;
+    z-index: 1;
+    width: 100%;
+    height: 3%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    pointer-events: none;
+}
+
+#mapMessageWrapper {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 50%;
+    bottom: 0;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#mapMessage {
+    width: max-content;
+    height: max-content;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: 250ms;
+    transform: translateY(-10vh);
+    justify-content: center;
+    border: solid 1px #ffffff;
+    line-height: normal;
 }
 
 .report {
@@ -421,7 +488,12 @@ img {
     margin-right: 1vw;
 }
 
-.report, .regen {
+.mapBtn {
+    background: #748aff !important;
+    margin: 10px;
+}
+
+.report, .regen, .mapBtn {
     transition: all 0.2s ease 0s;
     width: 100%;
     height: 7vh;
@@ -548,8 +620,13 @@ img {
     color: white;
 }
 
+button {
+    transition: 250ms !important;
+}
+
 button:disabled {
-    color: rgba(0, 0, 0, 0.38) !important;
+    color: rgba(255, 255, 255, 1) !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .btnSelected {

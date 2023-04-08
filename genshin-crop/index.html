@@ -5,15 +5,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="favicon.ico" />
 	<!-- meta -->
-	<meta property="og:description" content="A small page to guess the Genshin Impact character from a cropped image.">
+	<meta property="og:description" content="Genshin Impact minigames with character guesser using a cropped image of them or geoguessr style game with the game map.">
 	<meta property="og:title" content="Genshin Crop">
 	<meta property="og:url" content="https://genshin-crop.web.app">
 	<meta property="og:image" content="https://genshin-crop.web.app/assets/img/icon.png">
-	<meta property="twitter:description" content="A small page to guess the Genshin Impact character from a cropped image.">
+	<meta property="twitter:description" content="Genshin Impact minigames with character guesser using a cropped image of them or geoguessr style game with the game map.">
 	<meta property="twitter:title" content="Genshin Crop">
 	<meta property="twitter:url" content="https://genshin-crop.web.app">
 	<meta property="twitter:image" content="https://genshin-crop.web.app/assets/img/icon.png">
-	<meta name="description" content="A small page to guess the Genshin Impact character from a cropped image.">
+	<meta name="description" content="Genshin Impact minigames with character guesser using a cropped image of them or geoguessr style game with the game map.">
 	<!-- JS -->
 	<script src="assets/js/jquery-3.6.0.js"></script>
 	<script src="assets/js/material-components-web.min.js"></script>
@@ -21,12 +21,12 @@
 	<script src="assets/js/mui.min.js"></script>
 	<script src="assets/js/confetti.min.js"></script>
 	<script src="assets/js/leaflet-src.js"></script>
-	<!-- <script src="https://ena.escartem.eu.org/js/ems.js"></script> -->
+	<script src="https://ena.escartem.eu.org/js/ems.js"></script>
 	<script src="https://kit.fontawesome.com/8cacf0a9e5.js" crossorigin="anonymous"></script>
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
 	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
-	<link rel="stylesheet" href="assets/css/styles.css?v=162">
+	<link rel="stylesheet" href="assets/css/styles.css?v=200">
 	<link rel="stylesheet" href="assets/css/leaflet.css" />
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-132CTGT17P"></script>
@@ -41,6 +41,7 @@
 </head>
 <body style="opacity: 0; transition: 500ms; background-color: var(--background-color);">
 	<div class="main">
+		<a id="c" style="position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: 10;"></a>
 		<dialog class="mdl-dialog" id="popupDialog">
 			<div class="mdl-dialog__content" style="padding: 0.1px; height: 100%; color: var(--text-color);">
 				<h2 id="popupTitle" style="margin: 0px; font-size: 20px; line-height: 16px;">Popup Title</h2>
@@ -80,11 +81,19 @@
 
 						<div id="news" style="height: max-content; color: var(--text-alt-color); margin: 10px; width: 100%; background-color: var(--about-bg);">
 							<span style="margin: 10px; font-size: 13px;">
-								You will be shown a cropped picture of a random part of a random character from the game. You must guess which character it is. Be careful with names, there is only one valid for each character, you can check the list of all valid names with the button under this.
+								You will get a picture of a random place in the map, you have as much time as you want to look at it and when you are ready, click on the button to show the map. Once the map is displayed you cannot see the picture again so make sure you know where it is !
 
 								<br /><br />
 
-								Shortcuts are also a thing, press ctrl+q to generate an image, textbox is automatically selected after image is shown, but if not press tab to focus it. And you can after press enter to confirm your guess.
+								Once on the map, you can control the zoom level using your mouse wheel or with the buttons in the corner, click anywhere to place a marker of where you think the picture was. You can move the marker as many times as you want by clicking again. When you are satisfied with the location, just click on check and see the results !
+
+								<br /><br />
+
+								Keep in mind that the closest point to the image you have is the center of that image, placing your marker near it, even if it was inside that image will not give you the maximum score.
+
+								<br /><br /><br />
+
+								You can also use the following shortcuts, ctrl+q to generate a new image, space to show the map, enter to check the result after placing your marker.
 							</span>
 						</div>
 					</div>
@@ -100,7 +109,7 @@
 
 								<br /><br />
 
-								Shortcuts are also a thing, press ctrl+q to generate an image, textbox is automatically selected after image is shown, but if not press tab to focus it. And you can after press enter to confirm your guess.
+								You can use these shortcuts, press ctrl+q to generate an image, textbox is automatically selected after image is shown, but if not press tab to focus it. And you can after press enter to confirm your guess.
 							</span>
 						</div>
 
@@ -158,7 +167,7 @@
 								<ul>
 									<li>New gamemode added ! How well do you know Teyvat ? Try now with a geoguessr style minigame.</li>
 									<li>For the characters mode, there is now support of multiples names for the same characters, you can see them in the characters list</li>
-									<li>Many bug fixes, an improved interface with a new top bar and better centered elements, better mobile support, smoother animations to make the website more clean and pleasing.</li>
+									<li>Many bug fixes, an improved interface with a new top bar, better centered elements, better mobile support, smoother animations to make the website more clean.</li>
 								</ul>
 							</span>
 						</div>
@@ -242,20 +251,31 @@
 						<div id="mmaplistwrap">
 							<div id="map-cont-top-part">
 								<div id="maptopcontent">
+									<span class="pic-title" style="padding: 0%; padding-bottom: 10%;">Where is this ?</span>
 									<div class="pic">
 										<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="load-spinner-map"></div>
 										<img id="guessMap" src="./assets/img/load.png" draggable="false" style="border-radius: 7px; height: 100%;">
-										<span id="error-text" class="error-text">Something went wrong 😣<br/>Please try again</span>
+										<span id="error-text-map" class="error-text">Something went wrong 😣<br/>Please try again</span>
 									</div>
 
-									<div>
-										<button id="showMapBtn">ja gut</button>
-										<button id="genMapBtn">moar</button>
+									<div style="width: 100%; display: flex; flex-wrap: nowrap; margin-top: 15px; max-width: 800px;">
+										<button disabled type="button" class="mdc-button mdc-button--raised mapBtn" id="showMapBtn"><span class="mdc-button__label">🎴 Show map</span></button>
+										<button type="button" class="mdc-button mdc-button--raised mapBtn" id="genMapBtn"><span class="mdc-button__label">🎇 Another one</span></button>
 									</div>
 								</div>
 							</div>
 							<div id="map-cont-bottom-part">
 								<div id="map"></div>
+								<div id="mapButtons">
+									<button disabled style="pointer-events: all; border: solid 1px #ffffff;" type="button" class="mdc-button mdc-button--raised" id="checkMapBtn"><span class="mdc-button__label">🔎 Check location</span></button>
+									<button disabled style="pointer-events: all; border: solid 1px #ffffff;" type="button" class="mdc-button mdc-button--raised" id="genMapBtnBottom"><span class="mdc-button__label">🎇 Another one</span></button>
+								</div>
+								<div id="mapMessageWrapper">
+									<div id="mapMessage">
+										<span style="font-size: 20px;" id="mapMessageTop">ew cringe</span>
+										<span style="font-size: 20px;" id="mapMessageBottom">me sad</span>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -280,8 +300,8 @@
 
 								<div style="width: 100%;">
 									<div class="input-area" id="input-area">
-										<input id="uinput" name="uinput" size=10 class="uinput" placeholder="Your guess" autocomplete="off">
-										<button type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
+										<input disabled id="uinput" name="uinput" size=10 class="uinput" placeholder="Your guess" autocomplete="off">
+										<button disabled type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
 									</div>
 
 									<div class="input-result" id="result-area">
@@ -291,7 +311,7 @@
 									<div class="buttons">
 										<button type="button" class="mdc-button mdc-button--raised regen" id="regenBtn"><span class="mdc-button__label">✨ Another one</span></button>
 										<div id="reportBtnDiv">
-											<button type="button" class="mdc-button mdc-button--raised report" id="reportBtn"><span class="mdc-button__label">⚠️ Report invalid image</span></button>
+											<button disabled type="button" class="mdc-button mdc-button--raised report" id="reportBtn"><span class="mdc-button__label">⚠️ Report invalid image</span></button>
 										</div>
 									</div>
 								</div>
@@ -313,6 +333,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="./assets/js/app.js?v=162"></script>
+	<script src="./assets/js/app.js?v=200"></script>
 </body>
 </html>
