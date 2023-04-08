@@ -554,7 +554,7 @@ function showMap() {
 
 function mapScorePos(score) {
     message = "";
-    if (socre == 0) {
+    if (score == 0) {
         message = "How.";
         if (getCookie("noConfettis") == 0) {
             getElem("c").dispatchEvent(triggerConfettis);
