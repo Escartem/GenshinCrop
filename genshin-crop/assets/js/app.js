@@ -635,7 +635,8 @@ function genMapGuess() {
     }
 
     // defaults to medium difficulty, will add easy/hard mode later
-    const req = new Request("https://api.escartem.eu.org/p/gca/m/14x512");
+    // const req = new Request("https://api.escartem.eu.org/p/gca/m/14x512");
+    const req = new Request("https://api.escartem.eu.org/p/gca/d");
 
     fetch(req).then((response) => {
         if (response.status == 200) {
