@@ -4,7 +4,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "2.0.0"
+VERSION = "2.0";
 console.log("v"+VERSION);
 document.getElementById("version").innerHTML = "V"+VERSION;
 
@@ -317,6 +317,18 @@ function buttonState(tf, b, mode) {
     }
 }
 
+function showError(id, message=null) {
+    span = id;
+
+    if (message == null) {
+        span.innerHTML = "Something went wrong 😞<br/>Please try again";
+    } else {
+        span.innerHTML = `Something went wrong 😞<br/><br/>${message}`;
+    }
+
+    span.style.visibility = "visible";
+}
+
 ///////////////////////////
 /// CHARACTERS GAMEMODE ///
 ///////////////////////////
@@ -365,24 +377,21 @@ function genImage() {
     const req = new Request("https://api.escartem.eu.org/p/gca/c");
 
     fetch(req).then((response) => {
-        curr_char = response.headers.get("char");
-        buid = response.headers.get("uid");
-        result_url = response.headers.get("result");
-        response.blob().then((blob) => {
-            const objectURL = URL.createObjectURL(blob);
-            url_object = objectURL
-            img.src = objectURL;
-        });
+        if (response.status == 200) {
+            curr_char = response.headers.get("char");
+            buid = response.headers.get("uid");
+            result_url = response.headers.get("result");
+            response.blob().then((blob) => {
+                const objectURL = URL.createObjectURL(blob);
+                url_object = objectURL
+                img.src = objectURL;
+            });
+        } else {
+            if (response.status != 403) {response.json().then(data => {charErrorHandle(data["message"])})};
+            charErrorHandle();
+        }
     })
-    .catch((error) => {
-        char.src = "./assets/img/load.png";
-        char.style.opacity = 1;
-        loadSpinner.style.visibility = "hidden";
-        errorText.style.visibility = "visible";
-        regenBtn.disabled = false;
-        regenBtn.style.filter = "brightness(1)";
-        gen = false;
-    });
+    .catch((error) => {charErrorHandle(); gen=false;});
 }
 
 // check input
@@ -441,20 +450,27 @@ function check() {
     const req = new Request(result_url);
 
     fetch(req).then((response) => {
-        response.blob().then((blob) => {
-            const objectURL = URL.createObjectURL(blob);
-            url_object_result = objectURL
-            img.src = objectURL;
-        });
+        if (response.status == 200) {
+            response.blob().then((blob) => {
+                const objectURL = URL.createObjectURL(blob);
+                url_object_result = objectURL
+                img.src = objectURL;
+            });
+        } else {
+            if (response.status != 403) {response.json().then(data => {charErrorHandle(data["message"])})};
+            charErrorHandle();
+        }
     })
-    .catch((error) => {
-        char.src = "./assets/img/load.png";
-        char.style.opacity = 1;
-        loadSpinner.style.visibility = "hidden";
-        errorText.style.visibility = "visible";
-        regenBtn.disabled = false;
-        regenBtn.style.filter = "brightness(1)";
-    });
+    .catch((error) => {charErrorHandle()});
+};
+
+function charErrorHandle(msg=null) {
+    char.src = "./assets/img/load.png";
+    char.style.opacity = 1;
+    loadSpinner.style.visibility = "hidden";
+    showError(errorText, msg);
+    regenBtn.disabled = false;
+    regenBtn.style.filter = "brightness(1)";
 }
 
 ////////////////////
@@ -621,29 +637,36 @@ function genMapGuess() {
     const req = new Request("https://api.escartem.eu.org/p/gca/m/14x512");
 
     fetch(req).then((response) => {
-        rx = response.headers.get("rx");
-        ry = response.headers.get("ry");
-        size = response.headers.get("size");
-        os = 2**(-(size-9)+8);
-        llc = getLLcoord(rx,ry,os);
-        [rlat,rlng]= [llc[0],llc[1]];
+        if (response.status == 200) {
+            rx = response.headers.get("rx");
+            ry = response.headers.get("ry");
+            size = response.headers.get("size");
+            os = 2**(-(size-9)+8);
+            llc = getLLcoord(rx,ry,os);
+            [rlat,rlng]= [llc[0],llc[1]];
 
-        response.blob().then((blob) => {
-            const objectURL = URL.createObjectURL(blob);
-            url_object = objectURL;
-            img.src = objectURL;
-        });
+            response.blob().then((blob) => {
+                const objectURL = URL.createObjectURL(blob);
+                url_object = objectURL;
+                img.src = objectURL;
+            });
+        } else {
+            if (response.status != 403) {response.json().then(data => {mapErrorHandle(data["message"])})};
+            mapErrorHandle();
+        }
     })
-    .catch((error) => {
-        guessImg.src = "./assets/img/load.png";
-        guessImg.style.opacity = 1;
-        loadSpinnerMap.style.visibility = "hidden";
-        errorTextMap.style.visibility = "visible";
-        genMapBtn.disabled = false;
-        genMapBtn.style.filter = "brightness(1)";
-        genMap = false;
-    })
+    .catch((error) => {mapErrorHandle()});
 };
+
+function mapErrorHandle(msg=null) {
+    guessImg.src = "./assets/img/load.png";
+    guessImg.style.opacity = 1;
+    loadSpinnerMap.style.visibility = "hidden";
+    showError(errorTextMap, msg);
+    genMapBtn.disabled = false;
+    genMapBtn.style.filter = "brightness(1)";
+    genMap = false;
+}
 
 function checkMap() {
     mapChecked = true;
