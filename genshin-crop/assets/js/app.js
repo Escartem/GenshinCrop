@@ -323,7 +323,8 @@ function showError(id, message=null) {
     if (message == null) {
         span.innerHTML = "Something went wrong 😞<br/>Please try again";
     } else {
-        span.innerHTML = `Something went wrong 😞<br/><br/>${message}`;
+        // span.innerHTML = `Something went wrong 😞<br/><br/>${message}`;
+        span.innerHTML = message;
     }
 
     span.style.visibility = "visible";
