@@ -593,7 +593,7 @@ img#char, img#guessMap {
 .error-text {
     color: white;
     position: absolute;
-    width: 100px;
+    width: max-content;
     text-align: center;
     visibility: hidden;
 }
