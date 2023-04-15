@@ -723,3 +723,10 @@ window.addEventListener("load", () => {
     document.body.style.opacity = 1;
     switchMode(gameMode);
 });
+
+// TODO v2.2
+// use high-res map and btn to low res
+// add difficulties with 13x and 15x
+// fix blurry char list (scrollbar)
+// translate 50.1% to fix left bar
+// ctrl+m to switch gamemode
