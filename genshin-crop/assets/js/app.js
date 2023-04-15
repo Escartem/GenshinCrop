@@ -4,7 +4,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "2.0";
+VERSION = "2.1";
 console.log("v"+VERSION);
 document.getElementById("version").innerHTML = "V"+VERSION;
 
@@ -16,7 +16,7 @@ var curr_char=buid=url_object=url_object_result=full_url=null;
 var gen=resultLoading=charsListEnabled=optionsShown=leftPanelShown=oldVersionsShown=charInitialized=mapInitialized=false;
 
 var gameMode = "map";
-var charList = ["Aether", "Albedo", "Alhaitham", "Aloy", "Amber", "Ayaka", "Ayato", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Dehya", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", ["Itto", "Arataki Itto"], "Jean", "Kaeya",  ["Kazuha", "Kaedehara Kazuha"], "Keqing", "Klee", ["Kokomi", "Sangonomiya Kokomi"], ["Kujou Sara", "Sara"], ["Kuki", "Kuki Shinobu", "Shinobu"], "Layla", "Lisa", "Lumine", ["Mika", "Mika Schmidt"], ["Mona", "Mona Megistus"], "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", ["Raiden", "Shogun", "Raiden Shogun", "Ei", "Beelzebul"], "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", ["Tartaglia", "Childe"], "Thoma", "Tighnari", "Venti", ["Wanderer", "Scaramouche"], "Xiangling", "Xiao", "Xingqiu", "Xinyan", ["Yae Miko", "Yae", "Miko"], "Yanfei", "YaoYao", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
+var charList = ["Aether", "Albedo", "Alhaitham", "Aloy", "Amber", "Ayaka", "Ayato", "Baizhu", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Dehya", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", ["Itto", "Arataki Itto"], "Jean", "Kaeya", "Kaveh",  ["Kazuha", "Kaedehara Kazuha"], "Keqing", "Klee", ["Kokomi", "Sangonomiya Kokomi"], ["Kujou Sara", "Sara"], ["Kuki", "Kuki Shinobu", "Shinobu"], "Layla", "Lisa", "Lumine", ["Mika", "Mika Schmidt"], ["Mona", "Mona Megistus"], "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", ["Raiden", "Shogun", "Raiden Shogun", "Ei", "Beelzebul"], "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", ["Tartaglia", "Childe"], "Thoma", "Tighnari", "Venti", ["Wanderer", "Scaramouche"], "Xiangling", "Xiao", "Xingqiu", "Xinyan", ["Yae Miko", "Yae", "Miko"], "Yanfei", "YaoYao", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
 var charReplacement = {};
 var chars = "";
 charList.forEach(function(value) {
@@ -503,7 +503,7 @@ L.TileLayer.CustomCoords = L.TileLayer.extend({
     }
 });
 
-var layer = new L.TileLayer.CustomCoords("https://bluedb.escartem.eu.org/gs/map/{z}/{z}_{x}-{y}.png", {
+var layer = new L.TileLayer.CustomCoords("https://bluedb.escartem.eu.org/gs/map/{z}/{z}_{x}-{y}.jpg", {
     bounds: [[-256, -256], [256, 256]],
     tms: true,
     infinite: false,
@@ -635,8 +635,7 @@ function genMapGuess() {
     }
 
     // defaults to medium difficulty, will add easy/hard mode later
-    // const req = new Request("https://api.escartem.eu.org/p/gca/m/14x512");
-    const req = new Request("https://api.escartem.eu.org/p/gca/d");
+    const req = new Request("https://api.escartem.eu.org/p/gca/m/14x512");
 
     fetch(req).then((response) => {
         if (response.status == 200) {
