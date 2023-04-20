@@ -467,7 +467,8 @@ img#char, img#guessMap {
     background-color: var(--background-color);
     color: var(--text-color);
     transition: 250ms;
-    transform: translateY(-10vh);
+    transform: translateY(-20vh);
+    opacity: 0;
     justify-content: center;
     border: solid 1px #ffffff;
     line-height: normal;

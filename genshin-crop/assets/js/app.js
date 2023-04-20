@@ -606,7 +606,8 @@ function genMapGuess() {
     errorTextMap.style.visibility = "hidden";
     loadSpinnerMap.style.visibility = "visible";
     guessImg.style.opacity = 0.5;
-    getElem("mapMessage").style.transform = "translateY(-10vh)";
+    getElem("mapMessage").style.transform = "translateY(-20vh)";
+    getElem("mapMessage").style.opacity = "0";
     
     buttonState(true, 0.7, "map");
     checkMapBtn.disabled = true;
@@ -695,6 +696,7 @@ function checkMap() {
     getElem("mapMessageTop").innerHTML = `You were ${Math.round(gameDistance)} meters away`;
     getElem("mapMessageBottom").innerHTML = distanceMessage;
     getElem("mapMessage").style.transform = "translateY(0)";
+    getElem("mapMessage").style.opacity = "1";
 }
 
 ////////////
