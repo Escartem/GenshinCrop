@@ -159,7 +159,7 @@ function switchMode(mode, initialize=true) {
         getElem("gamemodeSelector").style.transform = "translateX(calc(100% + 4px))";
 
         gameMode = "char";
-        setCookie("gamemode", "char");
+        setVar("gamemode", "char");
 
         if (charInitialized == false && initialize == true) {
             genImage();
