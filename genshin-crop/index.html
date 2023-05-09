@@ -26,7 +26,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
 	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
-	<link rel="stylesheet" href="assets/css/styles.css?v=22">
+	<link rel="stylesheet" href="assets/css/styles.css?v=22.1">
 	<link rel="stylesheet" href="assets/css/leaflet.css" />
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-132CTGT17P"></script>
@@ -79,7 +79,7 @@
 					<div class="aboutContent">
 						<span class="pic-title">About</span>
 
-						<div id="news" style="height: calc(100% - 70px); color: var(--text-alt-color); margin: 10px; width: 100%; background-color: var(--about-bg);">
+						<div id="news" style="height: max-content; color: var(--text-alt-color); margin: 10px; margin-bottom: 20px; width: 100%; background-color: var(--about-bg);">
 							<span style="margin: 10px; font-size: 13px;">
 								You will get a picture of a random place in the map, you have as much time as you want to look at it and when you are ready, click on the button to show the map. Once the map is displayed you cannot see the picture again so make sure you know where it is !
 
@@ -165,9 +165,11 @@
 							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
 								version 2.2 (9 may 2023)
 								<ul>
+									<li>Added a link at the bottom of the page to view the API</li>
 									<li>You can now do ctrl+m to switch gamemode</li>
-									<li>Input area in the character mode is now automatically selected when switching to this mode</li>
-									<li>Fixed some bugs</li>
+									<li>Input area in the character mode is now automatically selected when closing options, closing characters list or switching gamemode</li>
+									<li>Fixed the blurry characters list</li>
+									<li>More bugs fixes</li>
 								</ul>
 							</span>
 						</div>
@@ -338,7 +340,7 @@
 
 		<div class="bottom">
 			<div class="left">
-				<span class="credits">Made by <a href="https://escartem.eu.org" target="_blank">Escartem</a> <i class="fa-solid fa-heart" style="color: #e55c5c;"></i></span>
+				<span class="credits">Made by <a href="https://escartem.eu.org" target="_blank">Escartem</a> <i class="fa-solid fa-heart" style="color: #e55c5c;"></i> | <a href="https://api.escartem.eu.org" target="_blank">View API</a></span>
 			</div>
 			<div class="bottomLine"><hr></div>
 				<div class="right">
@@ -347,6 +349,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="./assets/js/app.js?v=22"></script>
+	<script src="./assets/js/app.js?v=22.1"></script>
 </body>
 </html>
