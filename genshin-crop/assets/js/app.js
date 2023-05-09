@@ -4,7 +4,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "2.1";
+VERSION = "2.2";
 console.log("v"+VERSION);
 document.getElementById("version").innerHTML = "V"+VERSION;
 
@@ -81,23 +81,26 @@ genMapBtnBottom = getElem("genMapBtnBottom");
 
 // shortcuts
 document.addEventListener("keydown", function(e) {
-    if (e.ctrlKey && e.keyCode == 81) {
+    if (e.ctrlKey && e.keyCode == 81) { // ctrl+q
         e.preventDefault();
         if (gameMode == "char") {  
             if (gen==false && charsListEnabled==false && optionsShown==false) {genImage();};
         } else {
             if (genMap==false && optionsShown==false) {genMapGuess();};
         }
-    } else if (e.keyCode == 13) {
+    } else if (e.keyCode == 13) { // enter
         e.preventDefault();
         if (gameMode == "map" && checkMapBtn.disabled == false) {
             checkMap();
         }
-    } else if (e.keyCode == 32) {
+    } else if (e.keyCode == 32) { // space
         if (gameMode == "map" && genMap == false) {
             e.preventDefault();
             showMap();
         }
+    } else if (e.ctrlKey && e.keyCode == 77) { // ctrl+m
+        mode = gameMode == "char" ? "map" : "char";
+        switchMode(mode);
     }
 });
 // input enter shortcut
@@ -164,6 +167,12 @@ function switchMode(mode, initialize=true) {
         if (charInitialized == false && initialize == true) {
             genImage();
         };
+
+        if (uinput.disabled == false) {
+            setTimeout(function() {
+                uinput.focus();
+            }, 250);
+        }
     } else {
         // char to map
         leftWrapper.style.transform = "translateX(0)";
@@ -318,6 +327,7 @@ function showError(id, message=null) {
 
 // gen image
 function genImage() {
+    setVar("charCount", (parseInt(getVar("mapCount"))+1).toString());
     if (charInitialized == false) {
         charInitialized = true;
     };
