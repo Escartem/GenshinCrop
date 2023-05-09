@@ -79,7 +79,7 @@ genMapBtn = getElem("genMapBtn");
 checkMapBtn = getElem("checkMapBtn");
 genMapBtnBottom = getElem("genMapBtnBottom");
 
-// ctrl + q shortcut
+// shortcuts
 document.addEventListener("keydown", function(e) {
     if (e.ctrlKey && e.keyCode == 81) {
         e.preventDefault();
@@ -120,45 +120,27 @@ showOldVersionsBtn.addEventListener("click", function(event) {event.preventDefau
 
 getElem("listContent").innerHTML = chars;
 
-////////////////////////////////////////
-/// COOKIES LOCAL STORAGE EDITION :) ///
-////////////////////////////////////////
+///////////////////
+/// LOCALS VARS ///
+///////////////////
 
-function getCookie(name, check=false) {
-    t = window.localStorage.getItem(name)
-    if (t != null) {
-        return t;
-    } else {
-        if (check == false) {
-            setCookie(name, 0)
-            return 0
-        } else {
-            return false
-        }
-    }
-}
-
-function setCookie(name, value) {
-    window.localStorage.setItem(name, value);
-}
-
-function deleteCookie(name) {
-    window.localStorage.removeItem(name);
-}
+function getVar(n,c=false) {t=window.localStorage.getItem(n); if (t!=null) {return t} else {if (c==false) {setVar(n,0); return 0} else {return false}}};
+function setVar(n,v) {window.localStorage.setItem(n,v)};
+function deleteVar(n) {window.localStorage.removeItem(n)};
 
 //////////////////////
 /// SET UP OPTIONS ///
 //////////////////////
 
-optionsLightMode.checked = getCookie("lightMode") == 1 ? true : false;
-optionsNoConfettis.checked = getCookie("noConfettis") == 1 ? true : false;
-optionsNewAuto.checked = getCookie("newAuto") == 1 ? true : false;
-optionsHideReportBtn.checked = getCookie("hideReportBtn") == 1 ? true : false;
+optionsLightMode.checked = getVar("lightMode") == 1 ? true : false;
+optionsNoConfettis.checked = getVar("noConfettis") == 1 ? true : false;
+optionsNewAuto.checked = getVar("newAuto") == 1 ? true : false;
+optionsHideReportBtn.checked = getVar("hideReportBtn") == 1 ? true : false;
 
-optionsLightMode.addEventListener("click", function() { setCookie("lightMode", optionsLightMode.checked ? 1 : 0); themeSwitch(); })
-optionsNoConfettis.addEventListener("click", function() { setCookie("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
-optionsNewAuto.addEventListener("click", function() { setCookie("newAuto", optionsNewAuto.checked ? 1 : 0); });
-optionsHideReportBtn.addEventListener("click", function() { setCookie("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
+optionsLightMode.addEventListener("click", function() { setVar("lightMode", optionsLightMode.checked ? 1 : 0); themeSwitch(); })
+optionsNoConfettis.addEventListener("click", function() { setVar("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
+optionsNewAuto.addEventListener("click", function() { setVar("newAuto", optionsNewAuto.checked ? 1 : 0); });
+optionsHideReportBtn.addEventListener("click", function() { setVar("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
 
 //////////////////////
 /// MAIN FUNCTIONS ///
@@ -190,7 +172,7 @@ function switchMode(mode, initialize=true) {
         getElem("gamemodeSelector").style.transform = "translateX(0)";
 
         gameMode = "map";
-        setCookie("gamemode", "map");
+        setVar("gamemode", "map");
 
         if (mapInitialized == false && initialize == true) {
             genMapGuess();
@@ -198,7 +180,7 @@ function switchMode(mode, initialize=true) {
     }
 }
 
-switchMode(getCookie("gamemode"), false);
+switchMode(getVar("gamemode"), false);
 
 // toggle about menu
 function switchLeftPanel() {
@@ -212,21 +194,21 @@ function switchLeftPanel() {
         leftPanel.style.transform = "translateX(0)";
         leftPanelShown = true;
         showLeftPanelBtn.classList.add("btnSelected");
-        setCookie("leftPanelVisible", 1);
+        setVar("leftPanelVisible", 1);
     } else {
         mainPanel.classList.remove("main-panel-moved");
         leftPanelShown = false;
         leftPanel.style.transform = "translateX(-100vw)";
         showLeftPanelBtn.classList.remove("btnSelected");
-        setCookie("leftPanelVisible", 0);
+        setVar("leftPanelVisible", 0);
     }
 }
 
-if (getCookie("leftPanelVisible", true) === false && window.innerWidth > 690) { switchLeftPanel(); } else { if (getCookie("leftPanelVisible") == 1) { switchLeftPanel(); } }
+if (getVar("leftPanelVisible", true) === false && window.innerWidth > 690) { switchLeftPanel(); } else { if (getVar("leftPanelVisible") == 1) { switchLeftPanel(); } }
 
 // dark / light mode
 function themeSwitch() {
-    if (getCookie("lightMode") == 1) {
+    if (getVar("lightMode") == 1) {
         document.documentElement.classList.remove("dark");
         document.documentElement.classList.add("light");
     } else {
@@ -239,7 +221,7 @@ themeSwitch();
 
 // report button hide
 function reportBtnSwitch() {
-    if (getCookie("hideReportBtn") == 1) {
+    if (getVar("hideReportBtn") == 1) {
         reportBtn.style.pointerEvents = "none";
         reportBtn.style.fontSize = "0";
         getElem("reportBtnDiv").style.width = "0";
@@ -411,11 +393,12 @@ function check() {
     };
 
     if (win) {
-        if (getCookie("noConfettis") == 0) {
+        if (getVar("noConfettis") == 0) {
             getElem("c").dispatchEvent(triggerConfettis);
         }
         text.innerHTML = "Correct 🎉";
         text.style.color = "var(--text-green)";
+        setVar("charWin", (parseInt(getVar("charWin"))+1).toString());
     } else {
         text.innerHTML = "Nope, it was "+curr_char+" 😔";
         text.style.color = "var(--text-red)";
@@ -430,7 +413,7 @@ function check() {
     loadSpinner.style.visibility = "visible";
     char.style.height = "100%";
 
-    if (getCookie("newAuto") == 1 && win) {
+    if (getVar("newAuto") == 1 && win) {
         genImage();
     }
 
@@ -573,12 +556,12 @@ function mapScorePos(score) {
     message = "";
     if (score == 0) {
         message = "How.";
-        if (getCookie("noConfettis") == 0) {
+        if (getVar("noConfettis") == 0) {
             getElem("c").dispatchEvent(triggerConfettis);
         };
     } else if (score.between(0, 80)) {
         message = "Perfectly on spot 🎉";
-        if (getCookie("noConfettis") == 0) {
+        if (getVar("noConfettis") == 0) {
             getElem("c").dispatchEvent(triggerConfettis);
         };
     } else if (score.between(80, 140)) {
@@ -596,6 +579,7 @@ function mapScorePos(score) {
 }
 
 function genMapGuess() {
+    setVar("mapCount", (parseInt(getVar("mapCount"))+1).toString());
     if (mapInitialized == false) {
         mapInitialized = true;
     };
