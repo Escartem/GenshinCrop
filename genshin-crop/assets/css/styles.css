@@ -247,11 +247,10 @@ button:disabled {
     align-items: center;
     border-radius: 15px;
     width: 100%;
-    height: 100%;
+    height: 50%;
     flex-direction: column;
     background: var(--clist-color);
     transition: 0.5s;
-    overflow: hidden;
 }
 
 .options {

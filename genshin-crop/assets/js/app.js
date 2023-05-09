@@ -261,6 +261,12 @@ function switchCharList() {
         showCharsBtn.classList.remove("btnSelected");
         getElem("mcontlistwrap").style.transform = "translateY(-50%)";
         charsListEnabled = false;
+
+        if (uinput.disabled == false) {
+            setTimeout(function() {
+                uinput.focus();
+            }, 250);
+        }
     }
 }
 
@@ -276,6 +282,12 @@ function switchOptions() {
         showOptionsBtn.classList.remove("btnSelected");
         optionsShown = false;
         getElem("topwrapper").style.transform = "translateY(-50%)";
+
+        if (uinput.disabled == false && gameMode == "char") {
+            setTimeout(function() {
+                uinput.focus();
+            }, 250);
+        }
     }
 }
 
