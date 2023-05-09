@@ -236,12 +236,7 @@ button:disabled {
     display: flex;
 }
 
-#main-map {
-    width: 100%;
-    height: 100%;
-}
-
-#main-char {
+#main-map, #main-char {
     width: 100%;
     height: 100%;
 }
@@ -594,7 +589,7 @@ img#char, img#guessMap {
 .error-text {
     color: white;
     position: absolute;
-    width: 200px;
+    width: 20%;
     text-align: center;
     visibility: hidden;
 }
