@@ -16,19 +16,23 @@ var curr_char=buid=url_object=url_object_result=full_url=null;
 var gen=resultLoading=charsListEnabled=optionsShown=leftPanelShown=oldVersionsShown=charInitialized=mapInitialized=false;
 
 var gameMode = "map";
-var charList = ["Aether", "Albedo", "Alhaitham", "Aloy", "Amber", "Ayaka", "Ayato", "Baizhu", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Dehya", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", ["Itto", "Arataki Itto"], "Jean", "Kaeya", "Kaveh",  ["Kazuha", "Kaedehara Kazuha"], "Keqing", "Klee", ["Kokomi", "Sangonomiya Kokomi"], ["Kujou Sara", "Sara"], ["Kuki", "Kuki Shinobu", "Shinobu"], "Layla", "Lisa", "Lumine", ["Mika", "Mika Schmidt"], ["Mona", "Mona Megistus"], "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", ["Raiden", "Shogun", "Raiden Shogun", "Ei", "Beelzebul"], "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", ["Tartaglia", "Childe"], "Thoma", "Tighnari", "Venti", ["Wanderer", "Scaramouche"], "Xiangling", "Xiao", "Xingqiu", "Xinyan", ["Yae Miko", "Yae", "Miko"], "Yanfei", "YaoYao", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
-var charReplacement = {};
+var charList = ["Aether", "Albedo", "Alhaitham", "Aloy", "Amber", ["Ayaka", "Kamisato Ayaka"], ["Ayato", "Kamisato Ayato"], "Baizhu", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Dehya", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", ["Itto", "Arataki Itto"], "Jean", "Kaeya", "Kaveh",  ["Kazuha", "Kaedehara Kazuha"], "Keqing", "Klee", ["Kokomi", "Sangonomiya Kokomi"], ["Kujou Sara", "Sara"], ["Kuki", "Kuki Shinobu", "Shinobu"], "Layla", "Lisa", "Lumine", ["Mika", "Mika Schmidt"], ["Mona", "Mona Megistus"], "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", ["Raiden", "Shogun", "Raiden Shogun", "Shogun Raiden", "Ei", "Beelzebul"], "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", ["Tartaglia", "Childe", "Ajax"], "Thoma", "Tighnari", "Venti", ["Wanderer", "Scaramouche"], "Xiangling", "Xiao", "Xingqiu", "Xinyan", ["Yae Miko", "Yae", "Miko"], "Yanfei", "YaoYao", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
+var SRList = ["Arlan", "Asta", "Bailu", "bronya", ["Caelus", "Trailblazer", "Male Trailblazer"], "Clara", "Dan Heng", "Gepard", "Herta", "Himeko", "Hook", "Jing Yuan", "March 7th", "Natasha", "Pela", "Qingque", "Sampo", "Seele", "Serval", ["Stelle", "Trailblazer", "Female Trailblazer"], "Sushang", "Tingyun", "Welt", "Yanqing"]
 var chars = "";
 charList.forEach(function(value) {
     if (typeof(value) === "object") {
         chars += `<br/>• ${value.join().replaceAll(",",", ")}`;
 
-        charReplacement[value[0].toLowerCase()] = value.map(name => name.toLowerCase());
+        // charReplacement[value[0].toLowerCase()] = value.map(name => name.toLowerCase());
     } else {
         chars += `<br/>• ${value}`;
     }
 });
 chars = chars.slice(5);
+
+var sr = "";
+SRList.forEach(function(value) {if (typeof(value) === "object") {sr+=`<br/>• ${value.join().replaceAll(",",", ")}`} else {sr+=`<br/>• ${value}`}});
+sr = sr.slice(5);
 const triggerConfettis = new Event("confetti");
 let confetti = new Confetti("c");
 
@@ -68,6 +72,7 @@ optionsLightMode = getElem("optionsLightMode");
 optionsNoConfettis = getElem("optionsNoConfettis");
 optionsNewAuto = getElem("optionsNewAuto");
 optionsHideReportBtn = getElem("optionsHideWrongImg");
+optionsSRMode = getElem("optionsSRMode");
 // game modes
 leftWrapper = getElem("left-panel-wrapper");
 mainWrapper = getElem("main-wrapper");
@@ -121,8 +126,6 @@ genMapBtnBottom.addEventListener("click", function(event) {event.preventDefault(
 showLeftPanelBtn.addEventListener("click", function(event) {event.preventDefault(); switchLeftPanel();})
 showOldVersionsBtn.addEventListener("click", function(event) {event.preventDefault(); showOldVersions();})
 
-getElem("listContent").innerHTML = chars;
-
 ///////////////////
 /// LOCALS VARS ///
 ///////////////////
@@ -139,11 +142,15 @@ optionsLightMode.checked = getVar("lightMode") == 1 ? true : false;
 optionsNoConfettis.checked = getVar("noConfettis") == 1 ? true : false;
 optionsNewAuto.checked = getVar("newAuto") == 1 ? true : false;
 optionsHideReportBtn.checked = getVar("hideReportBtn") == 1 ? true : false;
+optionsSRMode.checked = getVar("srMode") == 1 ? true : false;
+
+if (optionsSRMode.checked == true) {getElem("listContent").innerHTML=sr} else {getElem("listContent").innerHTML=chars};
 
 optionsLightMode.addEventListener("click", function() { setVar("lightMode", optionsLightMode.checked ? 1 : 0); themeSwitch(); })
 optionsNoConfettis.addEventListener("click", function() { setVar("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
 optionsNewAuto.addEventListener("click", function() { setVar("newAuto", optionsNewAuto.checked ? 1 : 0); });
 optionsHideReportBtn.addEventListener("click", function() { setVar("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
+optionsSRMode.addEventListener("click", function() { setVar("srMode", optionsSRMode.checked ? 1 : 0); genImage(); })
 
 //////////////////////
 /// MAIN FUNCTIONS ///
@@ -210,6 +217,9 @@ function switchLeftPanel() {
         leftPanel.style.transform = "translateX(-100vw)";
         showLeftPanelBtn.classList.remove("btnSelected");
         setVar("leftPanelVisible", 0);
+        if (window.innerWidth < 690 && gameMode == "char" && uinput.disabled == false) {
+            uinput.focus();
+        }
     }
 }
 
@@ -340,6 +350,11 @@ function showError(id, message=null) {
 // gen image
 function genImage() {
     setVar("charCount", (parseInt(getVar("mapCount"))+1).toString());
+    if (optionsSRMode.checked == true) {getElem("listContent").innerHTML=sr} else {getElem("listContent").innerHTML=chars};
+    if (charsListEnabled == true) {
+        switchCharList();
+    }
+
     if (charInitialized == false) {
         charInitialized = true;
     };
@@ -379,11 +394,21 @@ function genImage() {
         gen = false;
     }
 
-    const req = new Request("https://api.escartem.eu.org/p/gca/c");
+    var req = null
+
+    if (getVar("srMode") == 1) {
+        req = new Request("https://api.escartem.eu.org/p/gca/srs");
+    } else {
+        req = new Request("https://api.escartem.eu.org/p/gca/c");
+    }
+
 
     fetch(req).then((response) => {
         if (response.status == 200) {
             curr_char = response.headers.get("char");
+            display = response.headers.get("display");
+            alias = response.headers.get("alias").split(".");
+            alias.pop();
             buid = response.headers.get("uid");
             result_url = response.headers.get("result");
             response.blob().then((blob) => {
@@ -408,11 +433,7 @@ function check() {
     var entry = (uinput.value).toLowerCase().trimEnd();
     var text = getElem("result-text");
 
-    if (curr_char.toLowerCase() in charReplacement) {
-        win = (charReplacement[curr_char.toLowerCase()].includes(entry));
-    } else {
-        win = (entry == curr_char.toLowerCase())
-    };
+    win = (entry == curr_char || alias.includes(entry));
 
     if (win) {
         if (getVar("noConfettis") == 0) {
@@ -422,7 +443,7 @@ function check() {
         text.style.color = "var(--text-green)";
         setVar("charWin", (parseInt(getVar("charWin"))+1).toString());
     } else {
-        text.innerHTML = "Nope, it was "+curr_char+" 😔";
+        text.innerHTML = "Nope, it was "+display+" 😔";
         text.style.color = "var(--text-red)";
     }
 

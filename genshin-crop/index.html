@@ -26,7 +26,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
 	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
-	<link rel="stylesheet" href="assets/css/styles.css?v=22.1">
+	<link rel="stylesheet" href="assets/css/styles.css?v=22.2">
 	<link rel="stylesheet" href="assets/css/leaflet.css" />
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-132CTGT17P"></script>
@@ -120,6 +120,11 @@
 						<span class="optionsCatTitle">Settings</span>
 
 						<div class="mdc-form-field">
+							<div class="mdc-checkbox"><input id="optionsSRMode" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+							<label style="color: var(--text-alt-color);" for="checkbox-1">Use Star Rail characters</label>
+						</div>
+
+						<div class="mdc-form-field">
 							<div class="mdc-checkbox"><input id="optionsNewAuto" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
 							<label style="color: var(--text-alt-color);" for="checkbox-1">Automatically generate new image if guess is correct</label>
 						</div>
@@ -165,11 +170,15 @@
 							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
 								version 2.2 (9 may 2023)
 								<ul>
+									<li>Added a button in the character mode to use Honkai Star Rail characters, this feature is still a test and may change later but have fun with it :)</li>
+									<li>A few improvements in the API, should be faster and less buggy</li>
 									<li>Added a link at the bottom of the page to view the API</li>
 									<li>You can now do ctrl+m to switch gamemode</li>
 									<li>Input area in the character mode is now automatically selected when closing options, closing characters list or switching gamemode</li>
 									<li>Fixed the blurry characters list</li>
 									<li>More bugs fixes</li>
+
+									<li>There is known bug where the display might broke when the screen is resized and about mode is toggled, it will be fixed soon enough</li>
 								</ul>
 							</span>
 						</div>
@@ -349,6 +358,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="./assets/js/app.js?v=22.1"></script>
+	<script src="./assets/js/app.js?v=22.2"></script>
 </body>
 </html>
