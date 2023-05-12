@@ -16,27 +16,10 @@ var curr_char=buid=url_object=url_object_result=full_url=null;
 var gen=resultLoading=charsListEnabled=optionsShown=leftPanelShown=oldVersionsShown=charInitialized=mapInitialized=false;
 
 var gameMode = "map";
-var charList = ["Aether", "Albedo", "Alhaitham", "Aloy", "Amber", ["Ayaka", "Kamisato Ayaka"], ["Ayato", "Kamisato Ayato"], "Baizhu", "Barbara", "Beidou", "Bennett", "Candace", "Chongyun", "Collei", "Cyno", "Dehya", "Diluc", "Diona", "Dori", "Eula", "Faruzan", "Fischl", "Ganyu", "Gorou", "Heizou", "Hu Tao", ["Itto", "Arataki Itto"], "Jean", "Kaeya", "Kaveh",  ["Kazuha", "Kaedehara Kazuha"], "Keqing", "Klee", ["Kokomi", "Sangonomiya Kokomi"], ["Kujou Sara", "Sara"], ["Kuki", "Kuki Shinobu", "Shinobu"], "Layla", "Lisa", "Lumine", ["Mika", "Mika Schmidt"], ["Mona", "Mona Megistus"], "Nahida", "Nilou", "Ningguang", "Noelle", "Qiqi", ["Raiden", "Shogun", "Raiden Shogun", "Shogun Raiden", "Ei", "Beelzebul"], "Razor", "Rosaria", "Sayu", "Shenhe", "Sucrose", ["Tartaglia", "Childe", "Ajax"], "Thoma", "Tighnari", "Venti", ["Wanderer", "Scaramouche"], "Xiangling", "Xiao", "Xingqiu", "Xinyan", ["Yae Miko", "Yae", "Miko"], "Yanfei", "YaoYao", "Yelan", "Yoimiya", "Yun Jin", "Zhongli"]
-var SRList = ["Arlan", "Asta", "Bailu", "bronya", ["Caelus", "Trailblazer", "Male Trailblazer"], "Clara", "Dan Heng", "Gepard", "Herta", "Himeko", "Hook", "Jing Yuan", "March 7th", "Natasha", "Pela", "Qingque", "Sampo", "Seele", "Serval", ["Stelle", "Trailblazer", "Female Trailblazer"], "Sushang", "Tingyun", "Welt", "Yanqing"]
-var chars = "";
-charList.forEach(function(value) {
-    if (typeof(value) === "object") {
-        chars += `<br/>• ${value.join().replaceAll(",",", ")}`;
-
-        // charReplacement[value[0].toLowerCase()] = value.map(name => name.toLowerCase());
-    } else {
-        chars += `<br/>• ${value}`;
-    }
-});
-chars = chars.slice(5);
-
-var sr = "";
-SRList.forEach(function(value) {if (typeof(value) === "object") {sr+=`<br/>• ${value.join().replaceAll(",",", ")}`} else {sr+=`<br/>• ${value}`}});
-sr = sr.slice(5);
-const triggerConfettis = new Event("confetti");
-let confetti = new Confetti("c");
 
 // tadjikistan
+const triggerConfettis = new Event("confetti");
+let confetti = new Confetti("c");
 confetti.setCount(300);
 confetti.setSize(2);
 confetti.setPower(50);
@@ -144,8 +127,6 @@ optionsNewAuto.checked = getVar("newAuto") == 1 ? true : false;
 optionsHideReportBtn.checked = getVar("hideReportBtn") == 1 ? true : false;
 optionsSRMode.checked = getVar("srMode") == 1 ? true : false;
 
-if (optionsSRMode.checked == true) {getElem("listContent").innerHTML=sr} else {getElem("listContent").innerHTML=chars};
-
 optionsLightMode.addEventListener("click", function() { setVar("lightMode", optionsLightMode.checked ? 1 : 0); themeSwitch(); })
 optionsNoConfettis.addEventListener("click", function() { setVar("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
 optionsNewAuto.addEventListener("click", function() { setVar("newAuto", optionsNewAuto.checked ? 1 : 0); });
@@ -155,6 +136,37 @@ optionsSRMode.addEventListener("click", function() { setVar("srMode", optionsSRM
 //////////////////////
 /// MAIN FUNCTIONS ///
 //////////////////////
+
+// fetch data
+var sr=chars="";
+function convertList(list) {
+    result = "";
+    list.forEach(function(value) {
+        if (typeof(value) === "object") {
+            result += `<br/>• ${value.join().replaceAll(",",", ")}`;
+        } else {
+            result += `<br/>• ${value}`;
+        }
+    });
+    result = result.slice(5);
+
+    return result;
+}
+
+function setupData() {
+    const req = new Request("https://api.escartem.eu.org/p/gca/data");
+    fetch(req).then(response => response.json()).then(json => {
+        var charList = json["ys"];
+        var SRList = json["sr"]; 
+
+        chars = convertList(charList);
+        sr = convertList(SRList);
+
+        if (optionsSRMode.checked == true) {getElem("listContent").innerHTML=sr} else {getElem("listContent").innerHTML=chars};
+    });
+}
+
+setupData();
 
 // change gamemode
 function switchMode(mode, initialize=true) {
