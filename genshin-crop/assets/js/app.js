@@ -154,10 +154,10 @@ function convertList(list) {
 }
 
 function setupData() {
-    const req = new Request("https://api.escartem.eu.org/p/gca/data");
+    const req = new Request("https://api.escartem.eu.org/p/gca/data?v=2");
     fetch(req).then(response => response.json()).then(json => {
-        var charList = json["ys"];
-        var SRList = json["sr"]; 
+        var charList = json["ys"]["display"];
+        var SRList = json["sr"]["display"]; 
 
         chars = convertList(charList);
         sr = convertList(SRList);
@@ -420,7 +420,6 @@ function genImage() {
             curr_char = response.headers.get("char");
             display = response.headers.get("display");
             alias = response.headers.get("alias").split(".");
-            alias.pop();
             buid = response.headers.get("uid");
             result_url = response.headers.get("result");
             response.blob().then((blob) => {
@@ -765,9 +764,7 @@ window.addEventListener("load", () => {
     switchMode(gameMode);
 });
 
-// TODO v2.2
+// TODO
 // use high-res map and btn to low res
 // add difficulties with 13x and 15x
-// fix blurry char list (scrollbar)
-// translate 50.1% to fix left bar
-// ctrl+m to switch gamemode
+// translate 50.1% to fix left bar  
