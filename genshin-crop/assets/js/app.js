@@ -361,7 +361,7 @@ function showError(id, message=null) {
 
 // gen image
 function genImage() {
-    setVar("charCount", (parseInt(getVar("mapCount"))+1).toString());
+    setVar("charCount", (parseInt(getVar("charCount"))+1).toString());
     if (optionsSRMode.checked == true) {getElem("listContent").innerHTML=sr} else {getElem("listContent").innerHTML=chars};
     if (charsListEnabled == true) {
         switchCharList();
