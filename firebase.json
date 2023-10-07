@@ -2,7 +2,7 @@
   "hosting": [
   {
     "target": "genshin-crop",
-    "public": "genshin-crop",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
