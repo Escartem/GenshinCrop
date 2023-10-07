@@ -5,9 +5,6 @@
   "targets": {
     "escartem-db": {
       "hosting": {
-        "escartem-db": [
-          "escartem-db"
-        ],
         "genshin-crop": [
           "genshin-crop"
         ]
