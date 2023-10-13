@@ -16,6 +16,7 @@ var curr_char=buid=url_object=url_object_result=full_url=null;
 var gen=resultLoading=charsListEnabled=optionsShown=leftPanelShown=oldVersionsShown=charInitialized=mapInitialized=false;
 
 var gameMode = "map";
+var phoneWidth = 800;
 
 // tadjikistan
 const triggerConfettis = new Event("confetti");
@@ -229,13 +230,13 @@ function switchLeftPanel() {
         leftPanel.style.transform = "translateX(-100vw)";
         showLeftPanelBtn.classList.remove("btnSelected");
         setVar("leftPanelVisible", 0);
-        if (window.innerWidth < 690 && gameMode == "char" && uinput.disabled == false) {
+        if (window.innerWidth < phoneWidth && gameMode == "char" && uinput.disabled == false) {
             uinput.focus();
         }
     }
 }
 
-if (getVar("leftPanelVisible", true) === false && window.innerWidth > 690) { switchLeftPanel(); } else { if (getVar("leftPanelVisible") == 1) { switchLeftPanel(); } }
+if (getVar("leftPanelVisible", true) === false && window.innerWidth > phoneWidth) { switchLeftPanel(); } else { if (getVar("leftPanelVisible") == 1) { switchLeftPanel(); } }
 
 // dark / light mode
 function themeSwitch() {
@@ -267,7 +268,7 @@ reportBtnSwitch();
 
 // characters list
 function switchCharList() {
-    if (window.innerWidth < 690) {
+    if (window.innerWidth < phoneWidth && getVar("leftPanelVisible") == 1) {
         switchLeftPanel();
     }
     if (charsListEnabled == false) {   
@@ -294,6 +295,9 @@ function switchCharList() {
 
 // toggle options
 function switchOptions() {
+    if (window.innerWidth < phoneWidth) {
+        switchLeftPanel();
+    }
     if (optionsShown == false) {   
         // char -> list
         showOptionsBtn.classList.add("btnSelected");
