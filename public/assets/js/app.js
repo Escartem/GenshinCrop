@@ -268,7 +268,7 @@ reportBtnSwitch();
 
 // characters list
 function switchCharList() {
-    if (window.innerWidth < phoneWidth && getVar("leftPanelVisible") == 1) {
+    if (window.innerWidth < phoneWidth) {
         switchLeftPanel();
     }
     if (charsListEnabled == false) {   
@@ -295,7 +295,7 @@ function switchCharList() {
 
 // toggle options
 function switchOptions() {
-    if (window.innerWidth < phoneWidth) {
+    if (window.innerWidth < phoneWidth && getVar("leftPanelVisible") == 1) {
         switchLeftPanel();
     }
     if (optionsShown == false) {   
