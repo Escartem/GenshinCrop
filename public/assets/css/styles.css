@@ -69,6 +69,7 @@ button:disabled {
     margin-left: 5%;
     position: absolute;
     background: var(--secondary-color);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     margin-bottom: 50px;
     margin-top: 60px;
     border-radius: 15px;
@@ -124,6 +125,16 @@ button:disabled {
     top: 0;
     background-color: var(--secondary-color);
     transition: 250ms;
+}
+
+#bar-left {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    transition: 500ms;
+    width: 200px;
+    background: var(--secondary-color);
+    border-radius: 0 0 10px 0;
 }
 
 #bar-middle {
@@ -205,6 +216,7 @@ button:disabled {
     z-index: 1;
     display: flex;
     background: var(--secondary-color);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     width: 90%;
     height: 80%;
     border-radius: 15px;
@@ -553,6 +565,9 @@ img#char, img#guessMap {
     height: 30px;
     width: 100%;
     background: var(--secondary-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    border-left: 1px solid rgba(255, 255, 255, 0.6);
+    border-right: 1px solid rgba(255, 255, 255, 0.6);
     position: fixed;
     bottom: 0;
     display: flex;
@@ -561,8 +576,8 @@ img#char, img#guessMap {
     z-index: 10;
 }
 
-@media (max-width: 690px) {
-    .bottom { height: 60px; }
+@media (max-width: 800px) {
+    .bottom { height: 60px; width: 240px; border-radius: 10px 10px 0 0; }
     .left { margin-bottom: 30px; }
     .right { right: 100% !important; transform: translate(100%, 0) !important; margin-right: 0px !important; }
     .bottomLine { margin-bottom: 5px !important; }
@@ -570,6 +585,7 @@ img#char, img#guessMap {
     .main-panel-moved { width: 0 !important; height: 0 !important; }
     .title { transform: translateY(-100px); }
     .top { height: calc(80% - 30px); margin-bottom: 80px; }
+    #left-bar { width: 40px !important; }
 }
 
 .bottomLine {
