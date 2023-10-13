@@ -582,7 +582,7 @@ img#char, img#guessMap {
     .right { right: 100% !important; transform: translate(100%, 0) !important; margin-right: 0px !important; }
     .bottomLine { margin-bottom: 5px !important; }
     .left-panel { width: 90%; transition: 250ms; height: calc(80% - 30px); margin-bottom: 80px; }
-    .main-panel-moved { width: 0 !important; height: 0 !important; }
+    .main-panel-moved { width: 0 !important; }
     .title { transform: translateY(-100px); }
     .top { height: calc(80% - 30px); margin-bottom: 80px; }
     #left-bar { width: 40px !important; }
