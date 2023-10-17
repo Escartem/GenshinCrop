@@ -41,6 +41,7 @@
 </head>
 <body style="opacity: 0; transition: 500ms; background-color: var(--background-color);">
 	<div class="main">
+		<div class="background"></div>
 		<a id="c" style="position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: 10;"></a>
 		<dialog class="mdl-dialog" id="popupDialog">
 			<div class="mdl-dialog__content" style="padding: 0.1px; height: 100%; color: var(--text-color);">
@@ -183,16 +184,24 @@
 						<button type="button" class="mdc-button mdc-button--raised" id="oldVersionsSwitch" style="height: 25px;"><span class="mdc-button__label">Show older versions</span></button>
 						<div id="news" style="height: max-content;">
 							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+								version 2.5 (17 October 2023)
+								<ul>
+									<li>Added new background option, still a work in progress and subject to changes</li>
+									<li>UI improvements and fixes, better phone support</li>
+									<li>Fixed bug with broken display mentionned in version 2.2 patch (it wasn't "fixed soon")</li>
+									<li>Report button is now hidden by default</li>
+								</ul>
+							</span>
+						</div>
+						<div id="oldNews" style="height: 0; opacity: 0;">
+							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
 								version 2.4.3 (11 October 2023)
 								<ul>
 									<li>Star Rail: Added Guinaifen, Jingliu and Topaz</li>
 									<li>Fixed bug with star rail mode where it may show wrong on correctly typed answers</li>
 									<li>Fixed version display</li>
 								</ul>
-							</span>
-						</div>
-						<div id="oldNews" style="height: 0; opacity: 0;">
-							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+
 								version 2.4.2 (27 September 2023)
 								<ul>
 									<li>Genshin: Added Neuvillette and Wriothesley</li>

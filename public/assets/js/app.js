@@ -4,7 +4,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "2.4.3";
+VERSION = "2.5";
 console.log("v"+VERSION);
 document.getElementById("version").innerHTML = "V"+VERSION;
 
@@ -179,9 +179,6 @@ setupData();
 
 // change gamemode
 function switchMode(mode, initialize=true) {
-    if (optionsShown == true) {
-        switchOptions();
-    }
     if (mode == "char") {
         // map to char
         leftWrapper.style.transform = "translateX(-50%)";
@@ -192,11 +189,15 @@ function switchMode(mode, initialize=true) {
         gameMode = "char";
         setVar("gamemode", "char");
 
+        if (optionsShown == true) {
+            switchOptions();
+        }
+
         if (charInitialized == false && initialize == true) {
             genImage();
         };
 
-        if (uinput.disabled == false && disableAutoFocus == false) {
+        if (uinput.disabled == false && disableAutoFocus == false && charsListEnabled == false) {
             setTimeout(function() {
                 uinput.focus();
             }, 250);
@@ -210,6 +211,10 @@ function switchMode(mode, initialize=true) {
 
         gameMode = "map";
         setVar("gamemode", "map");
+
+        if (optionsShown == true) {
+            switchOptions();
+        }
 
         if (mapInitialized == false && initialize == true) {
             genMapGuess();
@@ -238,7 +243,7 @@ function switchLeftPanel() {
         leftPanel.style.transform = "translateX(-100vw)";
         showLeftPanelBtn.classList.remove("btnSelected");
         setVar("leftPanelVisible", 0);
-        if (window.innerWidth < phoneWidth && gameMode == "char" && uinput.disabled == false && disableAutoFocus == false && charsListEnabled == false) {
+        if (window.innerWidth < phoneWidth && gameMode == "char" && uinput.disabled == false && disableAutoFocus == false && charsListEnabled == false && optionsShown == false) {
             uinput.focus();
         }
     }
@@ -371,20 +376,35 @@ function switchNewTheme() {
     var topLeft = getElem("bar-left")
     var barMiddle = getElem("bar-middle")
 
+    var barBottom = document.getElementsByClassName("bottom")[0]
+    var bottomLeft = document.getElementsByClassName("left")[0]
+    var bottomRight = document.getElementsByClassName("right")[0]
+
     if (getVar("newTheme") == 1) {
+        // update top bar
         topBar.style.transform = "translateY(-100%)";
-
         topLeft.style.transform = "translateY(calc(100% + 1px))";
-
         barMiddle.style.transform = "translateY(calc(100% + 1px))";
+
+        // update bottom bar
+        barBottom.style.transform = "translateY(100%)";
+        bottomLeft.style.transform = "translateY(calc(-100% - 1px))"
+        bottomRight.style.transform = "translateY(calc(-100% + 5px))"
+
+        // update bg
+        document.getElementsByClassName("background")[0].style.opacity = 0.5
 
         newThemeEnabled = true
     } else {
         topBar.style.transform = null;
-
         topLeft.style.transform = null;
-
         barMiddle.style.transform = null;
+
+        barBottom.style.transform = null
+        bottomLeft.style.transform = null
+        bottomRight.style.transform = null
+
+        document.getElementsByClassName("background")[0].style.opacity = 0
 
         newThemeEnabled = false
     }

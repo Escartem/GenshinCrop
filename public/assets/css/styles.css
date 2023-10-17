@@ -69,7 +69,7 @@ button:disabled {
     margin-left: 5%;
     position: absolute;
     background: var(--secondary-color);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     margin-bottom: 50px;
     margin-top: 60px;
     border-radius: 15px;
@@ -116,6 +116,16 @@ button:disabled {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-blend-mode: overlay;
+}
+
+.background {
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0;
+    transition: 250ms;
+    background-image: url("https://wallpapers.com/images/hd/genshin-impact-background-1at4i3bbwd6586f4.jpg");
 }
 
 #bar-back-wrapper {
@@ -269,7 +279,7 @@ button:disabled {
     z-index: 1;
     display: flex;
     background: var(--secondary-color);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     width: 90%;
     height: 80%;
     border-radius: 15px;
@@ -663,7 +673,12 @@ img#char, img#guessMap {
 }
 
 .left {
-    padding: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background: var(--secondary-color);
     transition: 250ms;
 }
 
