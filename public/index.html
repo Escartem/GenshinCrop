@@ -346,8 +346,8 @@
 							<div id="map-cont-bottom-part">
 								<div id="map"></div>
 								<div id="mapButtons">
-									<button disabled style="pointer-events: all; border: solid 1px #ffffff;" type="button" class="mdc-button mdc-button--raised" id="genMapBtnBottom"><span class="mdc-button__label">🎇 Another one</span></button>
-									<button disabled style="pointer-events: all; border: solid 1px #ffffff;" type="button" class="mdc-button mdc-button--raised" id="checkMapBtn"><span class="mdc-button__label">🔎 Check location</span></button>
+									<button disabled style="pointer-events: all; border: solid 1px #ffffff; background-color: #24bf6f !important;" type="button" class="mdc-button mdc-button--raised" id="genMapBtnBottom"><span class="mdc-button__label">🎇 Another one</span></button>
+									<button disabled style="pointer-events: all; border: solid 1px #ffffff; background-color: #8f45e3;" type="button" class="mdc-button mdc-button--raised" id="checkMapBtn"><span class="mdc-button__label">🔎 Check location</span></button>
 								</div>
 								<div id="mapMessageWrapper">
 									<div id="mapMessage">
@@ -380,7 +380,7 @@
 								<div style="width: 100%;">
 									<div class="input-area" id="input-area">
 										<input disabled id="uinput" name="uinput" size=10 class="uinput" placeholder="Your guess" autocomplete="off">
-										<button disabled type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
+										<button style="background-color: #8f45e3;" disabled type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
 									</div>
 
 									<div class="input-result" id="result-area">
@@ -388,7 +388,7 @@
 									</div>
 
 									<div class="buttons">
-										<button type="button" class="mdc-button mdc-button--raised regen" id="regenBtn"><span class="mdc-button__label">✨ Another one</span></button>
+										<button style="background-color: #24bf6f !important;" type="button" class="mdc-button mdc-button--raised regen" id="regenBtn"><span class="mdc-button__label">✨ Another one</span></button>
 										<div id="reportBtnDiv">
 											<button disabled type="button" class="mdc-button mdc-button--raised report" id="reportBtn"><span class="mdc-button__label">⚠️ Report invalid image</span></button>
 										</div>
@@ -410,6 +410,11 @@
 					<button type="button" class="mdc-button mdc-button--raised" id="leftPanelSwitch"><span class="mdc-button__label">🤔 About</span></button>
 					<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label" disabled>⚙ Settings</span></button>
 			</div>
+		</div>
+
+		<div id="bottom-back-wrapper">
+			<div id="bottom-left"></div>
+			<div id="bottom-right"></div>
 		</div>
 	</div>
 	<script src="./assets/js/app.js?v=2.4.3:2"></script>

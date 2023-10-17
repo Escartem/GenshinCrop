@@ -387,9 +387,12 @@ function switchNewTheme() {
         barMiddle.style.transform = "translateY(calc(100% + 1px))";
 
         // update bottom bar
-        barBottom.style.transform = "translateY(100%)";
-        bottomLeft.style.transform = "translateY(calc(-100% - 1px))"
-        bottomRight.style.transform = "translateY(calc(-100% + 5px))"
+        barBottom.classList.add("bottomMovedParent")
+        bottomLeft.classList.add("bottomMovedChild")
+        bottomRight.classList.add("bottomMovedChild")
+        // barBottom.style.transform = "translateY(100%)";
+        // bottomLeft.style.transform = "translateY(calc(-100% - 1px))"
+        // bottomRight.style.transform = "translateY(calc(-100% - 1px))"
 
         // update bg
         document.getElementsByClassName("background")[0].style.opacity = 0.5
@@ -400,9 +403,12 @@ function switchNewTheme() {
         topLeft.style.transform = null;
         barMiddle.style.transform = null;
 
-        barBottom.style.transform = null
-        bottomLeft.style.transform = null
-        bottomRight.style.transform = null
+        // barBottom.style.transform = null
+        // bottomLeft.style.transform = null
+        // bottomRight.style.transform = null
+        barBottom.classList.remove("bottomMovedParent")
+        bottomLeft.classList.remove("bottomMovedChild")
+        bottomRight.classList.remove("bottomMovedChild")
 
         document.getElementsByClassName("background")[0].style.opacity = 0
 

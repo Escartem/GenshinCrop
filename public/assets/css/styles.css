@@ -32,16 +32,19 @@ html {
     --about-bg: #4c4c4c;
 }
 
-button:disabled {
-    filter: brightness(0.7);
-}
-
 #leftPanelSwitch, #showOptions {
     height: 25px;
 }
 
 .mdc-checkbox__background {
     border-color: white !important;
+}
+
+button:disabled {
+    filter: brightness(0.7) !important;
+    color: rgba(255, 255, 255, 1) !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    cursor: not-allowed !important;
 }
 
 ::-webkit-scrollbar {
@@ -558,8 +561,15 @@ img#char, img#guessMap {
     margin-right: 1vw;
 }
 
+#genMapBtn {
+    background: #24bf6f;
+}
+
+#showMapBtn {
+    background: #748aff;
+}
+
 .mapBtn {
-    background: #748aff !important;
     margin: 10px;
 }
 
@@ -628,9 +638,8 @@ img#char, img#guessMap {
     height: 30px;
     width: 100%;
     background: var(--secondary-color);
-    border-top: 1px solid rgba(255, 255, 255, 0.6);
-    border-left: 1px solid rgba(255, 255, 255, 0.6);
-    border-right: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-bottom: none;
     position: fixed;
     bottom: 0;
     display: flex;
@@ -639,10 +648,44 @@ img#char, img#guessMap {
     z-index: 10;
 }
 
+#bottom-back-wrapper {
+    width: 100%;
+    height: 31px;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    transition: 250ms;
+}
+
+#bottom-left {
+    height: 100%;
+    width: 236px;
+    background: var(--secondary-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+    border-right: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 0 10px 0 0;
+}
+
+#bottom-right {
+    height: 100%;
+    width: 230px;
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+    border-left: 1px solid rgba(255, 255, 255, 0.7);
+    background: var(--secondary-color);
+    border-radius: 10px 0 0 0;
+}
+
+.bottomMovedParent { transform: translateY(100%); }
+.bottomMovedChild { transform: translateY(calc(-100% - 1px)); }
+
 @media (max-width: 800px) {
+    .bottomMovedParent { transform: translateY(0); display: flex; justify-content: center; }
+    .bottomMovedChild { transform: translateY(0); }
+    #bottom-back-wrapper { transform: translateY(100%); }
     .bottom { height: 60px; width: 240px; border-radius: 10px 10px 0 0; }
-    .left { margin-bottom: 30px; }
-    .right { right: 100% !important; transform: translate(100%, 0) !important; margin-right: 0px !important; }
+    .left { margin-bottom: 30px; background: none !important; }
+    .right { right: 100% !important; transform: translate(100%, 0) !important; margin-right: 0px !important; width: 240px !important; }
     .bottomLine { margin-bottom: 5px !important; }
     .left-panel { width: 90%; transition: 250ms; height: calc(80% - 30px); margin-bottom: 80px; }
     .main-panel-moved { width: 0 !important; }
@@ -680,17 +723,22 @@ img#char, img#guessMap {
     align-items: center;
     background: var(--secondary-color);
     transition: 250ms;
+    border-radius: 0 10px 0 0;
 }
 
 .right {
-    height: 20px;
+    height: 30px;
+    display: flex;
     position: absolute;
     right: 0;
     bottom: 0;
     width: max-content;
-    padding: 8px;
     transition: 250ms;
-    margin-right: -5px;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 230px;
+    background: var(--secondary-color);
+    border-radius: 10px 0px 0px;
 }
 
 #github, #discord, #showCharsBtn, #lang, #showOptions, #leftPanelSwitch, #oldVersionsSwitch {
@@ -701,12 +749,6 @@ img#char, img#guessMap {
 
 button {
     transition: 250ms !important;
-}
-
-button:disabled {
-    color: rgba(255, 255, 255, 1) !important;
-    background-color: rgba(0, 0, 0, 0.5) !important;
-    cursor: not-allowed !important;
 }
 
 .btnSelected {
