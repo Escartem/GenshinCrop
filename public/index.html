@@ -59,17 +59,25 @@
 				<span class="title" style="color: var(--text-color); font-size: 24px; transition: 250ms;">Genshin Crop</span>
 			</div>
 			<div id="bar-middle">
-				<div id="gamemodeWrapper">
-					<span id="gamemodeSelector"></span>
-					<div id="topTextWrapper">
-						<div id="topText">Map</div>
-						<div id="topText">Characters</div>
-					</div>
-					<div id="selectorBg">
-						<span class="selectorBgBtn" id="gmMap"></span>
-						<span class="selectorBgBtn" id="gmChar"></span>
+				<div id="middle-wrapper">
+					<div id="gamemodeWrapper">
+						<span id="gamemodeSelector"></span>
+						<div id="topTextWrapper">
+							<div id="topText">Map</div>
+							<div id="topText">Characters</div>
+						</div>
+						<div id="selectorBg">
+							<span class="selectorBgBtn" id="gmMap"></span>
+							<span class="selectorBgBtn" id="gmChar"></span>
+						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div id="bar-back-wrapper">
+			<div id="back-left"></div>
+			<div id="back-middle-wrapper">	
+				<div id="back-middle"></div>
 			</div>
 		</div>
 
@@ -155,6 +163,13 @@
 							<div class="mdc-form-field">
 								<div class="mdc-checkbox"><input id="optionsNoConfettis" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
 								<label style="color: var(--text-alt-color);" for="checkbox-1">Disable confettis</label>
+							</div>
+
+							<br />
+
+							<div class="mdc-form-field">
+								<div class="mdc-checkbox"><input id="optionsNewTheme" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+								<label style="color: var(--text-alt-color);" for="checkbox-1">Enable new theme</label>
 							</div>
 						</div>
 
@@ -314,16 +329,16 @@
 									</div>
 
 									<div style="width: 100%; display: flex; flex-wrap: nowrap; margin-top: 15px; max-width: 800px;">
-										<button disabled type="button" class="mdc-button mdc-button--raised mapBtn" id="showMapBtn"><span class="mdc-button__label">🎴 Show map</span></button>
 										<button type="button" class="mdc-button mdc-button--raised mapBtn" id="genMapBtn"><span class="mdc-button__label">🎇 Another one</span></button>
+										<button disabled type="button" class="mdc-button mdc-button--raised mapBtn" id="showMapBtn"><span class="mdc-button__label">🎴 Show map</span></button>
 									</div>
 								</div>
 							</div>
 							<div id="map-cont-bottom-part">
 								<div id="map"></div>
 								<div id="mapButtons">
-									<button disabled style="pointer-events: all; border: solid 1px #ffffff;" type="button" class="mdc-button mdc-button--raised" id="checkMapBtn"><span class="mdc-button__label">🔎 Check location</span></button>
 									<button disabled style="pointer-events: all; border: solid 1px #ffffff;" type="button" class="mdc-button mdc-button--raised" id="genMapBtnBottom"><span class="mdc-button__label">🎇 Another one</span></button>
+									<button disabled style="pointer-events: all; border: solid 1px #ffffff;" type="button" class="mdc-button mdc-button--raised" id="checkMapBtn"><span class="mdc-button__label">🔎 Check location</span></button>
 								</div>
 								<div id="mapMessageWrapper">
 									<div id="mapMessage">

@@ -13,10 +13,11 @@ document.getElementById("version").innerHTML = "V"+VERSION;
 ////////////
 
 var curr_char=buid=url_object=url_object_result=full_url=null;
-var gen=resultLoading=charsListEnabled=optionsShown=leftPanelShown=oldVersionsShown=charInitialized=mapInitialized=false;
+var gen=resultLoading=charsListEnabled=optionsShown=leftPanelShown=oldVersionsShown=charInitialized=mapInitialized=newThemeEnabled=false;
 
 var gameMode = "map";
 var phoneWidth = 800;
+var disableAutoFocus = false; // debugging
 
 // tadjikistan
 const triggerConfettis = new Event("confetti");
@@ -54,6 +55,7 @@ showOldVersionsBtn = getElem("oldVersionsSwitch");
 //
 optionsLightMode = getElem("optionsLightMode");
 optionsNoConfettis = getElem("optionsNoConfettis");
+optionsNewTheme = getElem("optionsNewTheme")
 optionsNewAuto = getElem("optionsNewAuto");
 optionsHideReportBtn = getElem("optionsHideWrongImg");
 optionsSRMode = getElem("optionsSRMode");
@@ -122,14 +124,20 @@ function deleteVar(n) {window.localStorage.removeItem(n)};
 /// SET UP OPTIONS ///
 //////////////////////
 
+if (getVar("hideReportBtn", true) == false) {
+    setVar("hideReportBtn", 1)
+}
+
 optionsLightMode.checked = getVar("lightMode") == 1 ? true : false;
 optionsNoConfettis.checked = getVar("noConfettis") == 1 ? true : false;
+optionsNewTheme.checked = getVar("newTheme") == 1 ? true : false;
 optionsNewAuto.checked = getVar("newAuto") == 1 ? true : false;
 optionsHideReportBtn.checked = getVar("hideReportBtn") == 1 ? true : false;
 optionsSRMode.checked = getVar("srMode") == 1 ? true : false;
 
 optionsLightMode.addEventListener("click", function() { setVar("lightMode", optionsLightMode.checked ? 1 : 0); themeSwitch(); })
 optionsNoConfettis.addEventListener("click", function() { setVar("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
+optionsNewTheme.addEventListener("click", function() { setVar("newTheme", optionsNewTheme.checked ? 1 : 0); switchNewTheme(); })
 optionsNewAuto.addEventListener("click", function() { setVar("newAuto", optionsNewAuto.checked ? 1 : 0); });
 optionsHideReportBtn.addEventListener("click", function() { setVar("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
 optionsSRMode.addEventListener("click", function() { setVar("srMode", optionsSRMode.checked ? 1 : 0); genImage(); })
@@ -188,7 +196,7 @@ function switchMode(mode, initialize=true) {
             genImage();
         };
 
-        if (uinput.disabled == false) {
+        if (uinput.disabled == false && disableAutoFocus == false) {
             setTimeout(function() {
                 uinput.focus();
             }, 250);
@@ -230,7 +238,7 @@ function switchLeftPanel() {
         leftPanel.style.transform = "translateX(-100vw)";
         showLeftPanelBtn.classList.remove("btnSelected");
         setVar("leftPanelVisible", 0);
-        if (window.innerWidth < phoneWidth && gameMode == "char" && uinput.disabled == false) {
+        if (window.innerWidth < phoneWidth && gameMode == "char" && uinput.disabled == false && disableAutoFocus == false && charsListEnabled == false) {
             uinput.focus();
         }
     }
@@ -273,19 +281,19 @@ function switchCharList() {
     }
     if (charsListEnabled == false) {   
         // char -> list
+        charsListEnabled = true;
         if (optionsShown == true) {
             switchOptions();
         }
         showCharsBtn.classList.add("btnSelected");
         getElem("mcontlistwrap").style.transform = "translateY(0)";
-        charsListEnabled = true;
     } else {
         // list -> char
         showCharsBtn.classList.remove("btnSelected");
         getElem("mcontlistwrap").style.transform = "translateY(-50%)";
         charsListEnabled = false;
 
-        if (uinput.disabled == false) {
+        if (uinput.disabled == false && optionsShown == false && disableAutoFocus == false) {
             setTimeout(function() {
                 uinput.focus();
             }, 250);
@@ -309,7 +317,7 @@ function switchOptions() {
         optionsShown = false;
         getElem("topwrapper").style.transform = "translateY(-50%)";
 
-        if (uinput.disabled == false && gameMode == "char") {
+        if (uinput.disabled == false && gameMode == "char" && charsListEnabled == false && disableAutoFocus == false) {
             setTimeout(function() {
                 uinput.focus();
             }, 250);
@@ -352,12 +360,37 @@ function showError(id, message=null) {
     if (message == null) {
         span.innerHTML = "Something went wrong 😞<br/>Please try again";
     } else {
-        // span.innerHTML = `Something went wrong 😞<br/><br/>${message}`;
         span.innerHTML = message;
     }
 
     span.style.visibility = "visible";
 }
+
+function switchNewTheme() {
+    var topBar = getElem("top-bar")
+    var topLeft = getElem("bar-left")
+    var barMiddle = getElem("bar-middle")
+
+    if (getVar("newTheme") == 1) {
+        topBar.style.transform = "translateY(-100%)";
+
+        topLeft.style.transform = "translateY(calc(100% + 1px))";
+
+        barMiddle.style.transform = "translateY(calc(100% + 1px))";
+
+        newThemeEnabled = true
+    } else {
+        topBar.style.transform = null;
+
+        topLeft.style.transform = null;
+
+        barMiddle.style.transform = null;
+
+        newThemeEnabled = false
+    }
+}
+
+switchNewTheme()
 
 ///////////////////////////
 /// CHARACTERS GAMEMODE ///
@@ -400,7 +433,7 @@ function genImage() {
         uinput.disabled = false;
         checkInputBtn.disabled = false;
 
-        if (gameMode == "char" && optionsShown == false && charsListEnabled == false) {
+        if (gameMode == "char" && optionsShown == false && charsListEnabled == false && disableAutoFocus == false) {
             uinput.focus();
         };
 
