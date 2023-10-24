@@ -26,7 +26,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
 	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
-	<link rel="stylesheet" href="assets/css/styles.css?v=2.4.3:1">
+	<link rel="stylesheet" href="assets/css/styles.css?v=2.5">
 	<link rel="stylesheet" href="assets/css/leaflet.css" />
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-132CTGT17P"></script>
@@ -41,6 +41,7 @@
 </head>
 <body style="opacity: 0; transition: 500ms; background-color: var(--background-color);">
 	<div class="main">
+		<div class="background"></div>
 		<a id="c" style="position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: 10;"></a>
 		<dialog class="mdl-dialog" id="popupDialog">
 			<div class="mdl-dialog__content" style="padding: 0.1px; height: 100%; color: var(--text-color);">
@@ -59,17 +60,25 @@
 				<span class="title" style="color: var(--text-color); font-size: 24px; transition: 250ms;">Genshin Crop</span>
 			</div>
 			<div id="bar-middle">
-				<div id="gamemodeWrapper">
-					<span id="gamemodeSelector"></span>
-					<div id="topTextWrapper">
-						<div id="topText">Map</div>
-						<div id="topText">Characters</div>
-					</div>
-					<div id="selectorBg">
-						<span class="selectorBgBtn" id="gmMap"></span>
-						<span class="selectorBgBtn" id="gmChar"></span>
+				<div id="middle-wrapper">
+					<div id="gamemodeWrapper">
+						<span id="gamemodeSelector"></span>
+						<div id="topTextWrapper">
+							<div id="topText">Map</div>
+							<div id="topText">Characters</div>
+						</div>
+						<div id="selectorBg">
+							<span class="selectorBgBtn" id="gmMap"></span>
+							<span class="selectorBgBtn" id="gmChar"></span>
+						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div id="bar-back-wrapper">
+			<div id="back-left"></div>
+			<div id="back-middle-wrapper">	
+				<div id="back-middle"></div>
 			</div>
 		</div>
 
@@ -156,6 +165,20 @@
 								<div class="mdc-checkbox"><input id="optionsNoConfettis" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
 								<label style="color: var(--text-alt-color);" for="checkbox-1">Disable confettis</label>
 							</div>
+
+							<br />
+
+							<div class="mdc-form-field">
+								<div class="mdc-checkbox"><input id="optionsNewTheme" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+								<label style="color: var(--text-alt-color);" for="checkbox-1">Enable background</label>
+							</div>
+
+							<br />
+
+							<div class="mdc-form-field">
+								<div class="mdc-checkbox"><input id="optionsDisableAutoFocus" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+								<label style="color: var(--text-alt-color);" for="checkbox-1">Disable input autofocus</label>
+							</div>
 						</div>
 
 						<div>
@@ -168,31 +191,65 @@
 						<button type="button" class="mdc-button mdc-button--raised" id="oldVersionsSwitch" style="height: 25px;"><span class="mdc-button__label">Show older versions</span></button>
 						<div id="news" style="height: max-content;">
 							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+								version 2.5 (24 October 2023)
+								<ul>
+									<li>New stuff</li>
+									<ul>
+										<li>Added new options to disable input autofocus, helpful for phones</li>
+										<li>Added new background option, still a work in progress and subject to changes</li>
+									</ul>
+									<li>Fixes and changes</li>
+									<ul>
+										<li>Fixed bug with broken display mentionned in version 2.2 patch (it wasn't "fixed soon")</li>
+										<li>Fixed a bug where the wrong image was shown when skipping too fast characters</li>
+										<li>Report button is now hidden by default</li>
+									</ul>
+									<li>Improvements</li>
+									<ul>
+										<li>Updated display and styling of the page</li>
+										<li>Buttons are now colored and the ones in map mode were switched place</li>
+										<li>Improved phone support</li>
+									</ul>
+									<li>Misc</li>
+									<ul>
+										<li>There are known issues with the map mode, the map being stuck at version 4.0 and the images generated not always including fontaine, and in the api some resolutions causing 502 errors.</li>
+									</ul>
+								</ul>
+							</span>
+						</div>
+						<div id="oldNews" style="height: 0; opacity: 0;">
+							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
 								version 2.4.3 (11 October 2023)
 								<ul>
 									<li>Star Rail: Added Guinaifen, Jingliu and Topaz</li>
 									<li>Fixed bug with star rail mode where it may show wrong on correctly typed answers</li>
 									<li>Fixed version display</li>
 								</ul>
-							</span>
-						</div>
-						<div id="oldNews" style="height: 0; opacity: 0;">
-							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+
+								<hr>
+
 								version 2.4.2 (27 September 2023)
 								<ul>
 									<li>Genshin: Added Neuvillette and Wriothesley</li>
 								</ul>
+
+								<hr>
 
 								version 2.4.1 (31 August 2023)
 								<ul>
 									<li>Genshin: Added Lyney, Lynette and Freminet for version 4.0</li>
 									<li>Genshin: Updated map to 4.0, fontaine may not be included in the guseses in some cases</li>
 								</ul>
+
+								<hr>
+
 								version 2.4 (28 July 2023)
 								<ul>
 									<li>Star Rail: Added Blade and Kafka</li>
 									<li>Fixed some bugs</li>
 								</ul>
+
+								<hr>
 								
 								version 2.3 (1 June 2023)
 								<ul>
@@ -200,6 +257,8 @@
 									<li>Star Rail: Added Luocha, Silver Wolf and Yukong</li>
 									<li>Fixed some bugs</li>
 								</ul>
+
+								<hr>
 
 								version 2.2 (9 may 2023)
 								<ul>
@@ -213,6 +272,8 @@
 
 									<li>There is known bug where the display might broke when the screen is resized and about mode is toggled, it will be fixed soon</li>
 								</ul>
+
+								<hr>
 								
 								version 2.1 (15 april 2023)
 								<ul>
@@ -221,6 +282,8 @@
 									<li>Fixed characters list display and a few others things</li>
 								</ul>
 
+								<hr>
+
 								version 2.0 (8 april 2023)
 								<ul>
 									<li>New gamemode added ! How well do you know Teyvat ? Try now with a geoguessr style minigame.</li>
@@ -228,12 +291,16 @@
 									<li>Many bug fixes, an improved interface with a new top bar, better centered elements, better mobile support, smoother animations to make the website more clean.</li>
 								</ul>
 
+								<hr>
+
 								version 1.6.2 (6 mars 2023)
 								<ul>
 									<li>added Dehya and Mika</li>
 									<li>added button to show old versions</li>
 									<li>bug fixes</li>
 								</ul>
+
+								<hr>
 
 								version 1.6.1 (27 february 2023)
 								<ul>
@@ -245,6 +312,8 @@
 									<li>many others bug fixes</li>
 								</ul>
 
+								<hr>
+
 								version 1.6 (23 february 2023)
 								<ul>
 									<li>interface rework: updated buttons, added about section, moved characters list button here and fixed/improved other stuff. Still a work in progress and may change again later</li>
@@ -254,6 +323,8 @@
 									<li>new gamemode coming soon ? ;)</li>
 								</ul>
 
+								<hr>
+
 								version 1.5 (30 january 2023)
 								<ul>
 									<li>added this news section</li>
@@ -261,16 +332,22 @@
 									<li>fixed some bugs</li>
 								</ul>
 
+								<hr>
+
 								version 1.4 (12 january 2023)
 								<ul>
 									<li>added options menu with some options to disable confettis and automatically generate new image</li>
 									<li>fixed bugs such as with input not being accepted on some phones</li>
 								</ul>
 
+								<hr>
+
 								version 1.3 (28 december 2022)
 								<ul>
 									<li>new design for characters list instead of the old popup</li>
 								</ul>
+
+								<hr>
 
 								version 1.2 (13 december 2022)
 								<ul>
@@ -279,17 +356,23 @@
 									<li>after a guess, a zoomed out image is now showed with a red square representing the area of the cropped image instead of the full one</li>
 								</ul>
 
+								<hr>
+
 								version 1.1 (12 december 2022)
 								<ul>
 									<li>added phone support for the interface</li>
 									<li>bug fixes again</li>
 								</ul>
 
+								<hr>
+
 								version 1.0.1 (21 november 2022)
 								<ul>
 									<li>the image of the full character is now showed after guessing</li>
 									<li>few improvements and fixes</li>
 								</ul>
+
+								<hr>
 
 								version 1.0 (19 november 2022)
 								<ul>
@@ -314,16 +397,16 @@
 									</div>
 
 									<div style="width: 100%; display: flex; flex-wrap: nowrap; margin-top: 15px; max-width: 800px;">
-										<button disabled type="button" class="mdc-button mdc-button--raised mapBtn" id="showMapBtn"><span class="mdc-button__label">🎴 Show map</span></button>
 										<button type="button" class="mdc-button mdc-button--raised mapBtn" id="genMapBtn"><span class="mdc-button__label">🎇 Another one</span></button>
+										<button disabled type="button" class="mdc-button mdc-button--raised mapBtn" id="showMapBtn"><span class="mdc-button__label">🎴 Show map</span></button>
 									</div>
 								</div>
 							</div>
 							<div id="map-cont-bottom-part">
 								<div id="map"></div>
 								<div id="mapButtons">
-									<button disabled style="pointer-events: all; border: solid 1px #ffffff;" type="button" class="mdc-button mdc-button--raised" id="checkMapBtn"><span class="mdc-button__label">🔎 Check location</span></button>
-									<button disabled style="pointer-events: all; border: solid 1px #ffffff;" type="button" class="mdc-button mdc-button--raised" id="genMapBtnBottom"><span class="mdc-button__label">🎇 Another one</span></button>
+									<button disabled style="pointer-events: all; border: solid 1px #ffffff; background-color: #24bf6f !important;" type="button" class="mdc-button mdc-button--raised" id="genMapBtnBottom"><span class="mdc-button__label">🎇 Another one</span></button>
+									<button disabled style="pointer-events: all; border: solid 1px #ffffff; background-color: #8f45e3;" type="button" class="mdc-button mdc-button--raised" id="checkMapBtn"><span class="mdc-button__label">🔎 Check location</span></button>
 								</div>
 								<div id="mapMessageWrapper">
 									<div id="mapMessage">
@@ -356,7 +439,7 @@
 								<div style="width: 100%;">
 									<div class="input-area" id="input-area">
 										<input disabled id="uinput" name="uinput" size=10 class="uinput" placeholder="Your guess" autocomplete="off">
-										<button disabled type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
+										<button style="background-color: #8f45e3;" disabled type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
 									</div>
 
 									<div class="input-result" id="result-area">
@@ -387,7 +470,12 @@
 					<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label" disabled>⚙ Settings</span></button>
 			</div>
 		</div>
+
+		<div id="bottom-back-wrapper">
+			<div id="bottom-left"></div>
+			<div id="bottom-right"></div>
+		</div>
 	</div>
-	<script src="./assets/js/app.js?v=2.4.3:2"></script>
+	<script src="./assets/js/app.js?v=2.5"></script>
 </body>
 </html>
