@@ -443,7 +443,7 @@ function genImage() {
 
 	buttonState(true, 0.7, "char");
 
-	char.style.height = "70%";
+	char.style.transform = "scale(0.8)";
 
 	var img = new Image();
 
@@ -529,7 +529,7 @@ function check() {
 
 	char.style.opacity = 0.5;
 	loadSpinner.style.visibility = "visible";
-	char.style.height = "100%";
+	char.style.transform = "scale(1)";
 
 	if (getVar("newAuto") == 1 && win) {
 		genImage();

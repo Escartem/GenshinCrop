@@ -479,8 +479,9 @@ button:hover {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 30vw;
+	width: 90%;
 	height: 40vh;
+	overflow: hidden;
 }
 
 .leaflet-control-zoom-out span {
@@ -515,7 +516,7 @@ img#char, img#guessMap {
 	padding: 20px;
 	display: flex;
 	justify-content: space-evenly;
-	width: 90%;
+	width: auto;
 	margin: auto;
 	max-width: 500px;
 }
