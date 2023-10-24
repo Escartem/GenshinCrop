@@ -26,7 +26,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
 	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
-	<link rel="stylesheet" href="assets/css/styles.css?v=2.4.3:1">
+	<link rel="stylesheet" href="assets/css/styles.css?v=2.5">
 	<link rel="stylesheet" href="assets/css/leaflet.css" />
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-132CTGT17P"></script>
@@ -170,7 +170,7 @@
 
 							<div class="mdc-form-field">
 								<div class="mdc-checkbox"><input id="optionsNewTheme" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-								<label style="color: var(--text-alt-color);" for="checkbox-1">Enable new theme</label>
+								<label style="color: var(--text-alt-color);" for="checkbox-1">Enable background</label>
 							</div>
 
 							<br />
@@ -191,14 +191,29 @@
 						<button type="button" class="mdc-button mdc-button--raised" id="oldVersionsSwitch" style="height: 25px;"><span class="mdc-button__label">Show older versions</span></button>
 						<div id="news" style="height: max-content;">
 							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
-								version 2.5 (17 October 2023)
+								version 2.5 (24 October 2023)
 								<ul>
-									<li>Added new background option, still a work in progress and subject to changes</li>
-									<li>Added new options to disable input autofocus, helpful for phones</li>
-									<li>Many UI improvements and fixes, including better phone support, colored buttons, etc</li>
-									<li>Fixed bug with broken display mentionned in version 2.2 patch (it wasn't "fixed soon")</li>
-									<li>Report button is now hidden by default</li>
-									<li>There are some issues with the map mode, the map being stuck at version 4.0 and the images generated not always including fontaine, and in the api some resolutions causing 502 errors.</li>
+									<li>New stuff</li>
+									<ul>
+										<li>Added new options to disable input autofocus, helpful for phones</li>
+										<li>Added new background option, still a work in progress and subject to changes</li>
+									</ul>
+									<li>Fixes and changes</li>
+									<ul>
+										<li>Fixed bug with broken display mentionned in version 2.2 patch (it wasn't "fixed soon")</li>
+										<li>Fixed a bug where the wrong image was shown when skipping too fast characters</li>
+										<li>Report button is now hidden by default</li>
+									</ul>
+									<li>Improvements</li>
+									<ul>
+										<li>Updated display and styling of the page</li>
+										<li>Buttons are now colored and the ones in map mode were switched place</li>
+										<li>Improved phone support</li>
+									</ul>
+									<li>Misc</li>
+									<ul>
+										<li>There are known issues with the map mode, the map being stuck at version 4.0 and the images generated not always including fontaine, and in the api some resolutions causing 502 errors.</li>
+									</ul>
 								</ul>
 							</span>
 						</div>
@@ -461,6 +476,6 @@
 			<div id="bottom-right"></div>
 		</div>
 	</div>
-	<script src="./assets/js/app.js?v=2.4.3:2"></script>
+	<script src="./assets/js/app.js?v=2.5"></script>
 </body>
 </html>

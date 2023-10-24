@@ -17,6 +17,7 @@ var gen=resultLoading=charsListEnabled=optionsShown=leftPanelShown=oldVersionsSh
 
 var gameMode = "map";
 var phoneWidth = 800;
+var currentGen = 0;
 
 // tadjikistan
 const triggerConfettis = new Event("confetti");
@@ -424,6 +425,7 @@ switchNewTheme()
 // gen image
 function genImage() {
 	setVar("charCount", (parseInt(getVar("charCount"))+1).toString());
+	currentGen += 1;
 	if (optionsSRMode.checked == true) {getElem("listContent").innerHTML=sr} else {getElem("listContent").innerHTML=chars};
 	if (charsListEnabled == true) {
 		switchCharList();
@@ -548,13 +550,15 @@ function check() {
 	}
 
 	const req = new Request(result_url);
-
+	const cur = currentGen
 	fetch(req).then((response) => {
 		if (response.status == 200) {
 			response.blob().then((blob) => {
-				const objectURL = URL.createObjectURL(blob);
-				url_object_result = objectURL
-				img.src = objectURL;
+				if (cur == currentGen) {
+					const objectURL = URL.createObjectURL(blob);
+					url_object_result = objectURL
+					img.src = objectURL;
+				}
 			});
 		} else {
 			if (response.status != 403) {response.json().then(data => {charErrorHandle(data["message"])})};
