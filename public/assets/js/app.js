@@ -5,19 +5,18 @@ setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
 VERSION = "2.5";
-console.log("v"+VERSION);
-document.getElementById("version").innerHTML = "V"+VERSION;
+console.log(`v${VERSION}`);
+document.getElementById("version").innerHTML = `V${VERSION}`;
 
 ////////////
 /// VARS ///
 ////////////
 
 var curr_char=buid=url_object=url_object_result=full_url=null;
-var gen=resultLoading=charsListEnabled=optionsShown=leftPanelShown=oldVersionsShown=charInitialized=mapInitialized=newThemeEnabled=false;
+var gen=resultLoading=charsListEnabled=optionsShown=leftPanelShown=oldVersionsShown=charInitialized=mapInitialized=newThemeEnabled=disableAutoFocus=false;
 
 var gameMode = "map";
 var phoneWidth = 800;
-var disableAutoFocus = false; // debugging
 
 // tadjikistan
 const triggerConfettis = new Event("confetti");
@@ -59,6 +58,7 @@ optionsNewTheme = getElem("optionsNewTheme")
 optionsNewAuto = getElem("optionsNewAuto");
 optionsHideReportBtn = getElem("optionsHideWrongImg");
 optionsSRMode = getElem("optionsSRMode");
+optionsDisableAutoFocus = getElem("optionsDisableAutoFocus");
 // game modes
 leftWrapper = getElem("left-panel-wrapper");
 mainWrapper = getElem("main-wrapper");
@@ -124,7 +124,7 @@ function deleteVar(n) {window.localStorage.removeItem(n)};
 /// SET UP OPTIONS ///
 //////////////////////
 
-if (getVar("hideReportBtn", true) == false) {
+if (getVar("hideReportBtn", true) === false) {
     setVar("hideReportBtn", 1)
 }
 
@@ -134,6 +134,7 @@ optionsNewTheme.checked = getVar("newTheme") == 1 ? true : false;
 optionsNewAuto.checked = getVar("newAuto") == 1 ? true : false;
 optionsHideReportBtn.checked = getVar("hideReportBtn") == 1 ? true : false;
 optionsSRMode.checked = getVar("srMode") == 1 ? true : false;
+optionsDisableAutoFocus.checked = getVar("disableAutoFocus") == 1 ? true : false;
 
 optionsLightMode.addEventListener("click", function() { setVar("lightMode", optionsLightMode.checked ? 1 : 0); themeSwitch(); })
 optionsNoConfettis.addEventListener("click", function() { setVar("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
@@ -141,6 +142,9 @@ optionsNewTheme.addEventListener("click", function() { setVar("newTheme", option
 optionsNewAuto.addEventListener("click", function() { setVar("newAuto", optionsNewAuto.checked ? 1 : 0); });
 optionsHideReportBtn.addEventListener("click", function() { setVar("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
 optionsSRMode.addEventListener("click", function() { setVar("srMode", optionsSRMode.checked ? 1 : 0); genImage(); })
+optionsDisableAutoFocus.addEventListener("click", function() { setVar("disableAutoFocus", optionsDisableAutoFocus.checked ? 1 : 0); disableAutoFocus = optionsDisableAutoFocus.checked; })
+
+disableAutoFocus = optionsDisableAutoFocus.checked;
 
 //////////////////////
 /// MAIN FUNCTIONS ///
@@ -269,6 +273,7 @@ function reportBtnSwitch() {
     if (getVar("hideReportBtn") == 1) {
         reportBtn.style.pointerEvents = "none";
         reportBtn.style.fontSize = "0";
+        reportBtn.marginLeft
         getElem("reportBtnDiv").style.width = "0";
     } else {
         reportBtn.style.pointerEvents = null;
@@ -390,12 +395,9 @@ function switchNewTheme() {
         barBottom.classList.add("bottomMovedParent")
         bottomLeft.classList.add("bottomMovedChild")
         bottomRight.classList.add("bottomMovedChild")
-        // barBottom.style.transform = "translateY(100%)";
-        // bottomLeft.style.transform = "translateY(calc(-100% - 1px))"
-        // bottomRight.style.transform = "translateY(calc(-100% - 1px))"
 
         // update bg
-        document.getElementsByClassName("background")[0].style.opacity = 0.5
+        document.getElementsByClassName("background")[0].style.opacity = 0.7
 
         newThemeEnabled = true
     } else {
@@ -403,9 +405,6 @@ function switchNewTheme() {
         topLeft.style.transform = null;
         barMiddle.style.transform = null;
 
-        // barBottom.style.transform = null
-        // bottomLeft.style.transform = null
-        // bottomRight.style.transform = null
         barBottom.classList.remove("bottomMovedParent")
         bottomLeft.classList.remove("bottomMovedChild")
         bottomRight.classList.remove("bottomMovedChild")

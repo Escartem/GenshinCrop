@@ -9,27 +9,45 @@ html {
 :root.dark {
     --background-color: #2f353e;
     --secondary-color: #1c2127;
+
     --clist-color: #3e4956;
     --clist-alt-color: #5b697a;
+
     --options-bg: #343d4a;
+
     --text-color: white;
     --text-alt-color: lightgray;
     --text-red: #ff9f9f;
     --text-green: #beffbe;
+
     --about-bg: #4c4c4c;
+
+    --btn-green: #24bf6f;
+    --btn-light-blue: #748aff;
+    --btn-purple: #8f45e3;
+    --btn-red: #ff4c4c;
 }
 
 :root.light {
     --background-color: #bac9e1;
     --secondary-color: #9eb0cd;
+
     --clist-color: #617b99;
     --clist-alt-color: #728cab;
+
     --options-bg: #859dbf;
+
     --text-color: black;
     --text-alt-color: #ffffff;
     --text-red: #ee4a4a;
     --text-green: #beffbe;
+
     --about-bg: #4c4c4c;
+
+    --btn-green: #24bf6f;
+    --btn-light-blue: #748aff;
+    --btn-purple: #8f45e3;
+    --btn-red: #ff4c4c;
 }
 
 #leftPanelSwitch, #showOptions {
@@ -45,6 +63,10 @@ button:disabled {
     color: rgba(255, 255, 255, 1) !important;
     background-color: rgba(0, 0, 0, 0.5) !important;
     cursor: not-allowed !important;
+}
+
+button:hover {
+    filter: brightness(0.8);
 }
 
 ::-webkit-scrollbar {
@@ -128,7 +150,8 @@ button:disabled {
     pointer-events: none;
     opacity: 0;
     transition: 250ms;
-    background-image: url("https://wallpapers.com/images/hd/genshin-impact-background-1at4i3bbwd6586f4.jpg");
+    background-image: url("../img/bg.jpg");
+    background-position: center;
 }
 
 #bar-back-wrapper {
@@ -546,8 +569,8 @@ img#char, img#guessMap {
     line-height: normal;
 }
 
-.report {
-    background: #ff4c4c !important;
+#reportBtn {
+    background: var(--btn-red);
 }
 
 #reportBtnDiv {
@@ -556,17 +579,16 @@ img#char, img#guessMap {
     width: 100%;
 }
 
-.regen {
-    background: #748aff !important;
-    margin-right: 1vw;
+#regenBtn {
+    background: var(--btn-green);
 }
 
 #genMapBtn {
-    background: #24bf6f;
+    background: var(--btn-green);
 }
 
 #showMapBtn {
-    background: #748aff;
+    background: var(--btn-light-blue);
 }
 
 .mapBtn {
@@ -578,6 +600,11 @@ img#char, img#guessMap {
     width: 100%;
     height: 7vh;
     padding: 1px;
+}
+
+.report {
+    margin-left: 1vw;
+    width: calc(100% - 1vw);
 }
 
 .uinput {
