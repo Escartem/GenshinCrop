@@ -147,6 +147,13 @@ optionsDisableAutoFocus.addEventListener("click", function() { setVar("disableAu
 
 disableAutoFocus = optionsDisableAutoFocus.checked;
 
+//update bg
+if (optionsSRMode.checked == true) {
+	document.getElementsByClassName("background")[0].style.backgroundImage = "url('../img/bg/hsr.jpg')"
+} else {
+	document.getElementsByClassName("background")[0].style.backgroundImage = "url('../img/bg/gi.jpg')"
+}
+
 //////////////////////
 /// MAIN FUNCTIONS ///
 //////////////////////
@@ -541,7 +548,6 @@ function check() {
 		if (resultLoading == true) {
 			char.src = img.src;
 			char.style.opacity = 1;
-			// char.style.opacity = 1;
 			loadSpinner.style.visibility = "hidden";
 		}
 

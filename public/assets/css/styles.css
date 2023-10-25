@@ -150,7 +150,7 @@ button:hover {
 	pointer-events: none;
 	opacity: 0;
 	transition: 250ms;
-	background-image: url("../img/bg.jpg");
+	background-image: url("../img/empty.jpg");
 	background-position: center;
 }
 
