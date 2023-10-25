@@ -142,17 +142,10 @@ optionsNoConfettis.addEventListener("click", function() { setVar("noConfettis", 
 optionsNewTheme.addEventListener("click", function() { setVar("newTheme", optionsNewTheme.checked ? 1 : 0); switchNewTheme(); })
 optionsNewAuto.addEventListener("click", function() { setVar("newAuto", optionsNewAuto.checked ? 1 : 0); });
 optionsHideReportBtn.addEventListener("click", function() { setVar("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
-optionsSRMode.addEventListener("click", function() { setVar("srMode", optionsSRMode.checked ? 1 : 0); genImage(); })
+optionsSRMode.addEventListener("click", function() { setVar("srMode", optionsSRMode.checked ? 1 : 0); genImage(); updateBg(); })
 optionsDisableAutoFocus.addEventListener("click", function() { setVar("disableAutoFocus", optionsDisableAutoFocus.checked ? 1 : 0); disableAutoFocus = optionsDisableAutoFocus.checked; })
 
 disableAutoFocus = optionsDisableAutoFocus.checked;
-
-//update bg
-if (optionsSRMode.checked == true) {
-	document.getElementsByClassName("background")[0].style.backgroundImage = "url('../img/bg/hsr.jpg')"
-} else {
-	document.getElementsByClassName("background")[0].style.backgroundImage = "url('../img/bg/gi.jpg')"
-}
 
 //////////////////////
 /// MAIN FUNCTIONS ///
@@ -188,6 +181,17 @@ function setupData() {
 }
 
 setupData();
+
+//update bg
+function updateBg() {
+	if (optionsSRMode.checked == true) {
+		document.getElementsByClassName("background")[0].style.backgroundImage = "url('../assets/img/bg/hsr.jpg')"
+	} else {
+		document.getElementsByClassName("background")[0].style.backgroundImage = "url('../assets/img/bg/gi.jpg')"
+	}
+}
+
+updateBg();
 
 // change gamemode
 function switchMode(mode, initialize=true) {
