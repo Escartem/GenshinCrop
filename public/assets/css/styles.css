@@ -150,18 +150,17 @@ button:hover {
 	pointer-events: none;
 	opacity: 0;
 	transition: 250ms;
+	background-size: cover;
+	background-position: center;
+	position: absolute;
 }
 
 .background-gi {
 	background-image: url("../img/bg/gi.jpg");
-	background-size: cover;
-	position: absolute;
 }
 
 .background-hsr {
 	background-image: url("../img/bg/hsr.jpg");
-	background-size: cover;
-	position: absolute;
 }
 
 #bar-back-wrapper {
