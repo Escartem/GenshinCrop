@@ -185,9 +185,12 @@ setupData();
 //update bg
 function updateBg() {
 	if (optionsSRMode.checked == true) {
-		document.getElementsByClassName("background")[0].style.backgroundImage = "url('../assets/img/bg/hsr.jpg')"
+		document.getElementsByClassName("background-hsr")[0].style.opacity = 1
+		document.getElementsByClassName("background-gi")[0].style.opacity = 0
+
 	} else {
-		document.getElementsByClassName("background")[0].style.backgroundImage = "url('../assets/img/bg/gi.jpg')"
+		document.getElementsByClassName("background-hsr")[0].style.opacity = 0
+		document.getElementsByClassName("background-gi")[0].style.opacity = 1
 	}
 }
 
