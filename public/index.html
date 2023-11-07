@@ -26,7 +26,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
 	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
-	<link rel="stylesheet" href="assets/css/styles.css?v=2.5:3">
+	<link rel="stylesheet" href="assets/css/styles.css?v=2.5.1">
 	<link rel="stylesheet" href="assets/css/leaflet.css" />
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-132CTGT17P"></script>
@@ -41,420 +41,429 @@
 </head>
 <body style="opacity: 0; transition: 500ms; background-color: var(--background-color);">
 	<div class="main">
-		<div class="background">
-			<div class="background-gi"></div>
-			<div class="background-hsr"></div>
-		</div>
 		<a id="c" style="position: absolute; width: 100%; height: 100%; pointer-events: none; z-index: 10;"></a>
-		<dialog class="mdl-dialog" id="popupDialog">
-			<div class="mdl-dialog__content" style="padding: 0.1px; height: 100%; color: var(--text-color);">
-				<h2 id="popupTitle" style="margin: 0px; font-size: 20px; line-height: 16px;">Popup Title</h2>
-				<br />
-				<span id="popupContent" style="overflow-wrap: anywhere;">Popup Content</span>
-			</div>
-			<div class="mdl-dialog__actions" style="position: fixed; margin-left: -28px; margin-top: -40px;">
-				<button type="button" class="mdc-button mdc-button--raised close"><span class="mdc-button__label">Close</span></button>
-			</div>
-		</dialog>
 
-		<div id="top-bar">
-			<div id="bar-left">
-				<img id="icon" draggable="false" src="./assets/img/icon.png" style="height: 100%;">
-				<span class="title" style="color: var(--text-color); font-size: 24px; transition: 250ms;">Genshin Crop</span>
-			</div>
-			<div id="bar-middle">
-				<div id="middle-wrapper">
-					<div id="gamemodeWrapper">
-						<span id="gamemodeSelector"></span>
-						<div id="topTextWrapper">
-							<div id="topText">Map</div>
-							<div id="topText">Characters</div>
-						</div>
-						<div id="selectorBg">
-							<span class="selectorBgBtn" id="gmMap"></span>
-							<span class="selectorBgBtn" id="gmChar"></span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="bar-back-wrapper">
-			<div id="back-left"></div>
-			<div id="back-middle-wrapper">	
-				<div id="back-middle"></div>
+		<div id="popup" class="popup-wrapper popup-disabled">
+			<span class="pic-title" id="popup-title">TITLE</span>
+			<span class="pic-title" id="popup-content">CONTENT</span>
+			<div class="popup-button-wrapper">
+				<button type="button" id="close-popup" class="mdc-button mdc-button--raised" style="background: var(--clist-color);"><span class="mdc-button__label">Close</span></button>
 			</div>
 		</div>
 
-		<div class="left-panel" id="leftPanel">
-			<div id="left-panel-wrapper">
-				<div id="left-panel-map">
-					<div class="aboutContent">
-						<span class="pic-title">About</span>
+		<div id="app">
+			<div class="background">
+				<div class="background-gi"></div>
+				<div class="background-hsr"></div>
+			</div>
 
-						<div id="news" style="height: max-content; color: var(--text-alt-color); margin: 10px; margin-bottom: 20px; width: 100%; background-color: var(--about-bg);">
-							<span style="margin: 10px; font-size: 13px;">
-								You will get a picture of a random place in the map, you have as much time as you want to look at it and when you are ready, click on the button to show the map. Once the map is displayed you cannot see the picture again so make sure you know where it is !
-
-								<br /><br />
-
-								Once on the map, you can control the zoom level using your mouse wheel or with the buttons in the corner, click anywhere to place a marker of where you think the picture was. You can move the marker as many times as you want by clicking again. When you are satisfied with the location, just click on check and see the results !
-
-								<br /><br />
-
-								Keep in mind that the closest point to the image you have is the center of that image, placing your marker near it, even if it was inside that image will not give you the maximum score.
-
-								<br /><br /><br />
-
-								You can also use the following shortcuts, ctrl+q to generate a new image, space to show the map, enter to check the result after placing your marker.
-							</span>
-						</div>
-					</div>
+			<div id="top-bar">
+				<div id="bar-left">
+					<img id="icon" draggable="false" src="./assets/img/icon.png" style="height: 100%;">
+					<span class="title" style="color: var(--text-color); font-size: 24px; transition: 250ms;">Genshin Crop</span>
 				</div>
-
-				<div id="left-panel-char">
-					<div class="aboutContent">
-						<span class="pic-title">About</span>
-
-						<div id="news" style="height: max-content; color: var(--text-alt-color); margin: 10px; width: 100%; background-color: var(--about-bg);">
-							<span style="margin: 10px; font-size: 13px;">
-								You will be shown a cropped picture of a random part of a random character from the game. You must guess which character it is. Be careful with names, you can check the list of all valid names with the "Characters List" button.
-
-								<br /><br />
-
-								You can use these shortcuts, press ctrl+q to generate an image, textbox is automatically selected after image is shown, but if not press tab to focus it. And you can after press enter to confirm your guess.
-							</span>
-						</div>
-
-						<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label" disabled>📄 Characters list</span></button>
-
-						<hr style="width: 100%;">
-
-						<span class="optionsCatTitle">Settings</span>
-
-						<div class="mdc-form-field">
-							<div class="mdc-checkbox"><input id="optionsSRMode" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-							<label style="color: var(--text-alt-color);" for="checkbox-1">Use Star Rail characters</label>
-						</div>
-
-						<div class="mdc-form-field">
-							<div class="mdc-checkbox"><input id="optionsNewAuto" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-							<label style="color: var(--text-alt-color);" for="checkbox-1">Automatically generate new image if guess is correct</label>
-						</div>
-
-						<div class="mdc-form-field">
-							<div class="mdc-checkbox"><input id="optionsHideWrongImg" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-							<label style="color: var(--text-alt-color);" for="checkbox-1">Hide "report invalid image" button</label>
+				<div id="bar-middle">
+					<div id="middle-wrapper">
+						<div id="gamemodeWrapper">
+							<span id="gamemodeSelector"></span>
+							<div id="topTextWrapper">
+								<div id="topText">Map</div>
+								<div id="topText">Characters</div>
+							</div>
+							<div id="selectorBg">
+								<span class="selectorBgBtn" id="gmMap"></span>
+								<span class="selectorBgBtn" id="gmChar"></span>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+			<div id="bar-back-wrapper">
+				<div id="back-left"></div>
+				<div id="back-middle-wrapper">	
+					<div id="back-middle"></div>
+				</div>
+			</div>
 
-		<div class="top" id="mainPanel">
-			<div id="topwrapper">
-				<div class="options" id="options">
-					<span class="pic-title" id="options-title" style="transition: 0.5s;">Settings</span>
+			<div class="left-panel" id="leftPanel">
+				<div id="left-panel-wrapper">
+					<div id="left-panel-map">
+						<div class="aboutContent">
+							<span class="pic-title">About</span>
 
-					<div class="optionsContent" id="optionsContent">
-						<div>
-							<div class="mdc-form-field">
-								<div class="mdc-checkbox"><input id="optionsLightMode" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-								<label style="color: var(--text-alt-color);" for="checkbox-1">Light Mode</label>
+							<div id="news" style="height: max-content; color: var(--text-alt-color); margin: 10px; margin-bottom: 20px; width: 100%; background-color: var(--about-bg);">
+								<span style="margin: 10px; font-size: 13px;">
+									You will get a picture of a random place in the map, you have as much time as you want to look at it and when you are ready, click on the button to show the map. Once the map is displayed you cannot see the picture again so make sure you know where it is !
+
+									<br /><br />
+
+									Once on the map, you can control the zoom level using your mouse wheel or with the buttons in the corner, click anywhere to place a marker of where you think the picture was. You can move the marker as many times as you want by clicking again. When you are satisfied with the location, just click on check and see the results !
+
+									<br /><br />
+
+									Keep in mind that the closest point to the image you have is the center of that image, placing your marker near it, even if it was inside that image will not give you the maximum score.
+
+									<br /><br /><br />
+
+									You can also use the following shortcuts, ctrl+q to generate a new image, space to show the map, enter to check the result after placing your marker.
+								</span>
 							</div>
-
-							<br />
-
-							<div class="mdc-form-field">
-								<div class="mdc-checkbox"><input id="optionsNoConfettis" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-								<label style="color: var(--text-alt-color);" for="checkbox-1">Disable confettis</label>
-							</div>
-
-							<br />
-
-							<div class="mdc-form-field">
-								<div class="mdc-checkbox"><input id="optionsNewTheme" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-								<label style="color: var(--text-alt-color);" for="checkbox-1">Enable background</label>
-							</div>
-
-							<br />
-
-							<div class="mdc-form-field">
-								<div class="mdc-checkbox"><input id="optionsDisableAutoFocus" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-								<label style="color: var(--text-alt-color);" for="checkbox-1">Disable input autofocus</label>
-							</div>
-						</div>
-
-						<div>
-							<span class="optionsCatTitle">Socials</span>
-							<button type="button" class="mdc-button mdc-button--raised" id="github" onclick="window.open('https://github.com/Escartem', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-github"></i> Github</span></button>
-							<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-discord"></i> Discord</span></button>
-						</div>
-
-						<span class="optionsCatTitle">What's new</span>
-						<button type="button" class="mdc-button mdc-button--raised" id="oldVersionsSwitch" style="height: 25px;"><span class="mdc-button__label">Show older versions</span></button>
-						<div id="news" style="height: max-content;">
-							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
-								version 2.5 (24 October 2023)
-								<ul>
-									<li>New stuff</li>
-									<ul>
-										<li>Added new options to disable input autofocus, helpful for phones</li>
-										<li>Added new background option, still a work in progress and subject to changes</li>
-										<li>Star Rail: Added Fu Xuan and Dan Feng for version 1.3 (I forgot :c)</li>
-									</ul>
-									<li>Fixes and changes</li>
-									<ul>
-										<li>Fixed bug with broken display mentionned in version 2.2 patch (it wasn't "fixed soon")</li>
-										<li>Fixed a bug where the wrong image was shown when skipping too fast characters</li>
-										<li>Fixed a display issue with the report button when hidden</li>
-										<li>Report button is now hidden by default</li>
-									</ul>
-									<li>Improvements</li>
-									<ul>
-										<li>Updated display and styling of the page</li>
-										<li>Buttons are now colored and the ones in map mode were switched place</li>
-										<li>Improved phone support</li>
-									</ul>
-									<li>Misc</li>
-									<ul>
-										<li>There are known issues with the map mode, the map being stuck at version 4.0 and the images generated not always including fontaine, and in the api some resolutions causing 502 errors.</li>
-									</ul>
-								</ul>
-							</span>
-						</div>
-						<div id="oldNews" style="height: 0; opacity: 0;">
-							<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
-								version 2.4.3 (11 October 2023)
-								<ul>
-									<li>Star Rail: Added Guinaifen, Jingliu and Topaz</li>
-									<li>Fixed bug with star rail mode where it may show wrong on correctly typed answers</li>
-									<li>Fixed version display</li>
-								</ul>
-
-								<hr>
-
-								version 2.4.2 (27 September 2023)
-								<ul>
-									<li>Genshin: Added Neuvillette and Wriothesley</li>
-								</ul>
-
-								<hr>
-
-								version 2.4.1 (31 August 2023)
-								<ul>
-									<li>Genshin: Added Lyney, Lynette and Freminet for version 4.0</li>
-									<li>Genshin: Updated map to 4.0, fontaine may not be included in the guseses in some cases</li>
-								</ul>
-
-								<hr>
-
-								version 2.4 (28 July 2023)
-								<ul>
-									<li>Star Rail: Added Blade and Kafka</li>
-									<li>Fixed some bugs</li>
-								</ul>
-
-								<hr>
-								
-								version 2.3 (1 June 2023)
-								<ul>
-									<li>Genshin: Added Kirara</li>
-									<li>Star Rail: Added Luocha, Silver Wolf and Yukong</li>
-									<li>Fixed some bugs</li>
-								</ul>
-
-								<hr>
-
-								version 2.2 (9 may 2023)
-								<ul>
-									<li>Added a button in the character mode to use Honkai Star Rail characters, this feature is still a test and may change later but have fun with it :)</li>
-									<li>A few improvements in the API, should be faster and less buggy</li>
-									<li>Added a link at the bottom of the page to view the API</li>
-									<li>You can now do ctrl+m to switch gamemode</li>
-									<li>Input area in the character mode is now automatically selected when closing options, closing characters list or switching gamemode</li>
-									<li>Fixed the blurry characters list</li>
-									<li>More bugs fixes</li>
-
-									<li>There is known bug where the display might broke when the screen is resized and about mode is toggled, it will be fixed soon</li>
-								</ul>
-
-								<hr>
-								
-								version 2.1 (15 april 2023)
-								<ul>
-									<li>Updated map to 3.6</li>
-									<li>Added Baizhu and Kaveh</li>
-									<li>Fixed characters list display and a few others things</li>
-								</ul>
-
-								<hr>
-
-								version 2.0 (8 april 2023)
-								<ul>
-									<li>New gamemode added ! How well do you know Teyvat ? Try now with a geoguessr style minigame.</li>
-									<li>For the characters mode, there is now support of multiples names for the same characters, you can see them in the characters list</li>
-									<li>Many bug fixes, an improved interface with a new top bar, better centered elements, better mobile support, smoother animations to make the website more clean.</li>
-								</ul>
-
-								<hr>
-
-								version 1.6.2 (6 mars 2023)
-								<ul>
-									<li>added Dehya and Mika</li>
-									<li>added button to show old versions</li>
-									<li>bug fixes</li>
-								</ul>
-
-								<hr>
-
-								version 1.6.1 (27 february 2023)
-								<ul>
-									<li>interface rework again, moved some settings in the about tab, others small improvements and visual fixes for phones</li>
-									<li>added a light mode for all light mode fans :)</li>
-									<li>about section is now enabled by default and stays the way it was after refresh</li>
-									<li>report button now hides with a cleaner animation than before</li>
-									<li>enabling characters list on phone hides the about section instead of showing the list somewhere behind it</li>
-									<li>many others bug fixes</li>
-								</ul>
-
-								<hr>
-
-								version 1.6 (23 february 2023)
-								<ul>
-									<li>interface rework: updated buttons, added about section, moved characters list button here and fixed/improved other stuff. Still a work in progress and may change again later</li>
-									<li>added new option to hide the "report invalid image" button</li>
-									<li>fixed a bug with the ctrl+q shortcut that was sometimes not working</li>
-									<li>faster image generation (I hope)</li>
-									<li>new gamemode coming soon ? ;)</li>
-								</ul>
-
-								<hr>
-
-								version 1.5 (30 january 2023)
-								<ul>
-									<li>added this news section</li>
-									<li>added Alhaitham and YaoYao</li>
-									<li>fixed some bugs</li>
-								</ul>
-
-								<hr>
-
-								version 1.4 (12 january 2023)
-								<ul>
-									<li>added options menu with some options to disable confettis and automatically generate new image</li>
-									<li>fixed bugs such as with input not being accepted on some phones</li>
-								</ul>
-
-								<hr>
-
-								version 1.3 (28 december 2022)
-								<ul>
-									<li>new design for characters list instead of the old popup</li>
-								</ul>
-
-								<hr>
-
-								version 1.2 (13 december 2022)
-								<ul>
-									<li>added wanderer and layla</li>
-									<li>lot of bug fixes with buttons not working</li>
-									<li>after a guess, a zoomed out image is now showed with a red square representing the area of the cropped image instead of the full one</li>
-								</ul>
-
-								<hr>
-
-								version 1.1 (12 december 2022)
-								<ul>
-									<li>added phone support for the interface</li>
-									<li>bug fixes again</li>
-								</ul>
-
-								<hr>
-
-								version 1.0.1 (21 november 2022)
-								<ul>
-									<li>the image of the full character is now showed after guessing</li>
-									<li>few improvements and fixes</li>
-								</ul>
-
-								<hr>
-
-								version 1.0 (19 november 2022)
-								<ul>
-									<li>Genshin Crop Initial Release !</li>
-								</ul>
-							</span>
 						</div>
 					</div>
-					<span id="bottomText">Genshin Crop - <span id="version">V0.0<span></span>
-				</div>
 
-				<div id="main-wrapper">
-					<div id="main-map">
-						<div id="mmaplistwrap">
-							<div id="map-cont-top-part">
-								<div id="maptopcontent">
-									<span class="pic-title" style="padding: 0%;">Where is this ?</span>
+					<div id="left-panel-char">
+						<div class="aboutContent">
+							<span class="pic-title">About</span>
+
+							<div id="news" style="height: max-content; color: var(--text-alt-color); margin: 10px; width: 100%; background-color: var(--about-bg);">
+								<span style="margin: 10px; font-size: 13px;">
+									You will be shown a cropped picture of a random part of a random character from the game. You must guess which character it is. Be careful with names, you can check the list of all valid names with the "Characters List" button.
+
+									<br /><br />
+
+									You can use these shortcuts, press ctrl+q to generate an image, textbox is automatically selected after image is shown, but if not press tab to focus it. And you can after press enter to confirm your guess.
+								</span>
+							</div>
+
+							<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label" disabled>📄 Characters list</span></button>
+
+							<hr style="width: 100%;">
+
+							<span class="optionsCatTitle">Settings</span>
+
+							<div class="mdc-form-field">
+								<div class="mdc-checkbox"><input id="optionsSRMode" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+								<label style="color: var(--text-alt-color);" for="checkbox-1">Use Star Rail characters</label>
+							</div>
+
+							<div class="mdc-form-field">
+								<div class="mdc-checkbox"><input id="optionsNewAuto" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+								<label style="color: var(--text-alt-color);" for="checkbox-1">Automatically generate new image if guess is correct</label>
+							</div>
+
+							<div class="mdc-form-field">
+								<div class="mdc-checkbox"><input id="optionsHideWrongImg" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+								<label style="color: var(--text-alt-color);" for="checkbox-1">Show "report invalid image" button</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="top" id="mainPanel">
+				<div id="topwrapper">
+					<div class="options" id="options">
+						<span class="pic-title" id="options-title" style="transition: 0.5s;">Settings</span>
+
+						<div class="optionsContent" id="optionsContent">
+							<div>
+								<div class="mdc-form-field">
+									<div class="mdc-checkbox"><input id="optionsLightMode" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+									<label style="color: var(--text-alt-color);" for="checkbox-1">Light Mode</label>
+								</div>
+
+								<br />
+
+								<div class="mdc-form-field">
+									<div class="mdc-checkbox"><input id="optionsNoConfettis" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+									<label style="color: var(--text-alt-color);" for="checkbox-1">Disable confettis</label>
+								</div>
+
+								<br />
+
+								<div class="mdc-form-field">
+									<div class="mdc-checkbox"><input id="optionsDisableNewTheme" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+									<label style="color: var(--text-alt-color);" for="checkbox-1">Disable background</label>
+								</div>
+
+								<br />
+
+								<div class="mdc-form-field">
+									<div class="mdc-checkbox"><input id="optionsDisableAutoFocus" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+									<label style="color: var(--text-alt-color);" for="checkbox-1">Disable input autofocus</label>
+								</div>
+							</div>
+
+							<div>
+								<span class="optionsCatTitle">Socials</span>
+								<button type="button" class="mdc-button mdc-button--raised" id="github" onclick="window.open('https://github.com/Escartem', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-github"></i> Github</span></button>
+								<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-discord"></i> Discord</span></button>
+							</div>
+
+							<span class="optionsCatTitle">What's new</span>
+							<button type="button" class="mdc-button mdc-button--raised" id="oldVersionsSwitch" style="height: 25px;"><span class="mdc-button__label">Show older versions</span></button>
+							<div id="news" style="height: max-content;">
+								<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+									version 2.5.1 (7 November 2023)
+									<ul>
+										<li>Fixed a bug with character mode where it may show the wrong image</li>
+										<li>Background is now enabled by default</li>
+										<li>Updated popup design</li>
+										<li>A few others improvements and fixes</li>
+									</ul>
+								</span>
+							</div>
+							<div id="oldAppUpdates" style="height: 0; opacity: 0;">
+								<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+									version 2.5 (24 October 2023)
+									<ul>
+										<li>New stuff</li>
+										<ul>
+											<li>Added new options to disable input autofocus, helpful for phones</li>
+											<li>Added new background option, still a work in progress and subject to changes</li>
+											<li>Star Rail: Added Fu Xuan and Dan Feng for version 1.3 (I forgot :c)</li>
+										</ul>
+										<li>Fixes and changes</li>
+										<ul>
+											<li>Fixed bug with broken display mentionned in version 2.2 patch (it wasn't "fixed soon")</li>
+											<li>Fixed a bug where the wrong image was shown when skipping too fast characters</li>
+											<li>Fixed a display issue with the report button when hidden</li>
+											<li>Report button is now hidden by default</li>
+										</ul>
+										<li>Improvements</li>
+										<ul>
+											<li>Updated display and styling of the page</li>
+											<li>Buttons are now colored and the ones in map mode were switched place</li>
+											<li>Improved phone support</li>
+										</ul>
+										<li>Misc</li>
+										<ul>
+											<li>There are known issues with the map mode, the map being stuck at version 4.0 and the images generated not always including fontaine, and in the api some resolutions causing 502 errors.</li>
+										</ul>
+									</ul>
+
+									version 2.4.3 (11 October 2023)
+									<ul>
+										<li>Star Rail: Added Guinaifen, Jingliu and Topaz</li>
+										<li>Fixed bug with star rail mode where it may show wrong on correctly typed answers</li>
+										<li>Fixed version display</li>
+									</ul>
+
+									<hr>
+
+									version 2.4.2 (27 September 2023)
+									<ul>
+										<li>Genshin: Added Neuvillette and Wriothesley</li>
+									</ul>
+
+									<hr>
+
+									version 2.4.1 (31 August 2023)
+									<ul>
+										<li>Genshin: Added Lyney, Lynette and Freminet for version 4.0</li>
+										<li>Genshin: Updated map to 4.0, fontaine may not be included in the guseses in some cases</li>
+									</ul>
+
+									<hr>
+
+									version 2.4 (28 July 2023)
+									<ul>
+										<li>Star Rail: Added Blade and Kafka</li>
+										<li>Fixed some bugs</li>
+									</ul>
+
+									<hr>
+									
+									version 2.3 (1 June 2023)
+									<ul>
+										<li>Genshin: Added Kirara</li>
+										<li>Star Rail: Added Luocha, Silver Wolf and Yukong</li>
+										<li>Fixed some bugs</li>
+									</ul>
+
+									<hr>
+
+									version 2.2 (9 may 2023)
+									<ul>
+										<li>Added a button in the character mode to use Honkai Star Rail characters, this feature is still a test and may change later but have fun with it :)</li>
+										<li>A few improvements in the API, should be faster and less buggy</li>
+										<li>Added a link at the bottom of the page to view the API</li>
+										<li>You can now do ctrl+m to switch gamemode</li>
+										<li>Input area in the character mode is now automatically selected when closing options, closing characters list or switching gamemode</li>
+										<li>Fixed the blurry characters list</li>
+										<li>More bugs fixes</li>
+
+										<li>There is known bug where the display might broke when the screen is resized and about mode is toggled, it will be fixed soon</li>
+									</ul>
+
+									<hr>
+									
+									version 2.1 (15 april 2023)
+									<ul>
+										<li>Updated map to 3.6</li>
+										<li>Added Baizhu and Kaveh</li>
+										<li>Fixed characters list display and a few others things</li>
+									</ul>
+
+									<hr>
+
+									version 2.0 (8 april 2023)
+									<ul>
+										<li>New gamemode added ! How well do you know Teyvat ? Try now with a geoguessr style minigame.</li>
+										<li>For the characters mode, there is now support of multiples names for the same characters, you can see them in the characters list</li>
+										<li>Many bug fixes, an improved interface with a new top bar, better centered elements, better mobile support, smoother animations to make the website more clean.</li>
+									</ul>
+
+									<hr>
+
+									version 1.6.2 (6 mars 2023)
+									<ul>
+										<li>added Dehya and Mika</li>
+										<li>added button to show old versions</li>
+										<li>bug fixes</li>
+									</ul>
+
+									<hr>
+
+									version 1.6.1 (27 february 2023)
+									<ul>
+										<li>interface rework again, moved some settings in the about tab, others small improvements and visual fixes for phones</li>
+										<li>added a light mode for all light mode fans :)</li>
+										<li>about section is now enabled by default and stays the way it was after refresh</li>
+										<li>report button now hides with a cleaner animation than before</li>
+										<li>enabling characters list on phone hides the about section instead of showing the list somewhere behind it</li>
+										<li>many others bug fixes</li>
+									</ul>
+
+									<hr>
+
+									version 1.6 (23 february 2023)
+									<ul>
+										<li>interface rework: updated buttons, added about section, moved characters list button here and fixed/improved other stuff. Still a work in progress and may change again later</li>
+										<li>added new option to hide the "report invalid image" button</li>
+										<li>fixed a bug with the ctrl+q shortcut that was sometimes not working</li>
+										<li>faster image generation (I hope)</li>
+										<li>new gamemode coming soon ? ;)</li>
+									</ul>
+
+									<hr>
+
+									version 1.5 (30 january 2023)
+									<ul>
+										<li>added this news section</li>
+										<li>added Alhaitham and YaoYao</li>
+										<li>fixed some bugs</li>
+									</ul>
+
+									<hr>
+
+									version 1.4 (12 january 2023)
+									<ul>
+										<li>added options menu with some options to disable confettis and automatically generate new image</li>
+										<li>fixed bugs such as with input not being accepted on some phones</li>
+									</ul>
+
+									<hr>
+
+									version 1.3 (28 december 2022)
+									<ul>
+										<li>new design for characters list instead of the old popup</li>
+									</ul>
+
+									<hr>
+
+									version 1.2 (13 december 2022)
+									<ul>
+										<li>added wanderer and layla</li>
+										<li>lot of bug fixes with buttons not working</li>
+										<li>after a guess, a zoomed out image is now showed with a red square representing the area of the cropped image instead of the full one</li>
+									</ul>
+
+									<hr>
+
+									version 1.1 (12 december 2022)
+									<ul>
+										<li>added phone support for the interface</li>
+										<li>bug fixes again</li>
+									</ul>
+
+									<hr>
+
+									version 1.0.1 (21 november 2022)
+									<ul>
+										<li>the image of the full character is now showed after guessing</li>
+										<li>few improvements and fixes</li>
+									</ul>
+
+									<hr>
+
+									version 1.0 (19 november 2022)
+									<ul>
+										<li>Genshin Crop Initial Release !</li>
+									</ul>
+								</span>
+							</div>
+						</div>
+						<span id="bottomText">Genshin Crop - <span id="version">V0.0<span></span>
+					</div>
+
+					<div id="main-wrapper">
+						<div id="main-map">
+							<div id="mmaplistwrap">
+								<div id="map-cont-top-part">
+									<div id="maptopcontent">
+										<span class="pic-title" style="padding: 0%;">Where is this ?</span>
+										<div class="pic">
+											<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="load-spinner-map"></div>
+											<img id="guessMap" src="./assets/img/load.png" draggable="false" style="border-radius: 7px; height: 100%;">
+											<span id="error-text-map" class="error-text">error cringe</span>
+										</div>
+
+										<div style="width: 100%; display: flex; flex-wrap: nowrap; margin-top: 15px; max-width: 800px;">
+											<button type="button" class="mdc-button mdc-button--raised mapBtn" id="genMapBtn"><span class="mdc-button__label">🎇 Another one</span></button>
+											<button disabled type="button" class="mdc-button mdc-button--raised mapBtn" id="showMapBtn"><span class="mdc-button__label">🎴 Show map</span></button>
+										</div>
+									</div>
+								</div>
+								<div id="map-cont-bottom-part">
+									<div id="map"></div>
+									<div id="mapButtons">
+										<button disabled style="pointer-events: all; border: solid 1px #ffffff; background-color: #24bf6f !important;" type="button" class="mdc-button mdc-button--raised" id="genMapBtnBottom"><span class="mdc-button__label">🎇 Another one</span></button>
+										<button disabled style="pointer-events: all; border: solid 1px #ffffff; background-color: #8f45e3;" type="button" class="mdc-button mdc-button--raised" id="checkMapBtn"><span class="mdc-button__label">🔎 Check location</span></button>
+									</div>
+									<div id="mapMessageWrapper">
+										<div id="mapMessage">
+											<span style="font-size: 20px;" id="mapMessageTop">ew cringe</span>
+											<span style="font-size: 20px;" id="mapMessageBottom">me sad</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div id="main-char">
+							<div id="mcontlistwrap">
+								<div class="characters-list" id="clist">
+									<span class="pic-title" id="clist-title" style="transition: 0.5s;">List of characters names</span>
+
+									<div class="clist" id="list" style="height: 100vh">
+										<span id="listContent" style="overflow-wrap: anywhere; color: white; font-size: 22px; -webkit-user-select: text; -ms-user-select: text; user-select: text;">Content</span>
+									</div>
+								</div>
+
+								<div class="main-content" id="mcontentchar">
+									<span class="pic-title" style="padding: 0%; padding-top: 3%;">Who is this ?</span>
 									<div class="pic">
-										<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="load-spinner-map"></div>
-										<img id="guessMap" src="./assets/img/load.png" draggable="false" style="border-radius: 7px; height: 100%;">
-										<span id="error-text-map" class="error-text">error cringe</span>
+										<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="load-spinner"></div>
+										<img id="char" src="./assets/img/load.png" draggable="false" style="border-radius: 7px; height: 85%;">
+										<span id="error-text" class="error-text">error cringe</span>
 									</div>
 
-									<div style="width: 100%; display: flex; flex-wrap: nowrap; margin-top: 15px; max-width: 800px;">
-										<button type="button" class="mdc-button mdc-button--raised mapBtn" id="genMapBtn"><span class="mdc-button__label">🎇 Another one</span></button>
-										<button disabled type="button" class="mdc-button mdc-button--raised mapBtn" id="showMapBtn"><span class="mdc-button__label">🎴 Show map</span></button>
-									</div>
-								</div>
-							</div>
-							<div id="map-cont-bottom-part">
-								<div id="map"></div>
-								<div id="mapButtons">
-									<button disabled style="pointer-events: all; border: solid 1px #ffffff; background-color: #24bf6f !important;" type="button" class="mdc-button mdc-button--raised" id="genMapBtnBottom"><span class="mdc-button__label">🎇 Another one</span></button>
-									<button disabled style="pointer-events: all; border: solid 1px #ffffff; background-color: #8f45e3;" type="button" class="mdc-button mdc-button--raised" id="checkMapBtn"><span class="mdc-button__label">🔎 Check location</span></button>
-								</div>
-								<div id="mapMessageWrapper">
-									<div id="mapMessage">
-										<span style="font-size: 20px;" id="mapMessageTop">ew cringe</span>
-										<span style="font-size: 20px;" id="mapMessageBottom">me sad</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+									<div style="width: 100%;">
+										<div class="input-area" id="input-area">
+											<input disabled id="uinput" name="uinput" size=10 class="uinput" placeholder="Your guess" autocomplete="off">
+											<button style="background-color: #8f45e3;" disabled type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
+										</div>
 
-					<div id="main-char">
-						<div id="mcontlistwrap">
-							<div class="characters-list" id="clist">
-								<span class="pic-title" id="clist-title" style="transition: 0.5s;">List of characters names</span>
+										<div class="input-result" id="result-area">
+											<span id="result-text">no u</span>
+										</div>
 
-								<div class="clist" id="list" style="height: 100vh">
-									<span id="listContent" style="overflow-wrap: anywhere; color: white; font-size: 22px; -webkit-user-select: text; -ms-user-select: text; user-select: text;">Content</span>
-								</div>
-							</div>
-
-							<div class="main-content" id="mcontentchar">
-								<span class="pic-title" style="padding: 0%; padding-top: 3%;">Who is this ?</span>
-								<div class="pic">
-									<div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" id="load-spinner"></div>
-									<img id="char" src="./assets/img/load.png" draggable="false" style="border-radius: 7px; height: 85%;">
-									<span id="error-text" class="error-text">error cringe</span>
-								</div>
-
-								<div style="width: 100%;">
-									<div class="input-area" id="input-area">
-										<input disabled id="uinput" name="uinput" size=10 class="uinput" placeholder="Your guess" autocomplete="off">
-										<button style="background-color: #8f45e3;" disabled type="button" class="mdc-button mdc-button--raised uinput-check" id="checkInputBtn"><span class="mdc-button__label">🔍 Check</span></button>
-									</div>
-
-									<div class="input-result" id="result-area">
-										<span id="result-text">no u</span>
-									</div>
-
-									<div class="buttons">
-										<button type="button" class="mdc-button mdc-button--raised regen" id="regenBtn"><span class="mdc-button__label">✨ Another one</span></button>
-										<div id="reportBtnDiv">
-											<button disabled type="button" class="mdc-button mdc-button--raised report" id="reportBtn"><span class="mdc-button__label">⚠️ Report invalid image</span></button>
+										<div class="buttons">
+											<button type="button" class="mdc-button mdc-button--raised regen" id="regenBtn"><span class="mdc-button__label">✨ Another one</span></button>
+											<div id="reportBtnDiv">
+												<button disabled type="button" class="mdc-button mdc-button--raised report" id="reportBtn"><span class="mdc-button__label">⚠️ Report invalid image</span></button>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -463,24 +472,24 @@
 					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="bottom">
-			<div class="left">
-				<span class="credits">Made by <a href="https://escartem.eu.org" target="_blank">Escartem</a> <i class="fa-solid fa-heart" style="color: #e55c5c;"></i> | <a href="https://api.escartem.eu.org" target="_blank">View API</a></span>
+			<div class="bottom">
+				<div class="left">
+					<span class="credits">Made by <a href="https://escartem.eu.org" target="_blank">Escartem</a> <i class="fa-solid fa-heart" style="color: #e55c5c;"></i> | <a href="https://api.escartem.eu.org" target="_blank">View API</a></span>
+				</div>
+				<div class="bottomLine"><hr></div>
+					<div class="right">
+						<button type="button" class="mdc-button mdc-button--raised" id="leftPanelSwitch"><span class="mdc-button__label">🤔 About</span></button>
+						<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label" disabled>⚙ Settings</span></button>
+				</div>
 			</div>
-			<div class="bottomLine"><hr></div>
-				<div class="right">
-					<button type="button" class="mdc-button mdc-button--raised" id="leftPanelSwitch"><span class="mdc-button__label">🤔 About</span></button>
-					<button type="button" class="mdc-button mdc-button--raised" id="showOptions"><span class="mdc-button__label" disabled>⚙ Settings</span></button>
-			</div>
-		</div>
 
-		<div id="bottom-back-wrapper">
-			<div id="bottom-left"></div>
-			<div id="bottom-right"></div>
+			<div id="bottom-back-wrapper">
+				<div id="bottom-left"></div>
+				<div id="bottom-right"></div>
+			</div>
 		</div>
 	</div>
-	<script src="./assets/js/app.js?v=2.5:3"></script>
+	<script src="./assets/js/app.js?v=2.5.1"></script>
 </body>
 </html>

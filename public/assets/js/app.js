@@ -4,7 +4,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "2.5";
+VERSION = "2.5.1";
 console.log(`v${VERSION}`);
 document.getElementById("version").innerHTML = `V${VERSION}`;
 
@@ -52,10 +52,10 @@ clist = getElem("clist");
 options = getElem("options");
 showLeftPanelBtn = getElem("leftPanelSwitch");
 showOldVersionsBtn = getElem("oldVersionsSwitch");
-//
+// options
 optionsLightMode = getElem("optionsLightMode");
 optionsNoConfettis = getElem("optionsNoConfettis");
-optionsNewTheme = getElem("optionsNewTheme")
+optionsDisableNewTheme = getElem("optionsDisableNewTheme")
 optionsNewAuto = getElem("optionsNewAuto");
 optionsHideReportBtn = getElem("optionsHideWrongImg");
 optionsSRMode = getElem("optionsSRMode");
@@ -102,7 +102,7 @@ uinput.onkeydown = function(event) {if (event.keyCode == 13) {check();}};
 gmMap.addEventListener("click", function(event) {event.preventDefault(); switchMode("map");})
 gmChar.addEventListener("click", function(event) {event.preventDefault(); switchMode("char");})
 regenBtn.addEventListener("click", function(event) {event.preventDefault(); genImage();});
-reportBtn.addEventListener("click", function(event) {event.preventDefault(); showPopup("Report image", "Please join the <a href='https://discord.gg/fzRdtVh', target='_blank'>discord</a> and provide this : <span style='color: white; background: #2a2a2a;'>"+buid+"</span>", 260, 200);});
+reportBtn.addEventListener("click", function(event) {event.preventDefault(); showPopup("Report image", "Please join the <a href='https://discord.gg/fzRdtVh', target='_blank'>discord</a> and provide this : <span style='color: white; background: #2a2a2a;'>"+buid+"</span>", 60, 33);});
 genMapBtn.addEventListener("click", function(event) {event.preventDefault(); genMapGuess();})
 showMapBtn.addEventListener("click", function(event) {event.preventDefault(); showMap();})
 checkMapBtn.addEventListener("click", function(event) {event.preventDefault(); checkMap();})
@@ -131,7 +131,7 @@ if (getVar("hideReportBtn", true) === false) {
 
 optionsLightMode.checked = getVar("lightMode") == 1 ? true : false;
 optionsNoConfettis.checked = getVar("noConfettis") == 1 ? true : false;
-optionsNewTheme.checked = getVar("newTheme") == 1 ? true : false;
+optionsDisableNewTheme.checked = getVar("newTheme") == 1 ? false : true;
 optionsNewAuto.checked = getVar("newAuto") == 1 ? true : false;
 optionsHideReportBtn.checked = getVar("hideReportBtn") == 1 ? true : false;
 optionsSRMode.checked = getVar("srMode") == 1 ? true : false;
@@ -139,7 +139,7 @@ optionsDisableAutoFocus.checked = getVar("disableAutoFocus") == 1 ? true : false
 
 optionsLightMode.addEventListener("click", function() { setVar("lightMode", optionsLightMode.checked ? 1 : 0); themeSwitch(); })
 optionsNoConfettis.addEventListener("click", function() { setVar("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
-optionsNewTheme.addEventListener("click", function() { setVar("newTheme", optionsNewTheme.checked ? 1 : 0); switchNewTheme(); })
+optionsDisableNewTheme.addEventListener("click", function() { setVar("newTheme", optionsDisableNewTheme.checked ? 0 : 1); switchNewTheme(); })
 optionsNewAuto.addEventListener("click", function() { setVar("newAuto", optionsNewAuto.checked ? 1 : 0); });
 optionsHideReportBtn.addEventListener("click", function() { setVar("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
 optionsSRMode.addEventListener("click", function() { setVar("srMode", optionsSRMode.checked ? 1 : 0); genImage(); updateBg(); })
@@ -355,13 +355,13 @@ function showOldVersions() {
 	if (oldVersionsShown == false) {
 		showOldVersionsBtn.classList.add("btnSelected");
 		oldVersionsShown = true;
-		getElem("oldNews").style.opacity = 1;
-		getElem("oldNews").style.height = "max-content";
+		getElem("oldAppUpdates").style.opacity = 1;
+		getElem("oldAppUpdates").style.height = "max-content";
 	} else {
 		showOldVersionsBtn.classList.remove("btnSelected");
 		oldVersionsShown = false;
-		getElem("oldNews").style.opacity = 0;
-		getElem("oldNews").style.height = "0";
+		getElem("oldAppUpdates").style.opacity = 0;
+		getElem("oldAppUpdates").style.height = "0";
 	}
 }
 
@@ -532,7 +532,7 @@ function check() {
 		text.style.color = "var(--text-green)";
 		setVar("charWin", (parseInt(getVar("charWin"))+1).toString());
 	} else {
-		text.innerHTML = "Nope, it was "+display+" 😔";
+		text.innerHTML = `Nope, it was ${display} 😔`;
 		text.style.color = "var(--text-red)";
 	}
 
@@ -547,6 +547,7 @@ function check() {
 
 	if (getVar("newAuto") == 1 && win) {
 		genImage();
+		return
 	}
 
 	var img = new Image();
@@ -820,22 +821,22 @@ function checkMap() {
 /// MISC ///
 ////////////
 
-function showPopup(title, text, width="150", height="90") {
-	var popupDialog = getElem("popupDialog");
+// w150 et h90
+function showPopup(title, content, width=80, height=70) {
+	var popup = getElem("popup")
+	var app = getElem("app")
 
-	if (! popupDialog.showModal) {
-		dialogPolyfill.registerDialog(popupDialog);
-	}
+	// update
+	getElem("popup-title").innerHTML = title
+	getElem("popup-content").innerHTML = content
 
-	getElem("popupTitle").innerHTML = title;
-	getElem("popupContent").innerHTML = text;
+	popup.style.width = `${width}%`
+	popup.style.height = `${height}%`
 
-	popupDialog.style.height = height+"px";
-	popupDialog.style.width = width+"px";
+	getElem("close-popup").addEventListener("click", () => { popup.classList.add("popup-disabled"); app.classList.remove("app-disabled"); });
 
-	popupDialog.showModal();
-
-	popupDialog.querySelector('.close').addEventListener('click', function() {popupDialog.close();});
+	popup.classList.remove("popup-disabled")
+	app.classList.add("app-disabled")
 }
 
 window.addEventListener("load", () => {
