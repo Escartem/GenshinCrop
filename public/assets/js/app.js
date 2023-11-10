@@ -131,7 +131,7 @@ if (getVar("hideReportBtn", true) === false) {
 
 optionsLightMode.checked = getVar("lightMode") == 1 ? true : false;
 optionsNoConfettis.checked = getVar("noConfettis") == 1 ? true : false;
-optionsDisableNewTheme.checked = getVar("newTheme") == 1 ? false : true;
+optionsDisableNewTheme.checked = getVar("newTheme") == 1 ? true : false;
 optionsNewAuto.checked = getVar("newAuto") == 1 ? true : false;
 optionsHideReportBtn.checked = getVar("hideReportBtn") == 1 ? true : false;
 optionsSRMode.checked = getVar("srMode") == 1 ? true : false;
