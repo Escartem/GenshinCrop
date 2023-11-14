@@ -131,7 +131,7 @@ if (getVar("hideReportBtn", true) === false) {
 
 optionsLightMode.checked = getVar("lightMode") == 1 ? true : false;
 optionsNoConfettis.checked = getVar("noConfettis") == 1 ? true : false;
-optionsDisableNewTheme.checked = getVar("newTheme") == 1 ? true : false;
+optionsDisableNewTheme.checked = getVar("disableNewTheme") == 1 ? true : false;
 optionsNewAuto.checked = getVar("newAuto") == 1 ? true : false;
 optionsHideReportBtn.checked = getVar("hideReportBtn") == 1 ? true : false;
 optionsSRMode.checked = getVar("srMode") == 1 ? true : false;
@@ -139,7 +139,7 @@ optionsDisableAutoFocus.checked = getVar("disableAutoFocus") == 1 ? true : false
 
 optionsLightMode.addEventListener("click", function() { setVar("lightMode", optionsLightMode.checked ? 1 : 0); themeSwitch(); })
 optionsNoConfettis.addEventListener("click", function() { setVar("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
-optionsDisableNewTheme.addEventListener("click", function() { setVar("newTheme", optionsDisableNewTheme.checked ? 0 : 1); switchNewTheme(); })
+optionsDisableNewTheme.addEventListener("click", function() { setVar("disableNewTheme", optionsDisableNewTheme.checked ? 1 : 0); switchNewTheme(); })
 optionsNewAuto.addEventListener("click", function() { setVar("newAuto", optionsNewAuto.checked ? 1 : 0); });
 optionsHideReportBtn.addEventListener("click", function() { setVar("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
 optionsSRMode.addEventListener("click", function() { setVar("srMode", optionsSRMode.checked ? 1 : 0); genImage(); updateBg(); })
@@ -400,7 +400,7 @@ function switchNewTheme() {
 	var bottomLeft = document.getElementsByClassName("left")[0]
 	var bottomRight = document.getElementsByClassName("right")[0]
 
-	if (getVar("newTheme") == 1) {
+	if (getVar("disableNewTheme") == 0) {
 		// update top bar
 		topBar.style.transform = "translateY(-100%)";
 		topLeft.style.transform = "translateY(calc(100% + 1px))";
