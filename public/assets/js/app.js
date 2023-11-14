@@ -1,10 +1,8 @@
-// Escartem
-
 // ems is a simple script that disable some keyboard shortcuts and show a nice message in console
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "2.5.1";
+VERSION = "2.6";
 console.log(`v${VERSION}`);
 document.getElementById("version").innerHTML = `V${VERSION}`;
 
@@ -48,7 +46,6 @@ errorText = getElem("error-text");
 loadSpinner = getElem("load-spinner");
 mcontent = getElem("main-wrapper");
 mcontentchar = getElem("mcontentchar");
-clist = getElem("clist");
 options = getElem("options");
 showLeftPanelBtn = getElem("leftPanelSwitch");
 showOldVersionsBtn = getElem("oldVersionsSwitch");
@@ -152,8 +149,9 @@ disableAutoFocus = optionsDisableAutoFocus.checked;
 //////////////////////
 
 // fetch data
-var sr=chars="";
+var sr=ys="";
 function convertList(list) {
+	var final = document.createElement("span")
 	result = "";
 	list.forEach(function(value) {
 		if (typeof(value) === "object") {
@@ -164,23 +162,97 @@ function convertList(list) {
 	});
 	result = result.slice(5);
 
-	return result;
+	final.innerHTML = result
+	final.classList.add("selectable")
+	return final;
 }
 
+function convertListNew(data) {
+	var result = document.createElement("div")
+	result.classList.add("clistWrapper")
+
+
+	Object.keys(data).forEach((e) => {
+		var value = data[e][0]
+		var cname = ""
+		if (typeof(value) === "object") {
+			cname = value[0]
+			value.shift()
+		} else {
+			cname = value
+			value = null
+		}
+		
+		var wrapper = document.createElement("div")
+		wrapper.classList.add("clistCharWrapper")
+
+		var pic = document.createElement("img")
+		pic.classList.add("clistCharImg")
+		if (data[e][1] == 5) {
+			pic.classList.add("five-star")
+		} else {
+			pic.classList.add("four-star")
+		}
+		pic.src = `https://bluedb.escartem.eu.org/gs/card/${e}.png`
+
+		var textWrap = document.createElement("div")
+		textWrap.classList.add("clistTextWrap")
+
+		var text = document.createElement("span")
+		text.classList = "clistCharText selectable"
+		text.innerHTML = cname
+
+		wrapper.appendChild(pic)
+
+		textWrap.appendChild(text)
+
+		if (value != null) {
+			var altText = document.createElement("span")
+			altText.classList = "clistCharAltText selectable"
+			altText.innerHTML = value.join().replace(",", ", ")
+
+			textWrap.appendChild(altText)
+		}
+
+		wrapper.appendChild(textWrap)
+		result.appendChild(wrapper)
+	})
+
+	return result
+}
+
+var setupDone = false
 function setupData() {
-	const req = new Request("https://api.escartem.eu.org/p/gca/data?v=2");
+	const req = new Request("https://api.escartem.eu.org/p/gca/data?v=3");
 	fetch(req).then(response => response.json()).then(json => {
-		var charList = json["ys"]["display"];
+		var charList = json["ys"]["chars"];
 		var SRList = json["sr"]["display"]; 
 
-		chars = convertList(charList);
+		ys = convertListNew(charList);
 		sr = convertList(SRList);
 
-		if (optionsSRMode.checked == true) {getElem("listContent").innerHTML=sr} else {getElem("listContent").innerHTML=chars};
+		updateCharsList(true)
 	});
 }
 
 setupData();
+
+function updateCharsList(setup=false) {
+	if (setup == true) {
+		setupDone = true
+	}
+
+	if (setupDone == true) {
+		var listContent = getElem("listContent")
+		if (optionsSRMode.checked == true) {
+			listContent.innerHTML = ""
+			listContent.appendChild(sr)
+		} else {
+			listContent.innerHTML = ""
+			listContent.appendChild(ys)
+		};
+	}
+}
 
 //update bg
 function updateBg() {
@@ -432,15 +504,39 @@ function switchNewTheme() {
 
 switchNewTheme()
 
+// update stats
+function updateStats() {
+	// map
+	var statsMap = getElem("stats-map")
+	var [count, win] = [getVar("mapCount"), getVar("mapWin")]
+	var mapText = `${count} games in map mode with ${win} won (${Math.round((win/count)*100)}% win ratio)`
+	
+	statsMap.innerHTML = mapText
+
+	// char
+	var statsChar = getElem("stats-char")
+	var [count, win] = [getVar("charCount"), getVar("charWin")]
+	var charText = `${count} games in character mode with ${win} won (${Math.round((win/count)*100)}% win ratio)`
+
+	statsChar.innerHTML = charText
+}
+
+updateStats()
+
+function updateVar(name, val=1) {
+	setVar(name, (parseInt(getVar(name))+val).toString());
+	updateStats()
+}
+
 ///////////////////////////
 /// CHARACTERS GAMEMODE ///
 ///////////////////////////
 
 // gen image
 function genImage() {
-	setVar("charCount", (parseInt(getVar("charCount"))+1).toString());
+	updateVar("charCount")
 	currentGen += 1;
-	if (optionsSRMode.checked == true) {getElem("listContent").innerHTML=sr} else {getElem("listContent").innerHTML=chars};
+	updateCharsList()
 	if (charsListEnabled == true) {
 		switchCharList();
 	}
@@ -530,7 +626,7 @@ function check() {
 		}
 		text.innerHTML = "Correct 🎉";
 		text.style.color = "var(--text-green)";
-		setVar("charWin", (parseInt(getVar("charWin"))+1).toString());
+		updateVar("charWin")
 	} else {
 		text.innerHTML = `Nope, it was ${display} 😔`;
 		text.style.color = "var(--text-red)";
@@ -689,11 +785,13 @@ function showMap() {
 function mapScorePos(score) {
 	message = "";
 	if (score == 0) {
+		updateVar("mapWin")
 		message = "How.";
 		if (getVar("noConfettis") == 0) {
 			getElem("c").dispatchEvent(triggerConfettis);
 		};
 	} else if (score.between(0, 80)) {
+		updateVar("mapWin")
 		message = "Perfectly on spot 🎉";
 		if (getVar("noConfettis") == 0) {
 			getElem("c").dispatchEvent(triggerConfettis);
@@ -713,7 +811,7 @@ function mapScorePos(score) {
 }
 
 function genMapGuess() {
-	setVar("mapCount", (parseInt(getVar("mapCount"))+1).toString());
+	updateVar("mapCount")
 	if (mapInitialized == false) {
 		mapInitialized = true;
 	};

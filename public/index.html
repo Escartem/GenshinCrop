@@ -184,15 +184,50 @@
 								</div>
 							</div>
 
+							<hr>
+
 							<div>
-								<span class="optionsCatTitle">Socials</span>
-								<button type="button" class="mdc-button mdc-button--raised" id="github" onclick="window.open('https://github.com/Escartem', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-github"></i> Github</span></button>
-								<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-discord"></i> Discord</span></button>
+								<span class="optionsCatTitle">Stats</span>
+
+								<div style="color: var(--text-color);">
+									<ul style="padding-left: 15px;">
+										<li id="stats-map">0 games in map mode with 0 won (0% win ratio)</li>
+
+										<li id="stats-char">0 games in character mode with 0 won (0% win ratio)</li>
+									</ul>
+								</div>
 							</div>
 
+							<hr>
+
+							<div>
+								<span class="optionsCatTitle">Socials</span>
+								<div style="display: flex; justify-content: space-evenly;">
+									<button type="button" class="mdc-button mdc-button--raised" id="github" onclick="window.open('https://github.com/Escartem/GenshinCrop', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-github"></i> Github</span></button>
+									<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-discord"></i> Discord</span></button>
+								</div>
+							</div>
+
+							<hr>
+
 							<span class="optionsCatTitle">What's new</span>
-							<button type="button" class="mdc-button mdc-button--raised" id="oldVersionsSwitch" style="height: 25px;"><span class="mdc-button__label">Show older versions</span></button>
+							<div style="display: flex; justify-content: center;">
+								<button type="button" class="mdc-button mdc-button--raised" id="oldVersionsSwitch" style="height: 25px;"><span class="mdc-button__label">Show older versions</span></button>
+							</div>
 							<div id="news" style="height: max-content;">
+								<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+									version 2.6 (X November 2023)
+									<br><br>
+									<span style="font-weight: 700; text-decoration: underline;">The website is now 1 year old !</span>
+									<ul>
+										<li>It's now open source, <a href="https://github.com/Escartem/GenshinCrop" target="_blank">see here</a></li>
+										<li>Added stats section in settings to view infos about your scores</li>
+										<li></li>
+										<li>More improvements and fixes</li>
+									</ul>
+								</span>
+							</div>
+							<div id="oldAppUpdates" style="height: 0; opacity: 0;">
 								<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
 									version 2.5.1 (7 November 2023)
 									<ul>
@@ -201,10 +236,9 @@
 										<li>Updated popup design</li>
 										<li>A few others improvements and fixes</li>
 									</ul>
-								</span>
-							</div>
-							<div id="oldAppUpdates" style="height: 0; opacity: 0;">
-								<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+
+									<hr>
+
 									version 2.5 (24 October 2023)
 									<ul>
 										<li>New stuff</li>
@@ -231,6 +265,8 @@
 											<li>There are known issues with the map mode, the map being stuck at version 4.0 and the images generated not always including fontaine, and in the api some resolutions causing 502 errors.</li>
 										</ul>
 									</ul>
+
+									<hr>
 
 									version 2.4.3 (11 October 2023)
 									<ul>
@@ -273,7 +309,7 @@
 
 									<hr>
 
-									version 2.2 (9 may 2023)
+									version 2.2 (9 May 2023)
 									<ul>
 										<li>Added a button in the character mode to use Honkai Star Rail characters, this feature is still a test and may change later but have fun with it :)</li>
 										<li>A few improvements in the API, should be faster and less buggy</li>
@@ -288,7 +324,7 @@
 
 									<hr>
 									
-									version 2.1 (15 april 2023)
+									version 2.1 (15 April 2023)
 									<ul>
 										<li>Updated map to 3.6</li>
 										<li>Added Baizhu and Kaveh</li>
@@ -297,7 +333,7 @@
 
 									<hr>
 
-									version 2.0 (8 april 2023)
+									version 2.0 (8 April 2023)
 									<ul>
 										<li>New gamemode added ! How well do you know Teyvat ? Try now with a geoguessr style minigame.</li>
 										<li>For the characters mode, there is now support of multiples names for the same characters, you can see them in the characters list</li>
@@ -306,7 +342,7 @@
 
 									<hr>
 
-									version 1.6.2 (6 mars 2023)
+									version 1.6.2 (6 March 2023)
 									<ul>
 										<li>added Dehya and Mika</li>
 										<li>added button to show old versions</li>
@@ -315,7 +351,7 @@
 
 									<hr>
 
-									version 1.6.1 (27 february 2023)
+									version 1.6.1 (27 February 2023)
 									<ul>
 										<li>interface rework again, moved some settings in the about tab, others small improvements and visual fixes for phones</li>
 										<li>added a light mode for all light mode fans :)</li>
@@ -327,7 +363,7 @@
 
 									<hr>
 
-									version 1.6 (23 february 2023)
+									version 1.6 (23 February 2023)
 									<ul>
 										<li>interface rework: updated buttons, added about section, moved characters list button here and fixed/improved other stuff. Still a work in progress and may change again later</li>
 										<li>added new option to hide the "report invalid image" button</li>
@@ -338,7 +374,7 @@
 
 									<hr>
 
-									version 1.5 (30 january 2023)
+									version 1.5 (30 January 2023)
 									<ul>
 										<li>added this news section</li>
 										<li>added Alhaitham and YaoYao</li>
@@ -347,7 +383,7 @@
 
 									<hr>
 
-									version 1.4 (12 january 2023)
+									version 1.4 (12 January 2023)
 									<ul>
 										<li>added options menu with some options to disable confettis and automatically generate new image</li>
 										<li>fixed bugs such as with input not being accepted on some phones</li>
@@ -355,14 +391,14 @@
 
 									<hr>
 
-									version 1.3 (28 december 2022)
+									version 1.3 (28 December 2022)
 									<ul>
 										<li>new design for characters list instead of the old popup</li>
 									</ul>
 
 									<hr>
 
-									version 1.2 (13 december 2022)
+									version 1.2 (13 December 2022)
 									<ul>
 										<li>added wanderer and layla</li>
 										<li>lot of bug fixes with buttons not working</li>
@@ -371,7 +407,7 @@
 
 									<hr>
 
-									version 1.1 (12 december 2022)
+									version 1.1 (12 December 2022)
 									<ul>
 										<li>added phone support for the interface</li>
 										<li>bug fixes again</li>
@@ -379,7 +415,7 @@
 
 									<hr>
 
-									version 1.0.1 (21 november 2022)
+									version 1.0.1 (21 November 2022)
 									<ul>
 										<li>the image of the full character is now showed after guessing</li>
 										<li>few improvements and fixes</li>
@@ -387,7 +423,7 @@
 
 									<hr>
 
-									version 1.0 (19 november 2022)
+									version 1.0 (19 November 2022)
 									<ul>
 										<li>Genshin Crop Initial Release !</li>
 									</ul>
@@ -434,10 +470,10 @@
 						<div id="main-char">
 							<div id="mcontlistwrap">
 								<div class="characters-list" id="clist">
-									<span class="pic-title" id="clist-title" style="transition: 0.5s;">List of characters names</span>
+									<span class="pic-title" id="clist-title" style="transition: 0.5s;">List of characters</span>
 
 									<div class="clist" id="list" style="height: 100vh">
-										<span id="listContent" style="overflow-wrap: anywhere; color: white; font-size: 22px; -webkit-user-select: text; -ms-user-select: text; user-select: text;">Content</span>
+										<span id="listContent" style="overflow-wrap: anywhere; color: white; font-size: 22px;">Content</span>
 									</div>
 								</div>
 
