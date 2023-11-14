@@ -131,7 +131,6 @@ img#char, img#guessMap { border: solid 1px #ffffff }
 	align-items: center;
 	width: 90%;
 	height: 40vh;
-	overflow: hidden;
 }
 
 #news, #oldAppUpdates {
