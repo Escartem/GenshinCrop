@@ -193,7 +193,7 @@ function convertListNew(data) {
 		} else {
 			pic.classList.add("four-star")
 		}
-		pic.src = `https://bluedb.escartem.eu.org/gs/card/${e}.png`
+		pic.src = `https://bluedb.escartem.eu.org/gcrop/ys/card/${e}.png`
 
 		var textWrap = document.createElement("div")
 		textWrap.classList.add("clistTextWrap")
@@ -209,7 +209,7 @@ function convertListNew(data) {
 		if (value != null) {
 			var altText = document.createElement("span")
 			altText.classList = "clistCharAltText selectable"
-			altText.innerHTML = value.join().replace(",", ", ")
+			altText.innerHTML = value.join().replaceAll(",", ", ")
 
 			textWrap.appendChild(altText)
 		}
