@@ -221,10 +221,21 @@ function convertListNew(data) {
 	return result
 }
 
+var paths = {}
 var setupDone = false
 function setupData() {
 	const req = new Request("https://api.escartem.eu.org/p/gca/data?v=3");
 	fetch(req).then(response => response.json()).then(json => {
+		// update paths
+		// todo: include db path
+		paths = {
+			"api_base": json["data"]["bases"]["api"],
+			"char_gi": json["data"]["paths"]["character_genshin"],
+			"char_hsr": json["data"]["paths"]["character_star_rail"],
+			"map_gi": json["data"]["paths"]["map_genshin"]
+		}
+
+		// update clist
 		var charList = json["ys"]["chars"];
 		var SRList = json["sr"]["display"]; 
 
@@ -258,11 +269,11 @@ function updateCharsList(setup=false) {
 function updateBg() {
 	if (optionsSRMode.checked == true) {
 		document.getElementsByClassName("background-hsr")[0].style.opacity = 1
-		document.getElementsByClassName("background-gi")[0].style.opacity = 0
+		document.getElementsByClassName("background-ys")[0].style.opacity = 0
 
 	} else {
 		document.getElementsByClassName("background-hsr")[0].style.opacity = 0
-		document.getElementsByClassName("background-gi")[0].style.opacity = 1
+		document.getElementsByClassName("background-ys")[0].style.opacity = 1
 	}
 }
 
@@ -583,9 +594,9 @@ function genImage() {
 	var req = null
 
 	if (getVar("srMode") == 1) {
-		req = new Request("https://api.escartem.eu.org/p/gca/srs");
+		req = new Request(`${paths["base"]}${paths["char_hsr"]}`);
 	} else {
-		req = new Request("https://api.escartem.eu.org/p/gca/c");
+		req = new Request(`${paths["base"]}${paths["char_gi"]}`);
 	}
 
 
@@ -716,6 +727,7 @@ L.TileLayer.CustomCoords = L.TileLayer.extend({
 	}
 });
 
+// todo: use high-res map and btn to low res
 var layer = new L.TileLayer.CustomCoords("https://bluedb.escartem.eu.org/gs/map/{z}/{z}_{x}-{y}.jpg", {
 	bounds: [[-256, -256], [256, 256]],
 	tms: true,
@@ -851,8 +863,9 @@ function genMapGuess() {
 		map.invalidateSize();
 	}
 
-	// defaults to medium difficulty, will add easy/hard mode later
-	const req = new Request("https://api.escartem.eu.org/p/gca/m/14x512");
+	// todo: add easy/hard mode
+	var difficulty = "14x512"
+	const req = new Request(`${paths["base"]}${paths["map_gi"]}/${difficulty}`);
 
 	fetch(req).then((response) => {
 		if (response.status == 200) {
@@ -903,7 +916,7 @@ function checkMap() {
 	polyline = L.polyline(dots, {color: "red"}).addTo(map);
 	map.fitBounds(polyline.getBounds());
 
-	// approximation of ratio between geographic coordonate system and in-game distance
+	// approximation of ratio between geographic coordinate system and in-game distance
 	coeff = 2.948595429*10**-4
 
 	gameDistance = distance * coeff;
@@ -941,8 +954,3 @@ window.addEventListener("load", () => {
 	document.body.style.opacity = 1;
 	switchMode(gameMode);
 });
-
-// TODO
-// use high-res map and btn to low res
-// add difficulties with 13x and 15x
-// translate 50.1% to fix left bar  

@@ -187,7 +187,7 @@ img#char, img#guessMap { border: solid 1px #ffffff }
 /** BACKGROUND **/
 /****************/
 
-.background, .background-gi, .background-hsr {
+.background, .background-ys, .background-hsr {
 	width: 100%;
 	height: 100%;
 	pointer-events: none;
@@ -198,7 +198,7 @@ img#char, img#guessMap { border: solid 1px #ffffff }
 	position: absolute;
 }
 
-.background-gi { background-image: url("../img/bg/gi.jpg") }
+.background-ys { background-image: url("../img/bg/ys.jpg") }
 .background-hsr { background-image: url("../img/bg/hsr.jpg") }
 
 /***********/
