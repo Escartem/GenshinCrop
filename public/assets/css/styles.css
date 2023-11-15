@@ -31,6 +31,8 @@ html {
 	--btn-light-blue: #748aff;
 	--btn-purple: #8f45e3;
 	--btn-red: #ff4c4c;
+
+	--number: #b7d7ff;
 }
 
 :root.light {
@@ -42,7 +44,7 @@ html {
 
 	--options-bg: #859dbf;
 
-	--text-color: black;
+	--text-color: #1c1c1c;
 	--text-alt-color: #ffffff;
 	--text-red: #ee4a4a;
 	--text-green: #beffbe;
@@ -53,6 +55,8 @@ html {
 	--btn-light-blue: #748aff;
 	--btn-purple: #8f45e3;
 	--btn-red: #ff4c4c;
+
+	--number: #040d0f;
 }
 
 /* material theme override */
@@ -67,6 +71,7 @@ button:disabled {
 }
 
 .mdc-checkbox__background { border-color: white !important }
+.mdc-form-field { color: var(--text-color); }
 
 .btnSelected {
 	background: #d9d9d9 !important;
@@ -102,6 +107,18 @@ img#char, img#guessMap { border: solid 1px #ffffff }
 	visibility: hidden;
 }
 
+/* shortcut key */
+kbd {
+	display: inline-block;
+	border: 1px solid gray;
+	border-radius: 4px;
+	padding: 0px 0.4em;
+	background-color: var(--background-color);
+	font-size: 12px;
+	margin-bottom: 5px;
+	transition: 250ms;
+}
+
 /**************/
 /** MAIN APP **/
 /**************/
@@ -133,9 +150,14 @@ img#char, img#guessMap { border: solid 1px #ffffff }
 	height: 40vh;
 }
 
+.statNumber { 
+	font-weight: 700;
+	color: var(--number);
+	transition: 250ms;
+}
+
 #news, #oldAppUpdates {
 	display: flex;
-	color: var(--text-alt-color);
 	background-color: var(--secondary-color);
 	height: 120px;
 	margin-top: 10px;
@@ -154,8 +176,8 @@ img#char, img#guessMap { border: solid 1px #ffffff }
 	display: block;
 	font-size: 25px;
 	margin: 10px;
-	margin-top: 15px;
 	text-align: center;
+	transition: 250ms;
 }
 
 /* errors */
@@ -524,6 +546,7 @@ img#char, img#guessMap { border: solid 1px #ffffff }
 	width: 90%;
 	height: 90%;
 	background: var(--options-bg);
+	color: var(--text-color) !important;
 	padding: 10px;
 	margin-bottom: 5px;
 	border-radius: 10px;

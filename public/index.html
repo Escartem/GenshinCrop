@@ -105,7 +105,7 @@
 
 									<br /><br /><br />
 
-									You can also use the following shortcuts, ctrl+q to generate a new image, space to show the map, enter to check the result after placing your marker.
+									There are also shortcuts available, check the settings menu to see them all.
 								</span>
 							</div>
 						</div>
@@ -121,7 +121,7 @@
 
 									<br /><br />
 
-									You can use these shortcuts, press ctrl+q to generate an image, textbox is automatically selected after image is shown, but if not press tab to focus it. And you can after press enter to confirm your guess.
+									There are also shortcuts available, check the settings menu to see them all.
 								</span>
 							</div>
 
@@ -159,28 +159,28 @@
 							<div>
 								<div class="mdc-form-field">
 									<div class="mdc-checkbox"><input id="optionsLightMode" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-									<label style="color: var(--text-alt-color);" for="checkbox-1">Light Mode</label>
+									<label for="checkbox-1">Light Mode</label>
 								</div>
 
 								<br />
 
 								<div class="mdc-form-field">
 									<div class="mdc-checkbox"><input id="optionsNoConfettis" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-									<label style="color: var(--text-alt-color);" for="checkbox-1">Disable confettis</label>
+									<label for="checkbox-1">Disable confettis</label>
 								</div>
 
 								<br />
 
 								<div class="mdc-form-field">
 									<div class="mdc-checkbox"><input id="optionsDisableNewTheme" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-									<label style="color: var(--text-alt-color);" for="checkbox-1">Disable background</label>
+									<label for="checkbox-1">Disable background</label>
 								</div>
 
 								<br />
 
 								<div class="mdc-form-field">
 									<div class="mdc-checkbox"><input id="optionsDisableAutoFocus" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-									<label style="color: var(--text-alt-color);" for="checkbox-1">Disable input autofocus</label>
+									<label for="checkbox-1">Disable input autofocus</label>
 								</div>
 							</div>
 
@@ -189,7 +189,7 @@
 							<div>
 								<span class="optionsCatTitle">Stats</span>
 
-								<div style="color: var(--text-color);">
+								<div>
 									<ul style="padding-left: 15px;">
 										<li id="stats-map">0 games in map mode with 0 won (0% win ratio)</li>
 
@@ -201,9 +201,30 @@
 							<hr>
 
 							<div>
-								<span class="optionsCatTitle">Socials</span>
+								<span class="optionsCatTitle">Shortcuts</span>
+
+								<div>
+									<ul style="padding-left: 15px;">
+										<li>Switch gamemode : <kbd>Ctrl</kbd> + <kbd>M</kbd></li>
+										<li>Generate new image : <kbd>Ctrl</kbd> + <kbd>Q</kbd> (<kbd>Ctrl</kbd> + <kbd>W</kbd> for Firefox)</li>
+										<br>
+										<li>Check answer : <kbd>Enter</kbd></li>
+										<li>Open map : <kbd>Space</kbd> (map mode only)</li>
+										<li>Show character list : <kbd>Ctrl</kbd> + <kbd>L</kbd> (character mode only)</li>
+										<li>Focus textbox : <kbd>Tab</kbd> (character mode only)</li>
+										<br>
+										<li>Open settings : <kbd>Ctrl</kbd> + <kbd>S</kbd></li>
+										<li>Hide left panel : <kbd>Ctrl</kbd> + <kbd>A</kbd></li>
+									</ul>
+								</div>
+							</div>
+
+							<hr>
+
+							<div>
+								<span class="optionsCatTitle">Links</span>
 								<div style="display: flex; justify-content: space-evenly;">
-									<button type="button" class="mdc-button mdc-button--raised" id="github" onclick="window.open('https://github.com/Escartem/GenshinCrop', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-github"></i> Github</span></button>
+									<button type="button" class="mdc-button mdc-button--raised" id="github" onclick="window.open('https://github.com/Escartem/GenshinCrop', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-github"></i> Source code</span></button>
 									<button type="button" class="mdc-button mdc-button--raised" id="discord" onclick="window.open('https://discord.gg/fzRdtVh', '_blank');"><span class="mdc-button__label"><i class="fa-brands fa-discord"></i> Discord</span></button>
 								</div>
 							</div>
@@ -220,10 +241,12 @@
 									<br><br>
 									<span style="font-weight: 700; text-decoration: underline;">The website is now 1 year old !</span>
 									<ul>
-										<li>It's now open source, <a href="https://github.com/Escartem/GenshinCrop" target="_blank">see here</a></li>
+										<li>It's now open source, <a href="https://github.com/Escartem/GenshinCrop" target="_blank">see here</a> ✨</li>
 										<li>Added stats section in settings to view infos about your scores</li>
-										<li></li>
-										<li>More improvements and fixes</li>
+										<li>New character list with better display and characters pictures, only for Genshin Mode as of right now</li>
+										<li>Plenty of new shortcuts all available in the settings in a new section</li>
+										<li>Fixed display issues with popup, texts, phone support, light mode and more</li>
+										<li>Other more fixes / technical changes</li>
 									</ul>
 								</span>
 							</div>

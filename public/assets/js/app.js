@@ -70,7 +70,7 @@ genMapBtnBottom = getElem("genMapBtnBottom");
 
 // shortcuts
 document.addEventListener("keydown", function(e) {
-	if (e.ctrlKey && e.keyCode == 81) { // ctrl+q
+	if ((e.ctrlKey && e.keyCode == 81) || (e.ctrlKey && e.keyCode == 87)) { // ctrl+q or ctrl+w
 		e.preventDefault();
 		if (gameMode == "char") {  
 			if (gen==false && charsListEnabled==false && optionsShown==false) {genImage();};
@@ -83,13 +83,25 @@ document.addEventListener("keydown", function(e) {
 			checkMap();
 		}
 	} else if (e.keyCode == 32) { // space
+		e.preventDefault();
 		if (gameMode == "map" && genMap == false) {
-			e.preventDefault();
 			showMap();
 		}
 	} else if (e.ctrlKey && e.keyCode == 77) { // ctrl+m
+		e.preventDefault();
 		mode = gameMode == "char" ? "map" : "char";
 		switchMode(mode);
+	} else if (e.ctrlKey && e.keyCode == 76) { // ctrl+l
+		e.preventDefault()
+		if (gameMode == "char") {
+			switchCharList()
+		}
+	} else if (e.ctrlKey && e.keyCode == 83) { // ctrl+s
+		e.preventDefault()
+		switchOptions()
+	} else if (e.ctrlKey && e.keyCode == 65) { // ctrl+a
+		e.preventDefault()
+		switchLeftPanel()
 	}
 });
 // input enter shortcut
@@ -518,18 +530,19 @@ function switchNewTheme() {
 switchNewTheme()
 
 // update stats
+function createStatSpan(text) { return Object.assign(document.createElement("span"), { innerHTML: text, classList: "statNumber" }) }
+
 function updateStats() {
 	// map
 	var statsMap = getElem("stats-map")
-	var [count, win] = [getVar("mapCount"), getVar("mapWin")]
-	var mapText = `${count} games in map mode with ${win} won (${Math.round((win/count)*100)}% win ratio)`
+	var [count, win] = [createStatSpan(getVar("mapCount")), createStatSpan(getVar("mapWin"))]
 	
-	statsMap.innerHTML = mapText
+	statsMap.innerHTML = `${count.outerHTML} games in map mode with ${win.outerHTML} won (${createStatSpan(Math.round((win.innerHTML/count.innerHTML)*100)+"%").outerHTML} win ratio)`
 
 	// char
 	var statsChar = getElem("stats-char")
-	var [count, win] = [getVar("charCount"), getVar("charWin")]
-	var charText = `${count} games in character mode with ${win} won (${Math.round((win/count)*100)}% win ratio)`
+	var [count, win] = [createStatSpan(getVar("charCount")), createStatSpan(getVar("charWin"))]
+	var charText = `${count.outerHTML} games in character mode with ${win.outerHTML} won (${createStatSpan(Math.round((win.innerHTML/count.innerHTML)*100)+"%").outerHTML} win ratio)`
 
 	statsChar.innerHTML = charText
 }
