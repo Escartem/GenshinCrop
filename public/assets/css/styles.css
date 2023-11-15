@@ -162,7 +162,7 @@ img#char, img#guessMap { border: solid 1px #ffffff }
 .error-text {
 	color: white;
 	position: absolute;
-	width: 20%;
+	width: calc(158px * 0.8);
 	text-align: center;
 	visibility: hidden;
 }
@@ -703,6 +703,7 @@ img#char, img#guessMap { border: solid 1px #ffffff }
 	height: auto;
 	aspect-ratio: 1/1;
 	border-radius: 10px;
+	object-fit: cover;
 }
 
 .five-star { background: linear-gradient(345deg, #cda56e, #9b6c6a) }
@@ -925,6 +926,7 @@ img#char, img#guessMap { border: solid 1px #ffffff }
 	.title { transform: translateY(-100px); }
 	.top { height: calc(80% - 30px); margin-bottom: 80px; }
 	#bar-left, #back-left { width: 40px !important; }
+	button:hover { filter: brightness(1) }
 }
 
 /**********/

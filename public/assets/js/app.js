@@ -3,7 +3,7 @@ setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
 VERSION = "2.6";
-console.log(`v${VERSION}`);
+console.log(`📦 v${VERSION}`);
 document.getElementById("version").innerHTML = `V${VERSION}`;
 
 ////////////
@@ -193,7 +193,7 @@ function convertListNew(data) {
 		} else {
 			pic.classList.add("four-star")
 		}
-		pic.src = `https://bluedb.escartem.eu.org/gcrop/ys/card/${e}.png`
+		pic.src = `${paths.db_base}/${paths.cards_ys}/${e}.png`
 
 		var textWrap = document.createElement("div")
 		textWrap.classList.add("clistTextWrap")
@@ -223,16 +223,19 @@ function convertListNew(data) {
 
 var paths = {}
 var setupDone = false
-function setupData() {
+function setupData(_callback) {
+	console.log("🗿 fetching data")
 	const req = new Request("https://api.escartem.eu.org/p/gca/data?v=3");
 	fetch(req).then(response => response.json()).then(json => {
 		// update paths
-		// todo: include db path
 		paths = {
-			"api_base": json["data"]["bases"]["api"],
-			"char_gi": json["data"]["paths"]["character_genshin"],
-			"char_hsr": json["data"]["paths"]["character_star_rail"],
-			"map_gi": json["data"]["paths"]["map_genshin"]
+			"api_base": json["data"]["api"]["base"],
+			"char_ys": json["data"]["api"]["char_genshin"],
+			"char_hsr": json["data"]["api"]["char_star_rail"],
+			"map_ys": json["data"]["api"]["map_genshin"],
+
+			"db_base": json["data"]["db"]["base"],
+			"cards_ys": json["data"]["db"]["cards_genshin"]
 		}
 
 		// update clist
@@ -243,10 +246,9 @@ function setupData() {
 		sr = convertList(SRList);
 
 		updateCharsList(true)
+		_callback();
 	});
 }
-
-setupData();
 
 function updateCharsList(setup=false) {
 	if (setup == true) {
@@ -594,9 +596,9 @@ function genImage() {
 	var req = null
 
 	if (getVar("srMode") == 1) {
-		req = new Request(`${paths["base"]}${paths["char_hsr"]}`);
+		req = new Request(`${paths.api_base}/${paths.char_hsr}`);
 	} else {
-		req = new Request(`${paths["base"]}${paths["char_gi"]}`);
+		req = new Request(`${paths.api_base}/${paths.char_ys}`);
 	}
 
 
@@ -728,15 +730,19 @@ L.TileLayer.CustomCoords = L.TileLayer.extend({
 });
 
 // todo: use high-res map and btn to low res
-var layer = new L.TileLayer.CustomCoords("https://bluedb.escartem.eu.org/gs/map/{z}/{z}_{x}-{y}.jpg", {
-	bounds: [[-256, -256], [256, 256]],
-	tms: true,
-	infinite: false,
-	minZoom: 1,
-	maxZoom: 6,
-	zoomOffset: 9,
-	errorTileUrl: "assets/img/empty.png"
-}).addTo(map);
+function updateMapLayer(prefix=["",""]) {
+	if (layer) { layer.remove() };
+
+	var layer = new L.TileLayer.CustomCoords(`https://bluedb.escartem.eu.org/gs/map/{z}${prefix[0]}/{z}_{x}-{y}${prefix[1]}.jpg`, {
+		bounds: [[-256, -256], [256, 256]],
+		tms: true,
+		infinite: false,
+		minZoom: 1,
+		maxZoom: 6,
+		zoomOffset: 9,
+		errorTileUrl: "assets/img/empty.png"
+	}).addTo(map);
+}
 
 var resultIcon = L.icon({
 	iconUrl: "assets/img/result-marker.png",
@@ -865,7 +871,7 @@ function genMapGuess() {
 
 	// todo: add easy/hard mode
 	var difficulty = "14x512"
-	const req = new Request(`${paths["base"]}${paths["map_gi"]}/${difficulty}`);
+	const req = new Request(`${paths.api_base}/${paths.map_ys}/${difficulty}`);
 
 	fetch(req).then((response) => {
 		if (response.status == 200) {
@@ -951,6 +957,10 @@ function showPopup(title, content, width=80, height=70) {
 }
 
 window.addEventListener("load", () => {
-	document.body.style.opacity = 1;
-	switchMode(gameMode);
+	setupData(() => {
+		console.log("📈 app init")
+		switchMode(gameMode);
+		updateMapLayer();
+		document.body.style.opacity = 1;
+	});
 });
