@@ -57,6 +57,7 @@ optionsNewAuto = getElem("optionsNewAuto");
 optionsHideReportBtn = getElem("optionsHideWrongImg");
 optionsSRMode = getElem("optionsSRMode");
 optionsDisableAutoFocus = getElem("optionsDisableAutoFocus");
+optionsBetterMap = getElem("optionsBetterMap");
 // game modes
 leftWrapper = getElem("left-panel-wrapper");
 mainWrapper = getElem("main-wrapper");
@@ -145,6 +146,7 @@ optionsNewAuto.checked = getVar("newAuto") == 1 ? true : false;
 optionsHideReportBtn.checked = getVar("hideReportBtn") == 1 ? true : false;
 optionsSRMode.checked = getVar("srMode") == 1 ? true : false;
 optionsDisableAutoFocus.checked = getVar("disableAutoFocus") == 1 ? true : false;
+optionsBetterMap.checked = getVar("betterMap") == 1 ? true : false;
 
 optionsLightMode.addEventListener("click", function() { setVar("lightMode", optionsLightMode.checked ? 1 : 0); themeSwitch(); })
 optionsNoConfettis.addEventListener("click", function() { setVar("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
@@ -153,6 +155,7 @@ optionsNewAuto.addEventListener("click", function() { setVar("newAuto", optionsN
 optionsHideReportBtn.addEventListener("click", function() { setVar("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
 optionsSRMode.addEventListener("click", function() { setVar("srMode", optionsSRMode.checked ? 1 : 0); genImage(); updateBg(); })
 optionsDisableAutoFocus.addEventListener("click", function() { setVar("disableAutoFocus", optionsDisableAutoFocus.checked ? 1 : 0); disableAutoFocus = optionsDisableAutoFocus.checked; })
+optionsBetterMap.addEventListener("click", function() { setVar("betterMap", optionsBetterMap.checked ? 1 : 0); updateMapLayer(optionsBetterMap.checked); })
 
 disableAutoFocus = optionsDisableAutoFocus.checked;
 
@@ -247,6 +250,7 @@ function setupData(_callback) {
 			"map_ys": json["data"]["api"]["map_genshin"],
 
 			"db_base": json["data"]["db"]["base"],
+			"tile_ys": json["data"]["db"]["map_tile_genshin"],
 			"cards_ys": json["data"]["db"]["cards_genshin"]
 		}
 
@@ -743,10 +747,16 @@ L.TileLayer.CustomCoords = L.TileLayer.extend({
 });
 
 // todo: use high-res map and btn to low res
-function updateMapLayer(prefix=["",""]) {
+var layer = null;
+function updateMapLayer(enhanced) {
+	var prefix = ["", ""]
+	if (enhanced == true) {
+		prefix = ["x", "-scale-2_00x"]
+	}
+
 	if (layer) { layer.remove() };
 
-	var layer = new L.TileLayer.CustomCoords(`https://bluedb.escartem.eu.org/gs/map/{z}${prefix[0]}/{z}_{x}-{y}${prefix[1]}.jpg`, {
+	layer = new L.TileLayer.CustomCoords(`${paths.db_base}/${paths.tile_ys}/{z}${prefix[0]}/{z}_{x}-{y}${prefix[1]}.jpg`, {
 		bounds: [[-256, -256], [256, 256]],
 		tms: true,
 		infinite: false,
@@ -973,7 +983,7 @@ window.addEventListener("load", () => {
 	setupData(() => {
 		console.log("📈 app init")
 		switchMode(gameMode);
-		updateMapLayer();
+		updateMapLayer(optionsBetterMap.checked);
 		document.body.style.opacity = 1;
 	});
 });
