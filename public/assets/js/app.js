@@ -1,11 +1,9 @@
-// Escartem
-
 // ems is a simple script that disable some keyboard shortcuts and show a nice message in console
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "2.5.1";
-console.log(`v${VERSION}`);
+VERSION = "2.6";
+console.log(`📦 v${VERSION}`);
 document.getElementById("version").innerHTML = `V${VERSION}`;
 
 ////////////
@@ -48,7 +46,6 @@ errorText = getElem("error-text");
 loadSpinner = getElem("load-spinner");
 mcontent = getElem("main-wrapper");
 mcontentchar = getElem("mcontentchar");
-clist = getElem("clist");
 options = getElem("options");
 showLeftPanelBtn = getElem("leftPanelSwitch");
 showOldVersionsBtn = getElem("oldVersionsSwitch");
@@ -60,6 +57,7 @@ optionsNewAuto = getElem("optionsNewAuto");
 optionsHideReportBtn = getElem("optionsHideWrongImg");
 optionsSRMode = getElem("optionsSRMode");
 optionsDisableAutoFocus = getElem("optionsDisableAutoFocus");
+optionsBetterMap = getElem("optionsBetterMap");
 // game modes
 leftWrapper = getElem("left-panel-wrapper");
 mainWrapper = getElem("main-wrapper");
@@ -73,7 +71,7 @@ genMapBtnBottom = getElem("genMapBtnBottom");
 
 // shortcuts
 document.addEventListener("keydown", function(e) {
-	if (e.ctrlKey && e.keyCode == 81) { // ctrl+q
+	if ((e.ctrlKey && e.keyCode == 81) || (e.ctrlKey && e.keyCode == 87)) { // ctrl+q or ctrl+w
 		e.preventDefault();
 		if (gameMode == "char") {  
 			if (gen==false && charsListEnabled==false && optionsShown==false) {genImage();};
@@ -86,13 +84,25 @@ document.addEventListener("keydown", function(e) {
 			checkMap();
 		}
 	} else if (e.keyCode == 32) { // space
+		e.preventDefault();
 		if (gameMode == "map" && genMap == false) {
-			e.preventDefault();
 			showMap();
 		}
 	} else if (e.ctrlKey && e.keyCode == 77) { // ctrl+m
+		e.preventDefault();
 		mode = gameMode == "char" ? "map" : "char";
 		switchMode(mode);
+	} else if (e.ctrlKey && e.keyCode == 76) { // ctrl+l
+		e.preventDefault()
+		if (gameMode == "char") {
+			switchCharList()
+		}
+	} else if (e.ctrlKey && e.keyCode == 83) { // ctrl+s
+		e.preventDefault()
+		switchOptions()
+	} else if (e.ctrlKey && e.keyCode == 65) { // ctrl+a
+		e.preventDefault()
+		switchLeftPanel()
 	}
 });
 // input enter shortcut
@@ -136,6 +146,7 @@ optionsNewAuto.checked = getVar("newAuto") == 1 ? true : false;
 optionsHideReportBtn.checked = getVar("hideReportBtn") == 1 ? true : false;
 optionsSRMode.checked = getVar("srMode") == 1 ? true : false;
 optionsDisableAutoFocus.checked = getVar("disableAutoFocus") == 1 ? true : false;
+optionsBetterMap.checked = getVar("betterMap") == 1 ? true : false;
 
 optionsLightMode.addEventListener("click", function() { setVar("lightMode", optionsLightMode.checked ? 1 : 0); themeSwitch(); })
 optionsNoConfettis.addEventListener("click", function() { setVar("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
@@ -144,6 +155,7 @@ optionsNewAuto.addEventListener("click", function() { setVar("newAuto", optionsN
 optionsHideReportBtn.addEventListener("click", function() { setVar("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
 optionsSRMode.addEventListener("click", function() { setVar("srMode", optionsSRMode.checked ? 1 : 0); genImage(); updateBg(); })
 optionsDisableAutoFocus.addEventListener("click", function() { setVar("disableAutoFocus", optionsDisableAutoFocus.checked ? 1 : 0); disableAutoFocus = optionsDisableAutoFocus.checked; })
+optionsBetterMap.addEventListener("click", function() { setVar("betterMap", optionsBetterMap.checked ? 1 : 0); updateMapLayer(optionsBetterMap.checked); })
 
 disableAutoFocus = optionsDisableAutoFocus.checked;
 
@@ -152,8 +164,9 @@ disableAutoFocus = optionsDisableAutoFocus.checked;
 //////////////////////
 
 // fetch data
-var sr=chars="";
+var sr=ys="";
 function convertList(list) {
+	var final = document.createElement("span")
 	result = "";
 	list.forEach(function(value) {
 		if (typeof(value) === "object") {
@@ -164,33 +177,121 @@ function convertList(list) {
 	});
 	result = result.slice(5);
 
-	return result;
+	final.innerHTML = result
+	final.classList.add("selectable")
+	return final;
 }
 
-function setupData() {
-	const req = new Request("https://api.escartem.eu.org/p/gca/data?v=2");
+function convertListNew(data) {
+	var result = document.createElement("div")
+	result.classList.add("clistWrapper")
+
+
+	Object.keys(data).forEach((e) => {
+		var value = data[e][0]
+		var cname = ""
+		if (typeof(value) === "object") {
+			cname = value[0]
+			value.shift()
+		} else {
+			cname = value
+			value = null
+		}
+		
+		var wrapper = document.createElement("div")
+		wrapper.classList.add("clistCharWrapper")
+
+		var pic = document.createElement("img")
+		pic.classList.add("clistCharImg")
+		if (data[e][1] == 5) {
+			pic.classList.add("five-star")
+		} else {
+			pic.classList.add("four-star")
+		}
+		pic.src = `${paths.db_base}/${paths.cards_ys}/${e}.png`
+
+		var textWrap = document.createElement("div")
+		textWrap.classList.add("clistTextWrap")
+
+		var text = document.createElement("span")
+		text.classList = "clistCharText selectable"
+		text.innerHTML = cname
+
+		wrapper.appendChild(pic)
+
+		textWrap.appendChild(text)
+
+		if (value != null) {
+			var altText = document.createElement("span")
+			altText.classList = "clistCharAltText selectable"
+			altText.innerHTML = value.join().replaceAll(",", ", ")
+
+			textWrap.appendChild(altText)
+		}
+
+		wrapper.appendChild(textWrap)
+		result.appendChild(wrapper)
+	})
+
+	return result
+}
+
+var paths = {}
+var setupDone = false
+function setupData(_callback) {
+	console.log("🗿 fetching data")
+	const req = new Request("https://api.escartem.eu.org/p/gca/data?v=3");
 	fetch(req).then(response => response.json()).then(json => {
-		var charList = json["ys"]["display"];
+		// update paths
+		paths = {
+			"api_base": json["data"]["api"]["base"],
+			"char_ys": json["data"]["api"]["char_genshin"],
+			"char_hsr": json["data"]["api"]["char_star_rail"],
+			"map_ys": json["data"]["api"]["map_genshin"],
+
+			"db_base": json["data"]["db"]["base"],
+			"tile_ys": json["data"]["db"]["map_tile_genshin"],
+			"cards_ys": json["data"]["db"]["cards_genshin"]
+		}
+
+		// update clist
+		var charList = json["ys"]["chars"];
 		var SRList = json["sr"]["display"]; 
 
-		chars = convertList(charList);
+		ys = convertListNew(charList);
 		sr = convertList(SRList);
 
-		if (optionsSRMode.checked == true) {getElem("listContent").innerHTML=sr} else {getElem("listContent").innerHTML=chars};
+		updateCharsList(true)
+		_callback();
 	});
 }
 
-setupData();
+function updateCharsList(setup=false) {
+	if (setup == true) {
+		setupDone = true
+	}
+
+	if (setupDone == true) {
+		var listContent = getElem("listContent")
+		if (optionsSRMode.checked == true) {
+			listContent.innerHTML = ""
+			listContent.appendChild(sr)
+		} else {
+			listContent.innerHTML = ""
+			listContent.appendChild(ys)
+		};
+	}
+}
 
 //update bg
 function updateBg() {
 	if (optionsSRMode.checked == true) {
 		document.getElementsByClassName("background-hsr")[0].style.opacity = 1
-		document.getElementsByClassName("background-gi")[0].style.opacity = 0
+		document.getElementsByClassName("background-ys")[0].style.opacity = 0
 
 	} else {
 		document.getElementsByClassName("background-hsr")[0].style.opacity = 0
-		document.getElementsByClassName("background-gi")[0].style.opacity = 1
+		document.getElementsByClassName("background-ys")[0].style.opacity = 1
 	}
 }
 
@@ -263,7 +364,9 @@ function switchLeftPanel() {
 		showLeftPanelBtn.classList.remove("btnSelected");
 		setVar("leftPanelVisible", 0);
 		if (window.innerWidth < phoneWidth && gameMode == "char" && uinput.disabled == false && disableAutoFocus == false && charsListEnabled == false && optionsShown == false) {
-			uinput.focus();
+			setTimeout(function() {
+				uinput.focus();
+			}, 250);
 		}
 	}
 }
@@ -301,14 +404,14 @@ reportBtnSwitch();
 
 // characters list
 function switchCharList() {
-	if (window.innerWidth < phoneWidth) {
-		switchLeftPanel();
-	}
 	if (charsListEnabled == false) {   
 		// char -> list
 		charsListEnabled = true;
 		if (optionsShown == true) {
 			switchOptions();
+		}
+		if (window.innerWidth < phoneWidth) {
+			switchLeftPanel();
 		}
 		showCharsBtn.classList.add("btnSelected");
 		getElem("mcontlistwrap").style.transform = "translateY(0)";
@@ -317,6 +420,10 @@ function switchCharList() {
 		showCharsBtn.classList.remove("btnSelected");
 		getElem("mcontlistwrap").style.transform = "translateY(-50%)";
 		charsListEnabled = false;
+
+		if (window.innerWidth < phoneWidth) {
+			switchLeftPanel();
+		}
 
 		if (uinput.disabled == false && optionsShown == false && disableAutoFocus == false) {
 			setTimeout(function() {
@@ -432,15 +539,40 @@ function switchNewTheme() {
 
 switchNewTheme()
 
+// update stats
+function createStatSpan(text) { return Object.assign(document.createElement("span"), { innerHTML: text, classList: "statNumber" }) }
+
+function updateStats() {
+	// map
+	var statsMap = getElem("stats-map")
+	var [count, win] = [createStatSpan(getVar("mapCount")), createStatSpan(getVar("mapWin"))]
+	
+	statsMap.innerHTML = `${count.outerHTML} games in map mode with ${win.outerHTML} won (${createStatSpan(Math.round((win.innerHTML/count.innerHTML)*100)+"%").outerHTML} win ratio)`
+
+	// char
+	var statsChar = getElem("stats-char")
+	var [count, win] = [createStatSpan(getVar("charCount")), createStatSpan(getVar("charWin"))]
+	var charText = `${count.outerHTML} games in character mode with ${win.outerHTML} won (${createStatSpan(Math.round((win.innerHTML/count.innerHTML)*100)+"%").outerHTML} win ratio)`
+
+	statsChar.innerHTML = charText
+}
+
+updateStats()
+
+function updateVar(name, val=1) {
+	setVar(name, (parseInt(getVar(name))+val).toString());
+	updateStats()
+}
+
 ///////////////////////////
 /// CHARACTERS GAMEMODE ///
 ///////////////////////////
 
 // gen image
 function genImage() {
-	setVar("charCount", (parseInt(getVar("charCount"))+1).toString());
+	updateVar("charCount")
 	currentGen += 1;
-	if (optionsSRMode.checked == true) {getElem("listContent").innerHTML=sr} else {getElem("listContent").innerHTML=chars};
+	updateCharsList()
 	if (charsListEnabled == true) {
 		switchCharList();
 	}
@@ -487,9 +619,9 @@ function genImage() {
 	var req = null
 
 	if (getVar("srMode") == 1) {
-		req = new Request("https://api.escartem.eu.org/p/gca/srs");
+		req = new Request(`${paths.api_base}/${paths.char_hsr}`);
 	} else {
-		req = new Request("https://api.escartem.eu.org/p/gca/c");
+		req = new Request(`${paths.api_base}/${paths.char_ys}`);
 	}
 
 
@@ -530,7 +662,7 @@ function check() {
 		}
 		text.innerHTML = "Correct 🎉";
 		text.style.color = "var(--text-green)";
-		setVar("charWin", (parseInt(getVar("charWin"))+1).toString());
+		updateVar("charWin")
 	} else {
 		text.innerHTML = `Nope, it was ${display} 😔`;
 		text.style.color = "var(--text-red)";
@@ -620,15 +752,25 @@ L.TileLayer.CustomCoords = L.TileLayer.extend({
 	}
 });
 
-var layer = new L.TileLayer.CustomCoords("https://bluedb.escartem.eu.org/gs/map/{z}/{z}_{x}-{y}.jpg", {
-	bounds: [[-256, -256], [256, 256]],
-	tms: true,
-	infinite: false,
-	minZoom: 1,
-	maxZoom: 6,
-	zoomOffset: 9,
-	errorTileUrl: "assets/img/empty.png"
-}).addTo(map);
+var layer = null;
+function updateMapLayer(enhanced) {
+	var prefix = ["", ""]
+	if (enhanced == true) {
+		prefix = ["x", "-scale-2_00x"]
+	}
+
+	if (layer) { layer.remove() };
+
+	layer = new L.TileLayer.CustomCoords(`${paths.db_base}/${paths.tile_ys}/{z}${prefix[0]}/{z}_{x}-{y}${prefix[1]}.jpg`, {
+		bounds: [[-256, -256], [256, 256]],
+		tms: true,
+		infinite: false,
+		minZoom: 1,
+		maxZoom: 6,
+		zoomOffset: 9,
+		errorTileUrl: "assets/img/empty.png"
+	}).addTo(map);
+}
 
 var resultIcon = L.icon({
 	iconUrl: "assets/img/result-marker.png",
@@ -689,11 +831,13 @@ function showMap() {
 function mapScorePos(score) {
 	message = "";
 	if (score == 0) {
+		updateVar("mapWin")
 		message = "How.";
 		if (getVar("noConfettis") == 0) {
 			getElem("c").dispatchEvent(triggerConfettis);
 		};
 	} else if (score.between(0, 80)) {
+		updateVar("mapWin")
 		message = "Perfectly on spot 🎉";
 		if (getVar("noConfettis") == 0) {
 			getElem("c").dispatchEvent(triggerConfettis);
@@ -713,7 +857,7 @@ function mapScorePos(score) {
 }
 
 function genMapGuess() {
-	setVar("mapCount", (parseInt(getVar("mapCount"))+1).toString());
+	updateVar("mapCount")
 	if (mapInitialized == false) {
 		mapInitialized = true;
 	};
@@ -753,8 +897,9 @@ function genMapGuess() {
 		map.invalidateSize();
 	}
 
-	// defaults to medium difficulty, will add easy/hard mode later
-	const req = new Request("https://api.escartem.eu.org/p/gca/m/14x512");
+	// todo: add easy/hard mode
+	var difficulty = "14x512"
+	const req = new Request(`${paths.api_base}/${paths.map_ys}/${difficulty}`);
 
 	fetch(req).then((response) => {
 		if (response.status == 200) {
@@ -805,7 +950,7 @@ function checkMap() {
 	polyline = L.polyline(dots, {color: "red"}).addTo(map);
 	map.fitBounds(polyline.getBounds());
 
-	// approximation of ratio between geographic coordonate system and in-game distance
+	// approximation of ratio between geographic coordinate system and in-game distance
 	coeff = 2.948595429*10**-4
 
 	gameDistance = distance * coeff;
@@ -840,11 +985,11 @@ function showPopup(title, content, width=80, height=70) {
 }
 
 window.addEventListener("load", () => {
-	document.body.style.opacity = 1;
-	switchMode(gameMode);
+	setupData(() => {
+		console.log("📈 app init")
+		switchMode(gameMode);
+		updateMapLayer(optionsBetterMap.checked);
+		document.body.style.opacity = 1;
+		getElem("c").dispatchEvent(triggerConfettis);
+	});
 });
-
-// TODO
-// use high-res map and btn to low res
-// add difficulties with 13x and 15x
-// translate 50.1% to fix left bar  
