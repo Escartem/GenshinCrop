@@ -59,6 +59,32 @@ html {
 	--number: #040d0f;
 }
 
+/* 1 year text */
+@keyframes text1yAnim {
+	0% {
+		color: white;
+		font-size: 0.69em;
+	}
+	30% {
+		color: #ffc9c9;
+		font-size: 0.71em;
+	}
+	100% {
+		color: white;
+		font-size: 0.69em;
+	}
+}
+
+.text1y {
+	position: absolute;
+	color: white;
+	bottom: 0;
+	right: 0;
+	margin-right: 25%;
+	font-size: 0.7em;
+	animation: 6s text1yAnim infinite;
+}
+
 /* material theme override */
 button { transition: 250ms !important }
 button:hover { filter: brightness(0.8) }
@@ -947,6 +973,7 @@ kbd {
 	.left-panel { width: 90%; transition: 250ms; height: calc(80% - 30px); margin-bottom: 80px; }
 	.main-panel-moved { width: 0 !important; }
 	.title { transform: translateY(-100px); }
+	.text1y { transform: translateY(-100px); } /* 1 year text */
 	.top { height: calc(80% - 30px); margin-bottom: 80px; }
 	#bar-left, #back-left { width: 40px !important; }
 	button:hover { filter: brightness(1) }

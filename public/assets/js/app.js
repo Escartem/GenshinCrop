@@ -364,7 +364,9 @@ function switchLeftPanel() {
 		showLeftPanelBtn.classList.remove("btnSelected");
 		setVar("leftPanelVisible", 0);
 		if (window.innerWidth < phoneWidth && gameMode == "char" && uinput.disabled == false && disableAutoFocus == false && charsListEnabled == false && optionsShown == false) {
-			uinput.focus();
+			setTimeout(function() {
+				uinput.focus();
+			}, 250);
 		}
 	}
 }
@@ -402,14 +404,14 @@ reportBtnSwitch();
 
 // characters list
 function switchCharList() {
-	if (window.innerWidth < phoneWidth) {
-		switchLeftPanel();
-	}
 	if (charsListEnabled == false) {   
 		// char -> list
 		charsListEnabled = true;
 		if (optionsShown == true) {
 			switchOptions();
+		}
+		if (window.innerWidth < phoneWidth) {
+			switchLeftPanel();
 		}
 		showCharsBtn.classList.add("btnSelected");
 		getElem("mcontlistwrap").style.transform = "translateY(0)";
@@ -418,6 +420,10 @@ function switchCharList() {
 		showCharsBtn.classList.remove("btnSelected");
 		getElem("mcontlistwrap").style.transform = "translateY(-50%)";
 		charsListEnabled = false;
+
+		if (window.innerWidth < phoneWidth) {
+			switchLeftPanel();
+		}
 
 		if (uinput.disabled == false && optionsShown == false && disableAutoFocus == false) {
 			setTimeout(function() {
@@ -746,7 +752,6 @@ L.TileLayer.CustomCoords = L.TileLayer.extend({
 	}
 });
 
-// todo: use high-res map and btn to low res
 var layer = null;
 function updateMapLayer(enhanced) {
 	var prefix = ["", ""]
@@ -985,5 +990,6 @@ window.addEventListener("load", () => {
 		switchMode(gameMode);
 		updateMapLayer(optionsBetterMap.checked);
 		document.body.style.opacity = 1;
+		getElem("c").dispatchEvent(triggerConfettis);
 	});
 });
