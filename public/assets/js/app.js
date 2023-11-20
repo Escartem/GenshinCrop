@@ -165,24 +165,8 @@ disableAutoFocus = optionsDisableAutoFocus.checked;
 
 // fetch data
 var sr=ys="";
-function convertList(list) {
-	var final = document.createElement("span")
-	result = "";
-	list.forEach(function(value) {
-		if (typeof(value) === "object") {
-			result += `<br/>• ${value.join().replaceAll(",",", ")}`;
-		} else {
-			result += `<br/>• ${value}`;
-		}
-	});
-	result = result.slice(5);
 
-	final.innerHTML = result
-	final.classList.add("selectable")
-	return final;
-}
-
-function convertListNew(data) {
+function convertListNew(data, base) {
 	var result = document.createElement("div")
 	result.classList.add("clistWrapper")
 
@@ -208,7 +192,7 @@ function convertListNew(data) {
 		} else {
 			pic.classList.add("four-star")
 		}
-		pic.src = `${paths.db_base}/${paths.cards_ys}/${e}.png`
+		pic.src = `${paths.db_base}/${base}/${e}.png`
 
 		var textWrap = document.createElement("div")
 		textWrap.classList.add("clistTextWrap")
@@ -251,15 +235,16 @@ function setupData(_callback) {
 
 			"db_base": json["data"]["db"]["base"],
 			"tile_ys": json["data"]["db"]["map_tile_genshin"],
-			"cards_ys": json["data"]["db"]["cards_genshin"]
+			"cards_ys": json["data"]["db"]["cards_genshin"],
+			"cards_hsr": json["data"]["db"]["cards_star_rail"]
 		}
 
 		// update clist
 		var charList = json["ys"]["chars"];
 		var SRList = json["sr"]["chars"]; 
 
-		ys = convertListNew(charList);
-		sr = convertListNew(SRList);
+		ys = convertListNew(charList, paths.cards_ys);
+		sr = convertListNew(SRList, paths.cards_hsr);
 
 		updateCharsList(true)
 		_callback();
