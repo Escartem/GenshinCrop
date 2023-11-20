@@ -256,7 +256,7 @@ function setupData(_callback) {
 
 		// update clist
 		var charList = json["ys"]["chars"];
-		var SRList = json["sr"]["display"]; 
+		var SRList = json["sr"]["chars"]; 
 
 		ys = convertListNew(charList);
 		sr = convertListNew(SRList);
