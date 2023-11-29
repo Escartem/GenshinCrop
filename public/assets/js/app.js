@@ -84,8 +84,8 @@ document.addEventListener("keydown", function(e) {
 			checkMap();
 		}
 	} else if (e.keyCode == 32) { // space
-		e.preventDefault();
 		if (gameMode == "map" && genMap == false) {
+			e.preventDefault();
 			showMap();
 		}
 	} else if (e.ctrlKey && e.keyCode == 77) { // ctrl+m
@@ -100,7 +100,7 @@ document.addEventListener("keydown", function(e) {
 	} else if (e.ctrlKey && e.keyCode == 83) { // ctrl+s
 		e.preventDefault()
 		switchOptions()
-	} else if (e.ctrlKey && e.keyCode == 65) { // ctrl+a
+	} else if (e.ctrlKey && e.keyCode == 68) { // ctrl+d
 		e.preventDefault()
 		switchLeftPanel()
 	}
