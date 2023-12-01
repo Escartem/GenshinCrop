@@ -975,6 +975,5 @@ window.addEventListener("load", () => {
 		switchMode(gameMode);
 		updateMapLayer(optionsBetterMap.checked);
 		document.body.style.opacity = 1;
-		getElem("c").dispatchEvent(triggerConfettis);
 	});
 });
