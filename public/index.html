@@ -26,7 +26,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
 	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
-	<link rel="stylesheet" href="assets/css/styles.css?v=2.6.2:1">
+	<link rel="stylesheet" href="assets/css/styles.css?v=2.6.3">
 	<link rel="stylesheet" href="assets/css/leaflet.css" />
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-132CTGT17P"></script>
@@ -162,6 +162,10 @@
 			</div>
 
 			<div class="top" id="mainPanel">
+				<div id="notificationBar">
+					<span id="notifBarText">null</span>
+					<span id="notifBarCloseBtn">X</span>
+				</div>
 				<div id="topwrapper">
 					<div class="options" id="options">
 						<span class="pic-title" id="options-title" style="transition: 0.5s;">Settings</span>
@@ -248,15 +252,20 @@
 							</div>
 							<div id="news" style="height: max-content;">
 								<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
-									version 2.6.2 (22 December 2023)
+									version 2.6.3 (21 January 2024)
 									<ul>
-										<li>Genshin : Added Navia and Chevreuse</li>
-										<li>Star Rail : Added Xueyi, Ruan Mei, Dr Ratio</li>
+										<li>Fixed bugs, improved error handling and major internal api changes</li>
 									</ul>
 								</span>
 							</div>
 							<div id="oldAppUpdates" style="height: 0; opacity: 0;">
 								<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+									version 2.6.2 (22 December 2023)
+									<ul>
+										<li>Genshin : Added Navia and Chevreuse</li>
+										<li>Star Rail : Added Xueyi, Ruan Mei, Dr Ratio</li>
+									</ul>
+
 									version 2.6.1 (11 December 2023)
 									<ul>
 										<li>Star Rail : Added Argenti, Hanya, Lynx and Luka</li>
@@ -580,6 +589,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="./assets/js/app.js?v=2.6.2:2"></script>
+	<script src="./assets/js/app.js?v=2.6.3"></script>
 </body>
 </html>

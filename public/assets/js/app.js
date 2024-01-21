@@ -2,7 +2,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "2.6.2";
+VERSION = "2.6.3";
 console.log(`📦 v${VERSION}`);
 document.getElementById("version").innerHTML = `V${VERSION}`;
 
@@ -224,7 +224,7 @@ var paths = {}
 var setupDone = false
 function setupData(_callback) {
 	console.log("🗿 fetching data")
-	const req = new Request("https://api.escartem.eu.org/p/gca/data?v=3");
+	const req = new Request("https://api.escartem.eu.org/gcrop/data?v=3");
 	fetch(req).then(response => {
 		if (response.status == 403) {
 			throw new Error("api returned 403 status")
@@ -233,17 +233,7 @@ function setupData(_callback) {
 		return response.json()
 	}).then(json => {
 		// update paths
-		paths = {
-			"api_base": json["data"]["api"]["base"],
-			"char_ys": json["data"]["api"]["char_genshin"],
-			"char_hsr": json["data"]["api"]["char_star_rail"],
-			"map_ys": json["data"]["api"]["map_genshin"],
-
-			"db_base": json["data"]["db"]["base"],
-			"tile_ys": json["data"]["db"]["map_tile_genshin"],
-			"cards_ys": json["data"]["db"]["cards_genshin"],
-			"cards_hsr": json["data"]["db"]["cards_star_rail"]
-		}
+		paths = json["data"]["paths"]
 
 		// update clist
 		var charList = json["ys"]["chars"];
@@ -251,6 +241,10 @@ function setupData(_callback) {
 
 		ys = convertListNew(charList, paths.cards_ys);
 		sr = convertListNew(SRList, paths.cards_hsr);
+
+		if (json["notification"] != "") {
+			showNotification(json["notification"])
+		}
 
 		updateCharsList(true)
 		_callback();
@@ -280,7 +274,7 @@ function updateCharsList(setup=false) {
 
 //update bg
 function updateBg() {
-	if (optionsSRMode.checked == true) {
+	if (optionsSRMode.checked == true && gameMode == "char") {
 		document.getElementsByClassName("background-hsr")[0].style.opacity = 1
 		document.getElementsByClassName("background-ys")[0].style.opacity = 0
 
@@ -335,6 +329,8 @@ function switchMode(mode, initialize=true) {
 			genMapGuess();
 		};
 	}
+
+	updateBg()
 }
 
 switchMode(getVar("gamemode"), false);
@@ -491,6 +487,17 @@ function showError(id, message=null) {
 	}
 
 	span.style.visibility = "visible";
+}
+
+function showNotification(message) {
+	notifBar = getElem("notificationBar")
+	notifText = getElem("notifBarText")
+	notifBtn = getElem("notifBarCloseBtn")
+
+	notifText.innerHTML = message
+	notifBtn.onclick = () => { notifBar.style.transform = "translateY(-100%)"; }
+
+	notifBar.style.transform = "translateY(0%)";
 }
 
 function switchNewTheme() {
