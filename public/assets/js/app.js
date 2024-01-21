@@ -224,8 +224,14 @@ var paths = {}
 var setupDone = false
 function setupData(_callback) {
 	console.log("🗿 fetching data")
-	const req = new Request("https://api.escartem.eu.org/p/gca/data?v=3");
-	fetch(req).then(response => response.json()).then(json => {
+	const req = new Request("https://api.escartem.eu.org/pp/gca/dataa?v=3");
+	fetch(req).then(response => {
+		if (response.status == 403) {
+			throw new Error("api returned 403 status")
+		}
+
+		return response.json()
+	}).then(json => {
 		// update paths
 		paths = {
 			"api_base": json["data"]["api"]["base"],
@@ -248,6 +254,10 @@ function setupData(_callback) {
 
 		updateCharsList(true)
 		_callback();
+	}).catch(error => {
+		var appError = document.getElementById("appError")
+		appError.style.opacity = 1
+		appError.innerHTML = appError.innerHTML.replaceAll("$0", error)
 	});
 }
 
@@ -974,6 +984,6 @@ window.addEventListener("load", () => {
 		console.log("📈 app init")
 		switchMode(gameMode);
 		updateMapLayer(optionsBetterMap.checked);
-		document.body.style.opacity = 1;
+		document.getElementsByClassName("main")[0].style.opacity = 1;
 	});
 });
