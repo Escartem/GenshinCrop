@@ -2,7 +2,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "2.6.3";
+VERSION = "2.6.4";
 console.log(`📦 v${VERSION}`);
 document.getElementById("version").innerHTML = `V${VERSION}`;
 
@@ -549,12 +549,12 @@ function updateStats() {
 	var statsMap = getElem("stats-map")
 	var [count, win] = [createStatSpan(getVar("mapCount")), createStatSpan(getVar("mapWin"))]
 	
-	statsMap.innerHTML = `${count.outerHTML} games in map mode with ${win.outerHTML} won (${createStatSpan(Math.round((win.innerHTML/count.innerHTML)*100)+"%").outerHTML} win ratio)`
+	statsMap.innerHTML = `${count.outerHTML} games in map mode with ${win.outerHTML} won (${createStatSpan(Math.round((win.innerHTML/(count.innerHTML+Number.EPSILON))*100)+"%").outerHTML} win ratio)`
 
 	// char
 	var statsChar = getElem("stats-char")
 	var [count, win] = [createStatSpan(getVar("charCount")), createStatSpan(getVar("charWin"))]
-	var charText = `${count.outerHTML} games in character mode with ${win.outerHTML} won (${createStatSpan(Math.round((win.innerHTML/count.innerHTML)*100)+"%").outerHTML} win ratio)`
+	var charText = `${count.outerHTML} games in character mode with ${win.outerHTML} won (${createStatSpan(Math.round((win.innerHTML/(count.innerHTML+Number.EPSILON))*100)+"%").outerHTML} win ratio)`
 
 	statsChar.innerHTML = charText
 }
