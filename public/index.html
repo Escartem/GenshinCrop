@@ -26,7 +26,7 @@
 	<!-- CSS -->
 	<link rel="stylesheet" href="assets/css/material-components-web.min.css">
 	<link rel="stylesheet" href="assets/css/material.indigo-pink.min.css">
-	<link rel="stylesheet" href="assets/css/styles.css?v=2.6.3">
+	<link rel="stylesheet" href="assets/css/styles.css?v=2.6.5">
 	<link rel="stylesheet" href="assets/css/leaflet.css" />
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-132CTGT17P"></script>
@@ -111,13 +111,15 @@
 								</span>
 							</div>
 
-							<hr style="width: 100%;">
+							<hr style="width: calc(100% + 20px);">
 
 							<span class="optionsCatTitle">Settings</span>
 
-							<div class="mdc-form-field">
-								<div class="mdc-checkbox"><input id="optionsBetterMap" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-								<label style="color: var(--text-alt-color);" for="checkbox-1">Less blurry map (WIP)</label>
+							<div>
+								<div class="mdc-form-field">
+									<div class="mdc-checkbox"><input id="optionsBetterMap" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+									<label style="color: var(--text-alt-color);" for="checkbox-1">Less blurry map (WIP)</label>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -138,23 +140,25 @@
 
 							<button type="button" class="mdc-button mdc-button--raised" id="showCharsBtn"><span class="mdc-button__label" disabled>📄 Characters list</span></button>
 
-							<hr style="width: 100%;">
+							<hr style="width: calc(100% + 20px);">
 
 							<span class="optionsCatTitle">Settings</span>
 
-							<div class="mdc-form-field">
-								<div class="mdc-checkbox"><input id="optionsSRMode" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-								<label style="color: var(--text-alt-color);" for="checkbox-1">Use Star Rail characters</label>
-							</div>
+							<div>
+								<div class="mdc-form-field">
+									<div class="mdc-checkbox"><input id="optionsSRMode" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+									<label style="color: var(--text-alt-color);" for="checkbox-1">Use Star Rail characters</label>
+								</div>
 
-							<div class="mdc-form-field">
-								<div class="mdc-checkbox"><input id="optionsNewAuto" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-								<label style="color: var(--text-alt-color);" for="checkbox-1">Automatically generate new image if guess is correct</label>
-							</div>
+								<div class="mdc-form-field">
+									<div class="mdc-checkbox"><input id="optionsNewAuto" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+									<label style="color: var(--text-alt-color);" for="checkbox-1">Automatically generate new image if guess is correct</label>
+								</div>
 
-							<div class="mdc-form-field">
-								<div class="mdc-checkbox"><input id="optionsHideWrongImg" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
-								<label style="color: var(--text-alt-color);" for="checkbox-1">Show "report invalid image" button</label>
+								<div class="mdc-form-field">
+									<div class="mdc-checkbox"><input id="optionsHideWrongImg" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/><div class="mdc-checkbox__background"><svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24"><path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/></svg><div class="mdc-checkbox__mixedmark"></div></div><div class="mdc-checkbox__ripple"></div></div>
+									<label style="color: var(--text-alt-color);" for="checkbox-1">Show "report invalid image" button</label>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -252,16 +256,26 @@
 							</div>
 							<div id="news" style="height: max-content;">
 								<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+									version 2.6.5 (4 March 2024)
+									<ul>
+										<li>Major API update, fixes, optimisation, and now <a href="https://github.com/Escartem/GenshinCropApi" target="_blank">open source</a></li>
+										<li>Fixed win ratio invalid number bug</li>
+										<li>Fixed inconsistent show report button toggle</li>
+										<li>Minor UI tweaks</li>
+									</ul>
+								</span>
+							</div>
+							<div id="oldAppUpdates" style="height: 0; opacity: 0;">
+								<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
 									version 2.6.4 (9 February 2024)
 									<ul>
 										<li>Genshin : Added Xianyun and Gaming</li>
 										<li>Star Rail : Added Black Swan, Sparkle and Misha</li>
 										<li>Fixed display issue with win ratio</li>
 									</ul>
-								</span>
-							</div>
-							<div id="oldAppUpdates" style="height: 0; opacity: 0;">
-								<span style="margin-top: 10px; margin-left: 10px; width: calc(100% - 20px);">
+
+									<hr>
+
 									version 2.6.3 (21 January 2024)
 									<ul>
 										<li>Fixed bugs, improved error handling and major internal api changes</li>
@@ -600,6 +614,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="./assets/js/app.js?v=2.6.4"></script>
+	<script src="./assets/js/app.js?v=2.6.5"></script>
 </body>
 </html>

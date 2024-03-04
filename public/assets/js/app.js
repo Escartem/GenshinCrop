@@ -2,7 +2,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "2.6.4";
+VERSION = "2.6.5";
 console.log(`📦 v${VERSION}`);
 document.getElementById("version").innerHTML = `V${VERSION}`;
 
@@ -143,7 +143,7 @@ optionsLightMode.checked = getVar("lightMode") == 1 ? true : false;
 optionsNoConfettis.checked = getVar("noConfettis") == 1 ? true : false;
 optionsDisableNewTheme.checked = getVar("disableNewTheme") == 1 ? true : false;
 optionsNewAuto.checked = getVar("newAuto") == 1 ? true : false;
-optionsHideReportBtn.checked = getVar("hideReportBtn") == 1 ? true : false;
+optionsHideReportBtn.checked = getVar("hideReportBtn") == 0 ? true : false;
 optionsSRMode.checked = getVar("srMode") == 1 ? true : false;
 optionsDisableAutoFocus.checked = getVar("disableAutoFocus") == 1 ? true : false;
 optionsBetterMap.checked = getVar("betterMap") == 1 ? true : false;
@@ -152,7 +152,7 @@ optionsLightMode.addEventListener("click", function() { setVar("lightMode", opti
 optionsNoConfettis.addEventListener("click", function() { setVar("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
 optionsDisableNewTheme.addEventListener("click", function() { setVar("disableNewTheme", optionsDisableNewTheme.checked ? 1 : 0); switchNewTheme(); })
 optionsNewAuto.addEventListener("click", function() { setVar("newAuto", optionsNewAuto.checked ? 1 : 0); });
-optionsHideReportBtn.addEventListener("click", function() { setVar("hideReportBtn", optionsHideReportBtn.checked ? 1 : 0); reportBtnSwitch(); })
+optionsHideReportBtn.addEventListener("click", function() { setVar("hideReportBtn", optionsHideReportBtn.checked ? 0 : 1); reportBtnSwitch(); })
 optionsSRMode.addEventListener("click", function() { setVar("srMode", optionsSRMode.checked ? 1 : 0); genImage(); updateBg(); })
 optionsDisableAutoFocus.addEventListener("click", function() { setVar("disableAutoFocus", optionsDisableAutoFocus.checked ? 1 : 0); disableAutoFocus = optionsDisableAutoFocus.checked; })
 optionsBetterMap.addEventListener("click", function() { setVar("betterMap", optionsBetterMap.checked ? 1 : 0); updateMapLayer(optionsBetterMap.checked); })
@@ -549,12 +549,12 @@ function updateStats() {
 	var statsMap = getElem("stats-map")
 	var [count, win] = [createStatSpan(getVar("mapCount")), createStatSpan(getVar("mapWin"))]
 	
-	statsMap.innerHTML = `${count.outerHTML} games in map mode with ${win.outerHTML} won (${createStatSpan(Math.round((win.innerHTML/(count.innerHTML+Number.EPSILON))*100)+"%").outerHTML} win ratio)`
+	statsMap.innerHTML = `${count.outerHTML} games in map mode with ${win.outerHTML} won (${createStatSpan(Math.round((win.innerHTML/(parseInt(count.innerHTML)+Number.EPSILON))*100)+"%").outerHTML} win ratio)`
 
 	// char
 	var statsChar = getElem("stats-char")
 	var [count, win] = [createStatSpan(getVar("charCount")), createStatSpan(getVar("charWin"))]
-	var charText = `${count.outerHTML} games in character mode with ${win.outerHTML} won (${createStatSpan(Math.round((win.innerHTML/(count.innerHTML+Number.EPSILON))*100)+"%").outerHTML} win ratio)`
+	var charText = `${count.outerHTML} games in character mode with ${win.outerHTML} won (${createStatSpan(Math.round((win.innerHTML/(parseInt(count.innerHTML)+Number.EPSILON))*100)+"%").outerHTML} win ratio)`
 
 	statsChar.innerHTML = charText
 }

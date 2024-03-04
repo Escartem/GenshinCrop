@@ -482,6 +482,7 @@ kbd {
 	position: absolute;
 	background: var(--secondary-color);
 	border: 1px solid rgba(255, 255, 255, 0.7);
+	box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.2);
 	margin-bottom: 50px;
 	margin-top: 60px;
 	border-radius: 15px;
@@ -580,6 +581,7 @@ kbd {
 	display: flex;
 	background: var(--secondary-color);
 	border: 1px solid rgba(255, 255, 255, 0.7);
+	box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.2);
 	width: 90%;
 	height: 80%;
 	border-radius: 15px;
@@ -847,7 +849,7 @@ kbd {
 	transform: translateY(0px);
 	transition: 0.5s;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: space-around;
 	align-content: space-around;
 }
 
