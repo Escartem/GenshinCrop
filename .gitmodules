@@ -1,0 +1,3 @@
+[submodule "GenshinCropApi"]
+	path = GenshinCropApi
+	url = https://github.com/Escartem/GenshinCropApi
