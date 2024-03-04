@@ -6,7 +6,7 @@ The minigame website to guess Genshin / Star Rail characters from a cropped imag
 
 Feel free to contribute in any way you want to the project, if something is not working create an issue, if you want to suggest changes, make a pull request, I'll be happy to look at them.
 
-> The api endpoint for this project is available in the folder GenshinCropApi
+> The api source code for this project is available [here](https://github.com/Escartem/GenshinCropApi)
 
 ## Run yourself
 
