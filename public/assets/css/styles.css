@@ -514,6 +514,12 @@ kbd {
 	height: 95%;
 }
 
+.leftPanelSettings {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
 #left-panel-map {
 	width: 100%;
 	height: 100%;
