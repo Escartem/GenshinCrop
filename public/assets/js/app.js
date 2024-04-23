@@ -51,8 +51,8 @@ showLeftPanelBtn = getElem("leftPanelSwitch");
 showOldVersionsBtn = getElem("oldVersionsSwitch");
 // options
 optionsLightMode = getElem("optionsLightMode");
-optionsNoConfettis = getElem("optionsNoConfettis");
-optionsDisableNewTheme = getElem("optionsDisableNewTheme")
+optionsConfettis = getElem("optionsConfettis");
+optionsNewTheme = getElem("optionsNewTheme")
 optionsNewAuto = getElem("optionsNewAuto");
 optionsHideReportBtn = getElem("optionsHideWrongImg");
 optionsSRMode = getElem("optionsSRMode");
@@ -123,39 +123,27 @@ genMapBtnBottom.addEventListener("click", function(event) {event.preventDefault(
 showLeftPanelBtn.addEventListener("click", function(event) {event.preventDefault(); switchLeftPanel();})
 showOldVersionsBtn.addEventListener("click", function(event) {event.preventDefault(); showOldVersions();})
 
-///////////////////
-/// LOCALS VARS ///
-///////////////////
-
-function getVar(n,c=false) {t=window.localStorage.getItem(n); if (t!=null) {return t} else {if (c==false) {setVar(n,0); return 0} else {return false}}};
-function setVar(n,v) {window.localStorage.setItem(n,v)};
-function deleteVar(n) {window.localStorage.removeItem(n)};
-
 //////////////////////
 /// SET UP OPTIONS ///
 //////////////////////
 
-if (getVar("hideReportBtn", true) === false) {
-	setVar("hideReportBtn", 1)
-}
+optionsLightMode.checked = getVar("lightMode");
+optionsConfettis.checked = getVar("confettis");
+optionsNewTheme.checked = getVar("newTheme");
+optionsNewAuto.checked = getVar("newAuto");
+optionsHideReportBtn.checked = !getVar("hideReportButton");
+optionsSRMode.checked = getVar("isCharStarRail");
+optionsDisableAutoFocus.checked = getVar("disableAutoFocus");
+optionsBetterMap.checked = getVar("betterMap");
 
-optionsLightMode.checked = getVar("lightMode") == 1 ? true : false;
-optionsNoConfettis.checked = getVar("noConfettis") == 1 ? true : false;
-optionsDisableNewTheme.checked = getVar("disableNewTheme") == 1 ? true : false;
-optionsNewAuto.checked = getVar("newAuto") == 1 ? true : false;
-optionsHideReportBtn.checked = getVar("hideReportBtn") == 0 ? true : false;
-optionsSRMode.checked = getVar("srMode") == 1 ? true : false;
-optionsDisableAutoFocus.checked = getVar("disableAutoFocus") == 1 ? true : false;
-optionsBetterMap.checked = getVar("betterMap") == 1 ? true : false;
-
-optionsLightMode.addEventListener("click", function() { setVar("lightMode", optionsLightMode.checked ? 1 : 0); themeSwitch(); })
-optionsNoConfettis.addEventListener("click", function() { setVar("noConfettis", optionsNoConfettis.checked ? 1 : 0); });
-optionsDisableNewTheme.addEventListener("click", function() { setVar("disableNewTheme", optionsDisableNewTheme.checked ? 1 : 0); switchNewTheme(); })
-optionsNewAuto.addEventListener("click", function() { setVar("newAuto", optionsNewAuto.checked ? 1 : 0); });
-optionsHideReportBtn.addEventListener("click", function() { setVar("hideReportBtn", optionsHideReportBtn.checked ? 0 : 1); reportBtnSwitch(); })
-optionsSRMode.addEventListener("click", function() { setVar("srMode", optionsSRMode.checked ? 1 : 0); genImage(); updateBg(); })
-optionsDisableAutoFocus.addEventListener("click", function() { setVar("disableAutoFocus", optionsDisableAutoFocus.checked ? 1 : 0); disableAutoFocus = optionsDisableAutoFocus.checked; })
-optionsBetterMap.addEventListener("click", function() { setVar("betterMap", optionsBetterMap.checked ? 1 : 0); updateMapLayer(optionsBetterMap.checked); })
+optionsLightMode.addEventListener("click", (e) => { setVar("lightMode", optionsLightMode.checked); themeSwitch(); })
+optionsConfettis.addEventListener("click", (e) => { setVar("confettis", optionsConfettis.checked); });
+optionsNewTheme.addEventListener("click", (e) => { setVar("newTheme", optionsNewTheme.checked); switchNewTheme(); })
+optionsNewAuto.addEventListener("click", (e) => { setVar("newAuto", optionsNewAuto.checked); });
+optionsHideReportBtn.addEventListener("click", (e) => { setVar("hideReportButton", !optionsHideReportBtn.checked); reportBtnSwitch(); })
+optionsSRMode.addEventListener("click", (e) => { setVar("isCharStarRail", optionsSRMode.checked); genImage(); updateBg(); })
+optionsDisableAutoFocus.addEventListener("click", (e) => { setVar("disableAutoFocus", optionsDisableAutoFocus.checked); disableAutoFocus = optionsDisableAutoFocus.checked; })
+optionsBetterMap.addEventListener("click", (e) => { setVar("betterMap", optionsBetterMap.checked); updateMapLayer(optionsBetterMap.checked); })
 
 disableAutoFocus = optionsDisableAutoFocus.checked;
 
@@ -562,7 +550,7 @@ function updateStats() {
 updateStats()
 
 function updateVar(name, val=1) {
-	setVar(name, (parseInt(getVar(name))+val).toString());
+	setVar(name, getVar(name)+val);
 	updateStats()
 }
 
@@ -620,7 +608,7 @@ function genImage() {
 
 	var req = null
 
-	if (getVar("srMode") == 1) {
+	if (getVar("isCharStarRail")) {
 		req = new Request(`${paths.api_base}/${paths.char_hsr}`);
 	} else {
 		req = new Request(`${paths.api_base}/${paths.char_ys}`);
@@ -659,7 +647,7 @@ function check() {
 	win = (entry == curr_char || alias.includes(entry));
 
 	if (win) {
-		if (getVar("noConfettis") == 0) {
+		if (getVar("confettis")) {
 			getElem("c").dispatchEvent(triggerConfettis);
 		}
 		text.innerHTML = "Correct 🎉";
@@ -679,7 +667,7 @@ function check() {
 	loadSpinner.style.visibility = "visible";
 	char.style.transform = "scale(1)";
 
-	if (getVar("newAuto") == 1 && win) {
+	if (getVar("newAuto") && win) {
 		genImage();
 		return
 	}
@@ -835,13 +823,13 @@ function mapScorePos(score) {
 	if (score == 0) {
 		updateVar("mapWin")
 		message = "How.";
-		if (getVar("noConfettis") == 0) {
+		if (getVar("confettis")) {
 			getElem("c").dispatchEvent(triggerConfettis);
 		};
 	} else if (score.between(0, 80)) {
 		updateVar("mapWin")
 		message = "Perfectly on spot 🎉";
-		if (getVar("noConfettis") == 0) {
+		if (getVar("confettis")) {
 			getElem("c").dispatchEvent(triggerConfettis);
 		};
 	} else if (score.between(80, 140)) {
