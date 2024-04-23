@@ -19,6 +19,7 @@ html {
 	--clist-alt-color: #5b697a;
 
 	--options-bg: #343d4a;
+	--button-bg: #303030;
 
 	--text-color: white;
 	--text-alt-color: lightgray;
@@ -33,6 +34,7 @@ html {
 	--btn-red: #ff4c4c;
 
 	--number: #b7d7ff;
+	--border: rgba(255, 255, 255, 0.7);
 }
 
 :root.light {
@@ -43,13 +45,14 @@ html {
 	--clist-alt-color: #728cab;
 
 	--options-bg: #859dbf;
+	--button-bg: #7294c9;
 
 	--text-color: #1c1c1c;
-	--text-alt-color: #ffffff;
+	--text-alt-color: black;
 	--text-red: #ee4a4a;
 	--text-green: #beffbe;
 
-	--about-bg: #4c4c4c;
+	--about-bg: #859dbf;
 
 	--btn-green: #24bf6f;
 	--btn-light-blue: #748aff;
@@ -57,6 +60,7 @@ html {
 	--btn-red: #ff4c4c;
 
 	--number: #040d0f;
+	--border: rgba(89, 89, 89, 0.7);
 }
 
 /* 1 year text */
@@ -121,7 +125,7 @@ button:disabled {
 
 /* other overrides */
 hr {
-	background: var(--text-color);
+	background: var(--border);
 	border: 0;
 	transition: 250ms;
 }
@@ -481,7 +485,7 @@ kbd {
 	margin-left: 5%;
 	position: absolute;
 	background: var(--secondary-color);
-	border: 1px solid rgba(255, 255, 255, 0.7);
+	border: 1px solid var(--border);
 	box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.2);
 	margin-bottom: 50px;
 	margin-top: 60px;
@@ -586,7 +590,7 @@ kbd {
 	z-index: 1;
 	display: flex;
 	background: var(--secondary-color);
-	border: 1px solid rgba(255, 255, 255, 0.7);
+	border: 1px solid var(--border);
 	box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.2);
 	width: 90%;
 	height: 80%;
@@ -1052,10 +1056,10 @@ kbd {
 /** MISC **/
 /**********/
 
-#github, #discord, #showCharsBtn, #lang, #showOptions, #leftPanelSwitch, #oldVersionsSwitch {
-	background: #303030;
+#github, #discord, #showCharsBtn, #showOptions, #leftPanelSwitch, #oldVersionsSwitch, #resetScores {
+	background: var(--button-bg);
 	transition: 0.5s;
-	color: white;
+	color: var(--text-color);
 }
 
 #news, .credits, #bottomText, #oldAppUpdates {
