@@ -140,10 +140,9 @@ img {
 img#char, img#guessMap { border: solid 1px #ffffff }
 
 /* scroll bar */
-::-webkit-scrollbar { width: 7px }
-::-webkit-srollbar-track { background: #f1f1f1 }
-::-webkit-scrollbar-thumb { background: #888; border-radius: 10px }
-::-webkit-scrollbar-thumb:hover { background: #555 }
+::-webkit-scrollbar { width: 4px }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 30px }
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.5) }
 
 /* spinner */
 #load-spinner, #load-spinner-map {
@@ -643,13 +642,15 @@ kbd {
 .optionsContent {
 	overflow: auto;
 	width: 90%;
-	height: 90%;
+	height: 95%;
 	background: var(--options-bg);
 	color: var(--text-color) !important;
 	padding: 10px;
+	margin-top: 20px;
 	margin-bottom: 5px;
 	border-radius: 10px;
 	transition: 0.5s;
+	box-shadow: inset 0px 0px 4px 0px black;
 }
 
 #bottomText {

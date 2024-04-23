@@ -2,7 +2,7 @@
 setupEMS({"RCB": true, "DVT": false, "BSC": true, "SRC": true});
 
 // version
-VERSION = "2.6.6";
+VERSION = "2.7";
 console.log(`📦 v${VERSION}`);
 document.getElementById("version").innerHTML = `V${VERSION}`;
 initConfig();
@@ -40,8 +40,6 @@ optionsBetterMap = getElem("optionsBetterMap");
 // game modes
 leftWrapper = getElem("left-panel-wrapper");
 mainWrapper = getElem("main-wrapper");
-gmMap = getElem("gmMap");
-gmChar = getElem("gmChar");
 // map
 showMapBtn = getElem("showMapBtn");
 genMapBtn = getElem("genMapBtn");
@@ -50,20 +48,20 @@ genMapBtnBottom = getElem("genMapBtnBottom");
 
 // shortcuts
 document.addEventListener("keydown", function(e) {
-	if ((e.ctrlKey && e.keyCode == 81) || (e.ctrlKey && e.keyCode == 87)) { // ctrl+q or ctrl+w
+	if ((e.ctrlKey && e.keyCode == 13) || (e.ctrlKey && e.keyCode == 81)) { // ctrl+enter or ctrl+q
 		e.preventDefault();
 		if (gameMode == "char") {  
-			if (gen==false && charsListEnabled==false && optionsShown==false) {genImage();};
+			if (!gen && !charsListEnabled && !optionsShown) { genImage() };
 		} else {
-			if (genMap==false && optionsShown==false) {genMapGuess();};
+			if (!genMap && !optionsShown) { genMapGuess() };
 		}
 	} else if (e.keyCode == 13) { // enter
 		e.preventDefault();
-		if (gameMode == "map" && checkMapBtn.disabled == false) {
+		if (gameMode == "map" && !checkMapBtn.disabled) {
 			checkMap();
 		}
 	} else if (e.keyCode == 32) { // space
-		if (gameMode == "map" && genMap == false) {
+		if (gameMode == "map" && !genMap) {
 			e.preventDefault();
 			showMap();
 		}
@@ -72,24 +70,24 @@ document.addEventListener("keydown", function(e) {
 		mode = gameMode == "char" ? "map" : "char";
 		switchMode(mode);
 	} else if (e.ctrlKey && e.keyCode == 76) { // ctrl+l
-		e.preventDefault()
+		e.preventDefault();
 		if (gameMode == "char") {
-			switchCharList()
+			switchCharList();
 		}
 	} else if (e.ctrlKey && e.keyCode == 83) { // ctrl+s
-		e.preventDefault()
-		switchOptions()
+		e.preventDefault();
+		switchOptions();
 	} else if (e.ctrlKey && e.keyCode == 68) { // ctrl+d
-		e.preventDefault()
-		switchLeftPanel()
+		e.preventDefault();
+		switchLeftPanel();
 	}
 });
 // input enter shortcut
 uinput.onkeydown = function(event) {if (event.keyCode == 13) {check();}};
 
 // buttons links
-gmMap.addEventListener("click", function(event) {event.preventDefault(); switchMode("map");})
-gmChar.addEventListener("click", function(event) {event.preventDefault(); switchMode("char");})
+getElem("gmMap").addEventListener("click", (e) => {switchMode("map")});
+getElem("gmChar").addEventListener("click", (e) => {switchMode("char")});
 getElem("resetScores").addEventListener("click", (e) => {resetScores()});
 regenBtn.addEventListener("click", function(event) {event.preventDefault(); genImage();});
 reportBtn.addEventListener("click", function(event) {event.preventDefault(); showPopup("Report image", "Please join the <a href='https://discord.gg/fzRdtVh', target='_blank'>discord</a> and provide this : <span style='color: white; background: #2a2a2a;'>"+buid+"</span>", 60, 33);});
@@ -667,7 +665,7 @@ function showPopup(title, content, width=80, height=70) {
 
 window.addEventListener("load", () => {
 	setupData(() => {
-		console.log("📈 app init")
+		console.log("📈 done !")
 		switchMode(gameMode);
 		updateMapLayer(optionsBetterMap.checked);
 		document.getElementsByClassName("main")[0].style.opacity = 1;
