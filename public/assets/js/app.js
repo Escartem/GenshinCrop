@@ -664,6 +664,15 @@ function showPopup(title, content, width=80, height=70) {
 }
 
 window.addEventListener("load", () => {
+	// refresh ui
+	updateBg();
+	switchMode(getVar("gameMode"), false);
+	if (getVar("leftPanelEnabled") && (window.innerWidth > phoneWidth)) { switchLeftPanel() };
+	themeSwitch();
+	reportBtnSwitch();
+	switchNewTheme();
+	updateStats();
+	// load data
 	setupData(() => {
 		console.log("📈 done !")
 		switchMode(gameMode);

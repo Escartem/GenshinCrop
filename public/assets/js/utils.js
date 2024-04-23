@@ -33,8 +33,6 @@ function updateBg() {
 	}
 }
 
-updateBg();
-
 //////////////////////
 //// RESET SCORES ////
 //////////////////////
@@ -99,8 +97,6 @@ function switchMode(mode, initialize=true) {
 	updateBg();
 }
 
-switchMode(getVar("gameMode"), false);
-
 ////////////////////
 //// LEFT PANEL ////
 ////////////////////
@@ -132,8 +128,6 @@ function switchLeftPanel() {
 	}
 }
 
-if (getVar("leftPanelEnabled") && (window.innerWidth > phoneWidth)) { switchLeftPanel() };
-
 ///////////////
 //// THEME ////
 ///////////////
@@ -147,8 +141,6 @@ function themeSwitch() {
 		document.documentElement.classList.add("dark");
 	}
 }
-
-themeSwitch();
 
 ///////////////////////
 //// REPORT BUTTON ////
@@ -165,8 +157,6 @@ function reportBtnSwitch() {
 		getElem("reportBtnDiv").style.width = null;
 	}
 }
-
-reportBtnSwitch();
 
 /////////////////////////
 //// CHARACTERS LIST ////
@@ -290,8 +280,6 @@ function switchNewTheme() {
 	}
 }
 
-switchNewTheme();
-
 //////////////////////
 //// UPDATE STATS ////
 //////////////////////
@@ -312,8 +300,6 @@ function updateStats() {
 
 	statsChar.innerHTML = charText
 }
-
-updateStats()
 
 // update buttons state //
 function buttonState(tf, b, mode) {
