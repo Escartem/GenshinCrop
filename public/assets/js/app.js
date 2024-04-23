@@ -90,6 +90,7 @@ uinput.onkeydown = function(event) {if (event.keyCode == 13) {check();}};
 // buttons links
 gmMap.addEventListener("click", function(event) {event.preventDefault(); switchMode("map");})
 gmChar.addEventListener("click", function(event) {event.preventDefault(); switchMode("char");})
+getElem("resetScores").addEventListener("click", (e) => {resetScores()});
 regenBtn.addEventListener("click", function(event) {event.preventDefault(); genImage();});
 reportBtn.addEventListener("click", function(event) {event.preventDefault(); showPopup("Report image", "Please join the <a href='https://discord.gg/fzRdtVh', target='_blank'>discord</a> and provide this : <span style='color: white; background: #2a2a2a;'>"+buid+"</span>", 60, 33);});
 genMapBtn.addEventListener("click", function(event) {event.preventDefault(); genMapGuess();})

@@ -34,6 +34,21 @@ function updateBg() {
 }
 
 updateBg();
+
+//////////////////////
+//// RESET SCORES ////
+//////////////////////
+
+function resetScores() {
+	if (confirm("Reset scores ?")) {
+		setVar("mapCount", 0);
+		setVar("mapWin", 0);
+		setVar("charCount", 0);
+		setVar("charWin", 0);
+		updateStats();
+	}
+}
+
 /////////////////////////
 //// CHANGE GAMEMODE ////
 /////////////////////////
