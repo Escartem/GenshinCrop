@@ -190,7 +190,7 @@ var paths = {}
 var setupDone = false
 function setupData(_callback) {
 	console.log("🗿 fetching data")
-	const req = new Request("https://api.escartem.eu.org/gcrop/data?v=3");
+	const req = new Request("https://api.escartem.moe/gcrop/data?v=3");
 	fetch(req).then(response => {
 		if (response.status == 403) {
 			throw new Error("api returned 403 status")
