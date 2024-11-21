@@ -505,6 +505,11 @@ kbd {
 	transition: 250ms;
 }
 
+#hk4eRegionsList {
+	display: flex;
+	flex-direction: column;
+}
+
 .aboutContent {
 	display: flex;
 	padding: 10px;
@@ -515,6 +520,8 @@ kbd {
 	align-items: center;
 	align-content: center;
 	height: 95%;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 .leftPanelSettings {

@@ -188,6 +188,7 @@ function convertListNew(data, base) {
 
 var paths = {}
 var setupDone = false
+var regions = {}
 function setupData(_callback) {
 	console.log("🗿 fetching data")
 	const req = new Request("https://api.escartem.moe/gcrop/data?v=3");
@@ -211,6 +212,9 @@ function setupData(_callback) {
 		if (json["notification"] != "") {
 			showNotification(json["notification"])
 		}
+
+		regions = json["ys"]["regions"];
+		updateRegionsList();
 
 		updateCharsList(true)
 		_callback();
@@ -243,6 +247,62 @@ function updateVar(name, val=1) {
 	updateStats()
 }
 
+function regionCheck() {
+	if (getRegions() == "") {
+		buttonState(true, 0.7, "char");
+		gen = true;
+	} else {
+		buttonState(false, 1, "char");
+		gen = false;
+	}
+}
+
+function createCheckbox(id, label, img=null) {
+	var htmlData = `
+		<img src="${img}" style="width: 35px; height: 35px; margin-right: 10px;">
+		<label style="color: var(--text-alt-color);" for="checkbox-1">${label}</label>
+		<div class="mdc-checkbox">
+			<input id="${id}" type="checkbox" class="mdc-checkbox__native-control" id="checkbox-1"/>
+			<div class="mdc-checkbox__background">
+				<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+					<path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+				</svg>
+				<div class="mdc-checkbox__mixedmark"></div>
+			</div>
+			<div class="mdc-checkbox__ripple"></div>
+		</div>
+	`
+	var wrapper = document.createElement("div")
+	wrapper.classList.add("mdc-form-field")
+	wrapper.innerHTML = htmlData
+
+	return wrapper;
+}
+
+function updateRegionsList() {
+	const regionsList = getElem("hk4eRegionsList");
+
+	Object.keys(regions).forEach((e) => {
+		var region = createCheckbox(`region-${e}`, regions[e], `${paths["db_base"]}/hk4e/region/${e}.png`)
+
+		regionsList.appendChild(region)
+		getElem(`region-${e}`).checked = true;
+		getElem(`region-${e}`).addEventListener("change", regionCheck)
+
+	}, regionsList)
+}
+
+function getRegions() {
+	var out = []
+	Object.keys(regions).forEach((e) => {
+		if (getElem(`region-${e}`).checked) {
+			out.push(e)
+		}
+	})
+
+	return out.join(",")
+}
+
 ///////////////////////////
 /// CHARACTERS GAMEMODE ///
 ///////////////////////////
@@ -259,6 +319,15 @@ function genImage() {
 	if (charInitialized == false) {
 		charInitialized = true;
 	};
+
+	var regionsElem = getElem("hk4eRegionsListWrapper")
+	if (getVar("isCharStarRail")) {
+		regionsElem.style.filter = "brightness(0.3)"
+		regionsElem.style.pointerEvents = "none"
+	} else {
+		regionsElem.style.filter = "brightness(1)"
+		regionsElem.style.pointerEvents = "auto"
+	}
 
 	gen = true;
 	resultLoading = false;
@@ -300,7 +369,14 @@ function genImage() {
 	if (getVar("isCharStarRail")) {
 		req = new Request(`${paths.api_base}/${paths.char_hsr}`);
 	} else {
-		req = new Request(`${paths.api_base}/${paths.char_ys}`);
+		req = new Request(`${paths.api_base}/${paths.char_ys}`, {
+			method: "GET",
+			headers: new Headers({
+				"regions": getRegions()
+			}),
+			mode: "cors",
+			cache: "default"
+		});
 	}
 
 
