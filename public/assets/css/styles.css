@@ -139,6 +139,23 @@ img {
 
 img#char, img#guessMap { border: solid 1px #ffffff }
 
+.icon {
+	width: 20px;
+	filter: contrast(0);
+	margin-right: 10px;
+}
+
+.icon-heart {
+	width: 15px;
+	filter: invert(57%) sepia(55%) saturate(3720%) hue-rotate(324deg) brightness(95%) contrast(89%);
+	margin-bottom: 2px;
+}
+
+.mdc-button__label {
+	display: flex !important;
+	align-items: center !important;
+}
+
 /* scroll bar */
 ::-webkit-scrollbar { width: 4px }
 ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.2); border-radius: 30px }
